@@ -103,3 +103,14 @@ stock de sécurité (8 semaines conseillées, ~280 kg au rythme du lancement), c
   [EFI](https://efi.int/sites/default/files/files/flegtredd/Sustainable-cocoa-programme/Factsheets/Geolocation_FactSheet-2026.pdf)).
 - **Triman et Info-tri** obligatoires sur les emballages ménagers depuis 2022, amende jusqu'à 15 000 €
   ([Projet Celsius](https://projetcelsius.com/blog/triman-etiquette-ppwr/)).
+
+## 8. Prix de L'Arbre à Café et de Terres de Café (question 10)
+
+- **L'Arbre à Café (Oberkampf)** : espresso 3 €, cappuccino 5 €, flat white 6 €, latte 6 €, americano 4,50 €, V60 10 €
+  ([specialtycoffee.paris](https://specialtycoffee.paris/shops/larbre-a-cafe-oberkampf)). Rue des Martyrs : V60 de 10 à 18 € selon le café
+  ([Places du café, décembre 2024](https://www.placesducafe.com/deguster-le-cafe/coffee-shop-paris-9e-l-arbre-a-cafe-le-plaisir-dans-l-exigence-138)).
+  La moyenne espresso-cappuccino-flat white-latte-americano donne 4,90 € : c'est très probablement l'origine des 4,93 € du brief.
+- **Terres de Café** : espresso 2,70 € dans un relevé d'il y a environ trois ans ([France Hotel Guide](https://www.france-hotel-guide.com/fr/blog/prix-cafe-paris/)),
+  2,90 € plus récemment, cappuccino 5 à 5,50 €, flat white près de 7 €, espresso signature 17 €. Pas de carte 2026 publiée.
+- **Moyenne parisienne** : cappuccino autour de 4,50 € en 2026, de 2,50 à 6 € ([Combien coûte](https://www.combien-coute.net/cappuccino/ile-de-france/paris/)).
+- Conséquence : grille « Premium Yémen » validée (V60 8 €, micro-lot 12 €, toujours sous L'Arbre à Café pour le filtre).

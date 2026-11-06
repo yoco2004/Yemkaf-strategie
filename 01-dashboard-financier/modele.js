@@ -21,7 +21,7 @@
   // ---------------------------------------------------------------- calendrier
   var MOIS = [
     { id: 'M1', periode: '20 nov – 19 déc', joursOuverts: 30,
-      reperes: ['Soft opening 20/11', 'Soirée VIP jeudi 26/11', 'E-shop ~27/11 (Black Friday)', 'Achats de Noël'] },
+      reperes: ['Soft opening 20/11', 'E-shop ~27/11 (Black Friday)', 'Soirée VIP samedi 12/12', 'Achats de Noël'] },
     { id: 'M2', periode: '20 déc – 19 janv', joursOuverts: 29,
       reperes: ['Noël : fermé le 25/12', 'Fermé le 1/01', 'Soldes d’hiver mi-janvier', 'Galette des rois'] },
     { id: 'M3', periode: '20 janv – 19 févr', joursOuverts: 31,
@@ -45,6 +45,7 @@
 
   // ------------------------------------------------- données modifiables par défaut
   // g = grammes de café net par unité (sert au calcul du café vert à acheter)
+  // Boissons : grille « Premium Yémen » validée le 6/11/2026 (le brief reste dans verifierGrille)
   var DONNEES_DEFAUT = {
     version: 2,
     chargesFixes: [
@@ -53,6 +54,7 @@
       { id: 'barista-web', nom: 'Barista vente et web (salaire chargé)', categorie: 'Équipe', montant: 2550, debut: 1, fin: 6 },
       { id: 'associes', nom: 'Rémunération des associés', categorie: 'Équipe', montant: 0, debut: 1, fin: 6 },
       { id: 'loyer', nom: 'Loyer et charges, rue du Renard', categorie: 'Local', montant: 6000, debut: 1, fin: 6 },
+      { id: 'stockage', nom: 'Loyer du bureau de stockage', categorie: 'Local', montant: 630, debut: 1, fin: 6 },
       { id: 'energie', nom: 'Électricité triphasée, eau filtrée, fibre', categorie: 'Local', montant: 720, debut: 1, fin: 6 },
       { id: 'compta', nom: 'Pennylane, Qonto, frais bancaires', categorie: 'Gestion', montant: 540, debut: 1, fin: 6 },
       { id: 'mkt-b2b', nom: 'Marketing B2B et échantillons', categorie: 'Commercial', montant: 510, debut: 1, fin: 6 },
@@ -63,17 +65,17 @@
     depensesPonctuelles: [],
     catalogue: {
       boissons: [
-        { id: 'espresso', nom: 'Espresso Simple', ttc: 3.00, cout: 0.76, mix: 14, g: 10 },
-        { id: 'double', nom: 'Double Espresso', ttc: 4.20, cout: 1.26, mix: 6, g: 18 },
-        { id: 'cappuccino', nom: 'Cappuccino', ttc: 5.00, cout: 1.53, mix: 14, g: 18 },
-        { id: 'flat-white', nom: 'Flat White', ttc: 5.20, cout: 1.55, mix: 12, g: 18 },
-        { id: 'latte', nom: 'Latte ou Iced Latte', ttc: 5.80, cout: 1.66, mix: 16, g: 18 },
-        { id: 'v60', nom: 'V60 Grand Cru', ttc: 6.50, cout: 1.22, mix: 6, g: 15 },
-        { id: 'radai', nom: 'Rada’i Gingembre', ttc: 4.70, cout: 1.21, mix: 4, g: 13 },
-        { id: 'qishr', nom: 'Qishr Cascara Épicé', ttc: 4.90, cout: 0.64, mix: 8, g: 0 },
-        { id: 'shai', nom: 'Shai Adeni Karak', ttc: 5.10, cout: 0.74, mix: 8, g: 0 },
-        { id: 'mufawar', nom: 'Mufawar Cardamome', ttc: 5.40, cout: 1.35, mix: 6, g: 15 },
-        { id: 'baydani', nom: 'Qahwa Baydani', ttc: 5.60, cout: 1.33, mix: 6, g: 14 },
+        { id: 'espresso', nom: 'Espresso Simple', ttc: 3.50, cout: 0.76, mix: 14, g: 10 },
+        { id: 'double', nom: 'Double Espresso', ttc: 4.80, cout: 1.26, mix: 6, g: 18 },
+        { id: 'cappuccino', nom: 'Cappuccino', ttc: 5.50, cout: 1.53, mix: 14, g: 18 },
+        { id: 'flat-white', nom: 'Flat White', ttc: 6.00, cout: 1.55, mix: 12, g: 18 },
+        { id: 'latte', nom: 'Latte ou Iced Latte', ttc: 6.20, cout: 1.66, mix: 16, g: 18 },
+        { id: 'v60', nom: 'V60 Grand Cru', ttc: 8.00, cout: 1.22, mix: 6, g: 15 },
+        { id: 'radai', nom: 'Rada’i Gingembre', ttc: 5.20, cout: 1.21, mix: 4, g: 13 },
+        { id: 'qishr', nom: 'Qishr Cascara Épicé', ttc: 5.50, cout: 0.64, mix: 8, g: 0 },
+        { id: 'shai', nom: 'Shai Adeni Karak', ttc: 5.80, cout: 0.74, mix: 8, g: 0 },
+        { id: 'mufawar', nom: 'Mufawar Cardamome', ttc: 6.00, cout: 1.35, mix: 6, g: 15 },
+        { id: 'baydani', nom: 'Qahwa Baydani', ttc: 6.20, cout: 1.33, mix: 6, g: 14 },
         { id: 'supplements', nom: 'Suppléments (lait végétal, micro-lot), par boisson', ttc: 0.10, cout: 0.03, mix: 0, g: 0, parBoisson: true }
       ],
       patisseries: [
@@ -88,7 +90,7 @@
         { id: 'sachet-150', nom: 'Sachet 150 g (prix proposé)', ttc: 19.00, cout: 10.00, mix: 40, g: 150 },
         { id: 'sachet-200', nom: 'Sachet 200 g (brief : Classique)', ttc: 25.00, cout: 13.15, mix: 0, g: 200 },
         { id: 'sachet-250', nom: 'Sachet 250 g (brief : Grand)', ttc: 30.00, cout: 16.32, mix: 45, g: 250 },
-        { id: 'sachet-melange', nom: 'Sachet mélange 250 g (hypothèse 50 % Yémen)', ttc: 22.00, cout: 10.23, mix: 15, g: 250 }
+        { id: 'sachet-melange', nom: 'Mélange épicé 200 g (≈ 85 % café yéménite, 15 % épices)', ttc: 24.00, cout: 12.36, mix: 15, g: 170 }
       ],
       coffrets: [
         { id: 'duo', nom: 'Coffret Duo Boutique', ttc: 52.00, cout: 28.10, mix: 45, g: 400 },
@@ -99,7 +101,7 @@
       web: [
         { id: 'web-coffret', nom: 'Coffret Web Trois Terroirs', ttc: 69.00, cout: 42.20, mix: 30, g: 600 },
         { id: 'web-abo', nom: 'Abonnement Web Mensuel', ttc: 54.00, cout: 34.65, mix: 25, g: 500 },
-        { id: 'web-sachet', nom: 'Sachet Unitaire Web', ttc: 31.00, cout: 17.70, mix: 35, g: 250 },
+        { id: 'web-sachet', nom: 'Sachet Unitaire Web 250 g', ttc: 27.90, cout: 17.70, mix: 35, g: 250 },
         { id: 'web-qishr', nom: 'Pack Rituel Qishr Web', ttc: 22.00, cout: 6.70, mix: 10, g: 0 }
       ]
     }
@@ -108,7 +110,6 @@
   // Suggestions de charges souvent oubliées (ajout en un clic, montants estimés à confirmer)
   var SUGGESTIONS = [
     { type: 'fixe', nom: 'Mutuelle, médecine du travail, repas du personnel (HCR)', categorie: 'Équipe', montant: 180, note: 'Estimation pour 3 salariés, à confirmer avec le cabinet.' },
-    { type: 'fixe', nom: 'Loyer ou charges du bureau de stockage', categorie: 'Local', montant: 0, note: 'À renseigner.' },
     { type: 'fixe', nom: 'Licence WooCommerce Subscriptions (abonnement mensuel)', categorie: 'Commercial', montant: 22, note: 'Extension payante, environ 279 $ par an.' },
     { type: 'fixe', nom: 'Brevo (e-mails et SMS automatiques)', categorie: 'Commercial', montant: 40, note: 'Formule Standard environ 15 € + SMS à environ 0,045 € l’unité.' },
     { type: 'fixe', nom: 'Entretien La Marzocco et cartouches de filtration', categorie: 'Local', montant: 60, note: 'Si non compris dans les 430 € du brief.' },

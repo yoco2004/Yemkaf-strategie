@@ -304,7 +304,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     var t = new Date(); t.setHours(0, 0, 0, 0);
     function cd(d) { var n = Math.round((d - t) / 86400000); return n > 0 ? 'J-' + n : (n === 0 ? 'aujourd’hui' : 'passé'); }
     document.getElementById('cd-open').innerHTML = 'Soft opening · <b>' + cd(new Date(2026, 10, 20)) + '</b>';
-    document.getElementById('cd-vip').innerHTML = 'Soirée VIP · <b>' + cd(new Date(2026, 10, 26)) + '</b>';
+    document.getElementById('cd-vip').innerHTML = 'Soirée VIP · <b>' + cd(new Date(2026, 11, 12)) + '</b>';
   })();
 
   // ================================================================ PERSISTANCE
@@ -690,7 +690,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
 
     var caBrief = M.simuler(M.LEVIERS_DEFAUT, {}, donnees).totaux.caTotal;
     document.getElementById('callout').innerHTML =
-      '<p><strong>Votre plan, mis à jour.</strong> Avec 3 baristas au lieu des 4 salariés du brief et vos charges actuelles (' + eur(r.pointMort.chargesFixesMois) + ' par mois en régime), vos objectifs quotidiens donnent ' + eur(plan.totaux.resultat) + ' de résultat sur 6 mois. Le brief annonçait 49 123 € avec 4 salariés. Je ne retrouve toujours pas ses 278 383 € de CA (j’obtiens ' + eur(caBrief) + ') : le fichier source reste utile.</p>' +
+      '<p><strong>Votre plan, mis à jour le 6 novembre.</strong> Avec 3 baristas, la grille « Premium Yémen » et vos charges actuelles (' + eur(r.pointMort.chargesFixesMois) + ' par mois en régime, bureau de stockage compris), vos objectifs quotidiens donnent ' + eur(plan.totaux.resultat) + ' de résultat sur 6 mois, pour ' + eur(caBrief) + ' de CA. Le brief annonçait 49 123 € avec 4 salariés et l’ancienne grille ; son fichier source reste utile pour caler le mix de ventes.</p>' +
       '<p><strong>Coussin de trésorerie.</strong> Point le plus bas en ' + r.moisTresorerieMin + ' (' + eur(r.tresorerieMin) + '). Gardez sur Qonto au moins ce creux plus un mois de charges, soit <b>' + eur(coussin) + '</b>' + (leviers.tresorerieDepart === 0 ? ' (indiquez votre solde réel dans « Loyer et trésorerie »).' : '.') + '</p>';
 
     document.getElementById('hint-ca').textContent = 'Total ' + eur(t.caTotal) + ' HT · ' + fInt.format(t.quantites.tasses) + ' tasses';

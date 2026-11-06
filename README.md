@@ -33,16 +33,17 @@ prix, coûts et parts de ventes de chaque produit. Sur la page publiée, chaque 
 l'équipe et Claude peut la relire. En local, elle reste dans le navigateur ; « Sauvegarde » permet de copier les données
 d'une version à l'autre.
 
-## Chiffres clés au 6 novembre 2026 (3 baristas)
+## Chiffres clés au 6 novembre 2026 (après vos décisions)
+
+3 baristas, bureau de stockage à 630 €/mois, grille « Premium Yémen », sachet web de 250 g à 27,90 €.
 
 | | Plan des associés | Avec les 6 corrections proposées |
 |---|---|---|
-| Chiffre d'affaires HT sur 6 mois | 302 805 € | 221 260 € |
-| Marge brute | 178 565 € (59,0 %) | 132 172 € (59,7 %) |
-| Charges fixes sur 6 mois | 100 200 € | 100 200 € |
-| Résultat d'exploitation | 78 365 € | 24 252 € |
-| Point bas de trésorerie (hors solde de départ) | +9 126 € en M1 | −3 437 € en M2 |
-| Point mort en régime | 64 tasses par jour | 71 tasses par jour |
+| Chiffre d'affaires HT sur 6 mois | 316 852 € | 231 657 € |
+| Marge brute | 191 483 € (60,4 %) | 141 824 € (61,2 %) |
+| Charges fixes sur 6 mois | 103 980 € | 103 980 € |
+| Résultat d'exploitation | 87 503 € | 29 939 € |
+| Point bas de trésorerie (hors solde de départ) | +10 649 € en M1 | −2 836 € en M1 |
+| Point mort en régime | 62 tasses par jour | 69 tasses par jour |
 
-Le brief annonçait 278 383 € de CA et 49 123 € de résultat avec 4 salariés. Ces montants ne se retrouvent pas à partir
-des objectifs quotidiens : le fichier source permettra de caler le mix de ventes.
+Les décisions du 6 novembre sont consignées dans `docs/decisions.md`.
