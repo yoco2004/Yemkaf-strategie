@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- @artifact-start -->
+<title>Feuille de route YEM'KAF</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Marcellus&display=swap">
+<style>
+/* Mise en page : bandeau « nuit d'Aden », puis une colonne de lecture large :
+   priorités de la semaine, décisions, paliers, feuille de route filtrable par personne, rituels, modules. */
+:root {
+  --page: #eceff3; --surface: #fbfbfc; --surface-2: #f3f5f8;
+  --ink: #132033; --ink-2: #445267; --muted: #5f6d80; --line: #dde2e8;
+  --night: #15233a; --on-night: #f2eee6; --on-night-2: #b9c3d3;
+  --accent: #a8661a; --accent-strong: #8a520f; --accent-wash: #f5e9d6;
+  --good: #11743a; --good-wash: #e2f2e7; --bad: #b8322f; --bad-wash: #f8e4e2; --focus: #2a78d6;
+  --p-fin: #2a78d6; --p-mkt: #e87ba4; --p-ops: #1baf7a; --p-bar: #eda100; --p-all: #445267;
+  --font-display: "Marcellus", "Cormorant Garamond", Georgia, serif;
+  --font-ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #0d1218; --surface: #161c23; --surface-2: #1c242d;
+    --ink: #e9edf2; --ink-2: #b8c2cd; --muted: #8e9aa8; --line: #27313c;
+    --night: #101b2c; --on-night: #f2eee6; --on-night-2: #a9b4c4;
+    --accent: #e3a548; --accent-strong: #f0b866; --accent-wash: #33281a;
+    --good: #4cc27a; --good-wash: #15291d; --bad: #f07a76; --bad-wash: #34191a; --focus: #6aa8f0;
+    --p-fin: #3987e5; --p-mkt: #d55181; --p-ops: #199e70; --p-bar: #c98500; --p-all: #b8c2cd;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #0d1218; --surface: #161c23; --surface-2: #1c242d;
+  --ink: #e9edf2; --ink-2: #b8c2cd; --muted: #8e9aa8; --line: #27313c;
+  --night: #101b2c; --on-night: #f2eee6; --on-night-2: #a9b4c4;
+  --accent: #e3a548; --accent-strong: #f0b866; --accent-wash: #33281a;
+  --good: #4cc27a; --good-wash: #15291d; --bad: #f07a76; --bad-wash: #34191a; --focus: #6aa8f0;
+  --p-fin: #3987e5; --p-mkt: #d55181; --p-ops: #199e70; --p-bar: #c98500; --p-all: #b8c2cd;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.55 var(--font-ui); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--night); }
+a { color: var(--accent-strong); text-underline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+.band { background: var(--night); color: var(--on-night); }
+.band .wrap { padding-block: 28px 26px; display: grid; gap: 16px; }
+.band h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(30px, 5vw, 44px); letter-spacing: .03em; line-height: 1.1; }
+.band p { margin: 0; color: var(--on-night-2); max-width: 75ch; }
+.band p b { color: var(--on-night); font-weight: 500; }
+.cds { display: flex; flex-wrap: wrap; gap: 8px; }
+.cd { border: 1px solid rgba(242, 238, 230, .22); border-radius: 999px; padding: 6px 12px; font-size: 13px; color: var(--on-night-2); white-space: nowrap; }
+.cd b { color: var(--on-night); }
+
+main.wrap { padding-block: 26px 40px; display: grid; gap: 34px; }
+section { display: grid; gap: 14px; min-width: 0; }
+.sec-head { display: grid; gap: 4px; }
+.sec-head h2 { font-family: var(--font-display); font-weight: 400; font-size: 26px; }
+.sec-head p { margin: 0; color: var(--ink-2); max-width: 80ch; }
+
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+
+/* priorités */
+.prio { counter-reset: p; display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.prio li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; padding: 14px 16px; }
+.prio li::before { counter-increment: p; content: counter(p); font-family: var(--font-display); font-size: 22px; color: var(--accent-strong); line-height: 1.2; }
+.prio b { display: block; }
+.prio span { color: var(--ink-2); font-size: 14px; }
+
+/* décisions */
+.decisions { display: grid; gap: 10px; }
+@media (min-width: 760px) { .decisions { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.dec { padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
+.dec .q { font-weight: 600; }
+.dec .why { font-size: 14px; color: var(--ink-2); }
+.dec .reco { font-size: 14px; background: var(--accent-wash); border-radius: 8px; padding: 8px 10px; }
+.dec .reco b { color: var(--accent-strong); }
+
+/* paliers */
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 8px 12px; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { text-align: left; position: sticky; left: 0; background: var(--surface); }
+thead th { font-size: 12px; color: var(--muted); background: var(--surface-2); font-weight: 600; }
+thead th:first-child { background: var(--surface-2); }
+tbody tr:last-child td { border-bottom: 0; }
+tr.brief td { color: var(--muted); font-size: 13px; }
+td.neg { color: var(--bad); }
+
+/* feuille de route */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: inherit; font-size: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); border-radius: 999px; padding: 6px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.phase { display: grid; gap: 8px; }
+.phase-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding-top: 8px; }
+.phase-head h3 { font-family: var(--font-display); font-weight: 400; font-size: 21px; }
+.phase-head span { color: var(--muted); font-size: 14px; }
+.task { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 14px; padding: 12px 16px; }
+.task .when { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
+.task .t { font-weight: 600; }
+.task .d { color: var(--ink-2); font-size: 14px; margin-top: 2px; }
+.task .who { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--ink-2); margin-top: 6px; }
+.empty { color: var(--muted); font-size: 14px; padding: 4px 2px; }
+@media (max-width: 560px) { .task { grid-template-columns: 1fr; gap: 2px; } }
+
+/* rituels et modules */
+.rituals { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.ritual { padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+.ritual .w { font-size: 13px; color: var(--accent-strong); font-weight: 600; }
+.ritual span { font-size: 14px; color: var(--ink-2); }
+.modules { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.module { padding: 16px; display: grid; gap: 8px; align-content: start; }
+.module h3 { font-family: var(--font-display); font-weight: 400; font-size: 19px; }
+.module p { margin: 0; font-size: 14px; color: var(--ink-2); }
+.module .need { font-size: 13px; color: var(--muted); }
+.status { justify-self: start; font-size: 12px; font-weight: 600; padding: 2px 10px; border-radius: 999px; }
+.status.ready { background: var(--good-wash); color: var(--good); }
+.status.next { background: var(--accent-wash); color: var(--accent-strong); }
+.status.later { background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
+.btn { justify-self: start; font-weight: 600; font-size: 14px; text-decoration: none; background: var(--accent); color: #fff; padding: 8px 14px; border-radius: 8px; }
+:root[data-theme="dark"] .btn { color: #1a1206; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn { color: #1a1206; } }
+footer.wrap { padding-block: 0 40px; font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
+footer ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; }
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--on-night-2)">YEM'KAF · 24 rue du Renard, Paris 4e</div>
+    <h1>Feuille de route des six premiers mois</h1>
+    <p>Pour <b>les trois associés et les trois baristas</b>. Qui fait quoi, et pour quand, du 6 novembre 2026 au bilan du 19 mai 2027. Les objectifs suivent une montée progressive : on vise 70 tasses par jour au lancement, 135 au printemps.</p>
+    <div class="cds" id="cds"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="h-prio">
+    <div class="sec-head">
+      <h2 id="h-prio">Les cinq urgences de la semaine</h2>
+      <p>Du vendredi 6 au jeudi 12 novembre. Le reste de la feuille de route en dépend.</p>
+    </div>
+    <ol class="prio">
+      <li class="panel"><div><b>Sécuriser le café vert depuis la chute de Mokha</b><span>Les Houthis tiennent le port depuis le 10 septembre. Faites l’inventaire au kilo, confirmez la route d’acheminement et commandez 8 semaines de stock, soit environ 280 kg au rythme du lancement (~14 000 € HT). Pôle Opérations, d’ici le mardi 10.</span></div></li>
+      <li class="panel"><div><b>Choisir la bonne formule SumUp</b><span>Avec Paiements Plus (19 € par mois, 0,79 % annoncés), l’abonnement est rentabilisé dès 2 000 € d’encaissements carte par mois. Au rythme prévu, l’économie atteint 300 à 400 € par mois. Vérifiez le taux réel dans votre espace SumUp. Pôle Finance, d’ici le mardi 10.</span></div></li>
+      <li class="panel"><div><b>Mettre l’hygiène et la loi AGEC en règle</b><span>Formation HACCP de 14 h pour au moins une personne, plan de maîtrise sanitaire, déclaration à la DDPP, affichage des allergènes, et prix réduit obligatoire quand un client apporte sa tasse. Pôle Opérations, d’ici le jeudi 12.</span></div></li>
+      <li class="panel"><div><b>Lancer la fiche Google et le dossier presse de Noël</b><span>Les guides cadeaux en ligne se bouclent fin novembre. Envoyez le Coffret Prestige en photo à 25 rédactions avant le vendredi 13. Pôle Marque.</span></div></li>
+      <li class="panel"><div><b>Caler les recettes et tester le service en carafe</b><span>Qishr (5 min), Shai Adeni (6 min) et Qahwa Baydani (3 min) ne tiennent pas un rush à la minute. Testez des carafes isothermes renouvelées toutes les 45 minutes. Chef Barista, d’ici le vendredi 13.</span></div></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-dec">
+    <div class="sec-head">
+      <h2 id="h-dec">Vos décisions</h2>
+      <p>Je n’ai rien tranché à votre place. Pour chaque question, voici ce que je recommande. Répondez-moi et j’ajuste le simulateur et les modules.</p>
+    </div>
+    <div class="decisions" id="decisions"></div>
+  </section>
+
+  <section aria-labelledby="h-pal">
+    <div class="sec-head">
+      <h2 id="h-pal">Des paliers plutôt qu’un objectif dès le premier jour</h2>
+      <p>Moyennes par jour d’ouverture dans le scénario réaliste du simulateur (les 8 corrections appliquées). En gris, l’objectif du brief. Ce sont les cibles à afficher en back-office : atteignables, puis relevées chaque mois.</p>
+    </div>
+    <div class="table-scroll"><table id="paliers"></table></div>
+    <a class="btn" href="01-dashboard-financier/index.html" id="link-dash">Ouvrir le simulateur financier</a>
+  </section>
+
+  <section aria-labelledby="h-road">
+    <div class="sec-head">
+      <h2 id="h-road">Feuille de route, tâche par tâche</h2>
+      <p>Chaque tâche a un seul responsable. Les pôles des associés sont une proposition : dites-moi qui de Yousif, Amer et Khaled prend lequel.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filtrer par personne" id="filters"></div>
+    <div id="road" style="display:grid;gap:18px"></div>
+  </section>
+
+  <section aria-labelledby="h-rit">
+    <div class="sec-head">
+      <h2 id="h-rit">Les rituels qui tiennent la maison</h2>
+      <p>Courts, réguliers, toujours à la même heure.</p>
+    </div>
+    <div class="rituals" id="rituals"></div>
+  </section>
+
+  <section aria-labelledby="h-mod">
+    <div class="sec-head">
+      <h2 id="h-mod">Les cinq modules</h2>
+      <p>Le premier est prêt. Pour chacun des suivants, voici ce qu’il me faut pour le produire.</p>
+    </div>
+    <div class="modules" id="modules"></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="eyebrow">Sources consultées le 6 novembre 2026</div>
+  <ul>
+    <li>Prise de Mokha : <a href="https://www.aljazeera.com/amp/news/2026/9/10/houthis-capture-yemeni-town-of-mocha-why-it-matters" target="_blank" rel="noopener">Al Jazeera</a> · Centre Pompidou : <a href="https://sortiraparis.com/en/news/in-paris/articles/325118-center-pompidou-gradual-closure-before-construction-begins-timetable" target="_blank" rel="noopener">Sortir à Paris</a></li>
+    <li>Loi AGEC, prix réduit avec contenant du client : <a href="https://cdn.adelphe.fr/LOI_AGEC_2021/FICHE_REFLEXE_loi_AGEC" target="_blank" rel="noopener">fiche Adelphe</a>, <a href="https://www.paris.fr/pages/commercants-parisiens-passez-aux-emballages-reemployables-23352" target="_blank" rel="noopener">Ville de Paris</a></li>
+    <li>Ramadan 2027 et Aïd el-Fitr : <a href="https://www.sortiraparis.com/actualites/a-paris/articles/274470-ramadan-2023-quand-aura-lieu-l-aid-el-fitr-en-france-la-fete-qui-marque-la-fin-du-jeune" target="_blank" rel="noopener">Sortir à Paris</a> · Paris Café Festival 2027 : <a href="https://www.worldcoffeeportal.com/le-paris-cafe-festival/" target="_blank" rel="noopener">World Coffee Portal</a></li>
+    <li>SumUp : <a href="https://www.sumup.com/fr-fr/tarifs/" target="_blank" rel="noopener">tarifs officiels</a> · Expédition : <a href="https://www.laposte.fr/professionnel/tarif-colissimo" target="_blank" rel="noopener">Colissimo 2026</a></li>
+  </ul>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // Comptes à rebours
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  document.getElementById('cds').innerHTML = [
+    ['Soft opening', new Date(2026, 10, 20)], ['E-shop', new Date(2026, 10, 27)],
+    ['Soirée VIP (proposée)', new Date(2026, 11, 3)], ['Bilan des 6 mois', new Date(2027, 4, 19)]
+  ].map(function (it) {
+    var d = Math.round((it[1] - today) / 86400000);
+    return '<span class="cd">' + esc(it[0]) + ' · <b>' + (d > 0 ? 'J-' + d : (d === 0 ? 'aujourd’hui' : 'passé')) + '</b></span>';
+  }).join('');
+
+  // Décisions
+  var DEC = [
+    ['Qui prend quel pôle ?', 'Je propose trois pôles : Finance, admin et B2B · Marque, web et événements · Opérations, produit et sourcing.', 'Un associé par pôle, selon vos métiers d’origine. Chacun reste aussi en renfort au comptoir.'],
+    ['Trois ou quatre baristas, et les associés sont-ils payés ?', 'Le brief chiffre 4 salariés (10 200 €), vous m’annoncez 3 baristas. Avec 3, il reste environ 5 séquences de 7 h par semaine à tenir par les associés.', 'Rester à 3 jusqu’au bilan de janvier. Recruter le 4e quand vous tenez plus de 110 tasses par jour pendant 3 semaines.'],
+    ['Qui torréfie, et où est stocké le vert ?', 'Le rendement de 800 g par kilo et les tarifs B2B en dépendent. Ils conditionnent aussi le stock de sécurité.', 'Si c’est un façonnier, signer un délai de torréfaction garanti (72 h) avant le 20 novembre.'],
+    ['Sur quelle plateforme tourne l’e-shop ?', 'La relance à 45 minutes, les SMS et l’abonnement mensuel n’existent pas partout. La boutique en ligne SumUp facture 2,5 % par paiement.', 'Dites-moi l’outil et je rédige les séquences exactes dans le module 4.'],
+    ['Pouvez-vous m’envoyer le fichier du plan à 278 383 € ?', 'Avec vos objectifs quotidiens, j’obtiens 305 210 € : le mix de ventes diffère. Il me faut aussi le solde Qonto et les mensualités d’emprunt.', 'Envoi avant lundi 9 novembre pour caler le simulateur.'],
+    ['Soirée VIP le jeudi 3 décembre ?', 'Deux semaines de rodage après le 20 novembre, avant le pic de Noël, le jour habituel des cuppings.', 'Oui, de 19 h à 22 h, boutique fermée au public à 18 h 30.'],
+    ['Combien de places assises, et une terrasse ?', 'À partir de 20 places, la loi AGEC impose la vaisselle réemployable pour la consommation sur place. Le nombre de places change aussi la vitesse de rotation.', 'Me donner le plan de salle pour le module 2.'],
+    ['Tester une ouverture le soir ?', 'Aux États-Unis, les cafés yéménites réussissent comme lieux du soir sans alcool, ouverts tard. Vous fermez à 20 h.', 'Test pendant le Ramadan (février-mars), jusqu’à 22 h du jeudi au samedi, puis décision sur les chiffres.'],
+    ['Faut-il augmenter le prix des micro-lots en sachet ?', 'À 25 € les 200 g, vos sachets classiques sont bien placés. Le Yémen rare se vend beaucoup plus cher ailleurs (Qima, Port of Mokha).', 'Passer Joyau de Marib et Brise de Socotra à 34-39 € les 200 g. À valider ensemble.'],
+    ['D’où viennent les moyennes 4,39 € et 4,93 € ?', 'Je n’ai pas pu les retrouver en ligne pour Terres de Café et L’Arbre à Café. Mes relevés sont dans le simulateur.', 'Un relevé sur place des deux cartes, avec photo, à faire cette semaine.']
+  ];
+  document.getElementById('decisions').innerHTML = DEC.map(function (d) {
+    return '<div class="panel dec"><div class="q">' + esc(d[0]) + '</div><div class="why">' + esc(d[1]) + '</div><div class="reco"><b>Ma recommandation :</b> ' + esc(d[2]) + '</div></div>';
+  }).join('');
+
+  // Paliers (scénario réaliste du simulateur, calculé le 6 novembre 2026)
+  var PAL = {
+    mois: ['M1 · 20 nov–19 déc', 'M2 · 20 déc–19 janv', 'M3 · 20 janv–19 févr', 'M4 · 20 févr–19 mars', 'M5 · 20 mars–19 avr', 'M6 · 20 avr–19 mai'],
+    lignes: [
+      ['Tasses par jour', [72, 79, 87, 105, 126, 137], 135],
+      ['Pâtisseries par jour', [29, 32, 36, 43, 51, 56], 55],
+      ['Snacking et formules par jour', [0, 16, 18, 22, 26, 28], 28],
+      ['Sachets boutique par jour', [3, 4, 4, 5, 6, 6], 6],
+      ['Colis web dans le mois', [60, 66, 54, 72, 90, 108], 120],
+      ['Café livré aux pros (kg)', [9, 18, 30, 42, 51, 60], 60],
+      ['Coffrets cadeaux', [84, 46, 21, 25, 19, 15], 35],
+      ['Café vert à acheter (kg)', [150, 144, 149, 181, 223, 241], null],
+      ['Résultat d’exploitation', [-3416, -159, 2046, 4069, 10444, 11162], 10663]
+    ]
+  };
+  var fEur = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+  var fInt = new Intl.NumberFormat('fr-FR');
+  document.getElementById('paliers').innerHTML = '<thead><tr><th>Cible réaliste</th>' + PAL.mois.map(function (m) { var p = m.split(' · '); return '<th>' + esc(p[0]) + '<br><span style="font-weight:400">' + esc(p[1]) + '</span></th>'; }).join('') + '<th>Brief, par mois</th></tr></thead><tbody>' +
+    PAL.lignes.map(function (l) {
+      var money = l[0].indexOf('Résultat') === 0;
+      return '<tr><td>' + esc(l[0]) + '</td>' + l[1].map(function (v) { return '<td' + (v < 0 ? ' class="neg"' : '') + '>' + (money ? fEur.format(v) : fInt.format(v)) + '</td>'; }).join('') +
+        '<td style="color:var(--muted)">' + (l[2] === null ? '—' : (money ? fEur.format(l[2]) : fInt.format(l[2]))) + '</td></tr>';
+    }).join('') + '</tbody>';
+
+  // Personnes
+  var WHO = {
+    fin: ['Pôle Finance, admin et B2B', 'var(--p-fin)'],
+    mkt: ['Pôle Marque, web et événements', 'var(--p-mkt)'],
+    ops: ['Pôle Opérations, produit et sourcing', 'var(--p-ops)'],
+    chef: ['Chef Barista', 'var(--p-bar)'],
+    senior: ['Barista Senior', 'var(--p-bar)'],
+    vente: ['Barista Vente et Web', 'var(--p-bar)'],
+    equipe: ['Toute l’équipe', 'var(--p-all)']
+  };
+
+  var PHASES = [
+    { t: 'Verrouiller', d: 'du 6 au 12 novembre', tasks: [
+      ['fin', 'lun. 9 nov.', 'M’envoyer les chiffres qui manquent', 'Le fichier source du plan à 278 383 €, le solde Qonto, l’échéancier d’emprunt ou de leasing et le dépôt de garantie. Je recale le simulateur dans la journée.'],
+      ['fin', 'mar. 10 nov.', 'Choisir la formule SumUp', 'Relever le taux réellement appliqué dans l’espace SumUp. Paiements Plus devient rentable dès 2 000 € d’encaissements carte par mois. Garder une capture des conditions.'],
+      ['ops', 'mar. 10 nov.', 'Sécuriser le café vert', 'Inventaire au kilo par terroir, route d’acheminement depuis la prise de Mokha, délai et prix. Commande de sécurité de 8 semaines, soit environ 280 kg (~14 000 € HT).'],
+      ['vente', 'mer. 11 nov.', 'Construire le catalogue SumUp', 'Chaque produit avec sa TVA : 10 % pour les boissons et pâtisseries, 5,5 % pour le café en grains et les coffrets, 20 % pour les accessoires. Options lait végétal +0,50 € et micro-lot +1,00 €, touche « tasse perso », un code vendeur par personne.'],
+      ['fin', 'jeu. 12 nov.', 'Organiser Qonto en enveloppes', 'Sous-comptes « TVA » (9 % des encaissements de la semaine, viré chaque lundi), « Salaires et loyer », « Café vert ». Cartes des associés plafonnées. Justificatifs synchronisés avec Pennylane.'],
+      ['ops', 'jeu. 12 nov.', 'Mettre l’hygiène en règle', 'Formation HACCP de 14 h (au moins une personne), plan de maîtrise sanitaire, déclaration d’activité à la DDPP (Cerfa 13984), affichage des 14 allergènes, relevés de température.'],
+      ['ops', 'jeu. 12 nov.', 'Appliquer la loi AGEC', 'Prix réduit pour une boisson à emporter servie dans la tasse du client (−0,20 € proposé), affiché en caisse. Vaisselle réemployable sur place si vous accueillez 20 personnes ou plus.'],
+      ['mkt', 'jeu. 12 nov.', 'Créer la fiche Google Business Profile', 'Catégories « Café » et « Boutique de café », horaires, 10 photos, mention « Ouverture le 20 novembre », lien vers l’e-shop. Objectif : 30 avis au 3 décembre.'],
+      ['mkt', 'jeu. 12 nov.', 'Arrêter la liste VIP', '120 noms en six segments : presse food, créateurs café, chefs pâtissiers, F&B des palaces, torréfacteurs, commerçants du quartier. Objectif : 60 présents.'],
+      ['chef', 'jeu. 12 nov.', 'Caler les recettes au gramme', 'Réglage des deux moulins, ratios et temps d’extraction de chaque boisson, photo de référence. Livrable : 16 fiches recettes validées.'],
+      ['senior', 'jeu. 12 nov.', 'Monter la routine d’hygiène', 'Plan de nettoyage, backflush, purge des buses, relevés des frigos, registre des pertes, rangement du sous-sol par zones.'],
+      ['mkt', 'ven. 13 nov.', 'Envoyer le dossier presse cadeaux', '25 rédactions en ligne (Time Out, Le Bonbon, Sortir à Paris, Paris Zigzag, newsletters food) : photo du Coffret Prestige, prix, proposition d’échantillon.'],
+      ['fin', 'ven. 13 nov.', 'Relancer le bailleur par écrit', 'Demander 3 mois de franchise (18 000 €) en contrepartie des travaux réalisés. À défaut, proposer un loyer progressif sur 6 mois.'],
+      ['ops', 'ven. 13 nov.', 'Signer les fournisseurs frais', 'Pâtisseries parisiennes et yéménites, lait : livraison avant 7 h 30, DLC, prix fermes pour 3 mois.'],
+      ['chef', 'ven. 13 nov.', 'Tester les boissons yéménites en carafe', 'Préparer Qishr, Shai Adeni et Qahwa Baydani en carafes isothermes renouvelées toutes les 45 minutes. Dégustation à l’aveugle : préparé à la minute contre maintenu au chaud.'],
+      ['vente', 'ven. 13 nov.', 'Photographier les produits de l’e-shop', 'Sachets, coffrets, rituel Qishr. Fond neutre, lumière du jour, même angle pour tous.']
+    ]},
+    { t: 'Répéter', d: 'du 13 au 19 novembre', tasks: [
+      ['mkt', 'lun. 16 nov.', 'Envoyer le save-the-date VIP', 'Jeudi 3 décembre, 19 h–22 h : cupping, Qishr et Sabaya. Confirmation demandée avant le 27 novembre.'],
+      ['ops', 'lun. 16 nov.', 'Publier le planning des 4 premières semaines', 'Un associé en renfort de 8 h à 10 h 30 en semaine : à l’ouverture, une seule personne au bar ne tient pas le rush du matin.'],
+      ['equipe', 'mar. 17 → jeu. 19 nov.', 'Trois services à blanc', 'Amis, voisins et commerçants du quartier, en échange d’un avis Google. Chronométrer chaque boisson. Cibles : boisson lactée en moins de 3 minutes, jamais plus de 4 personnes dans la file.'],
+      ['fin', 'mer. 18 nov.', 'Écrire la procédure de caisse', 'Fond de caisse, ticket Z chaque soir, rapprochement des virements SumUp sur Qonto, catégories Pennylane.'],
+      ['fin', 'mer. 18 nov.', 'Boucler l’administratif employeur', 'DPAE, registre unique du personnel, affichages obligatoires, document unique des risques, mutuelle, inscription au service de santé au travail.'],
+      ['mkt', 'mer. 18 nov.', 'Tester l’e-shop de bout en bout', 'Commande réelle : paiement, e-mail de confirmation, étiquette, colis, retour. CGV, mentions légales, bandeau cookies, frais de port.'],
+      ['mkt', 'jeu. 19 nov.', 'Préparer le quartier', '500 flyers rue du Renard, rue de la Verrerie et rue Saint-Merri. Affiche « Ouverture le 20 novembre » en vitrine. 9 publications Instagram prêtes.']
+    ]},
+    { t: 'Soft opening et e-shop', d: 'du 20 novembre au 2 décembre', tasks: [
+      ['equipe', 'ven. 20 nov.', 'Soft opening', 'Sans presse. Objectif réaliste du premier mois : 70 tasses par jour, pas 135. Chaque client compte pour les avis.'],
+      ['equipe', 'chaque soir', 'Tenir le journal de bord', 'Ticket Z, tasses vendues, invendus pris en photo, une remarque de client. Cinq minutes à la fermeture.'],
+      ['vente', 'chaque jour', 'Demander un avis Google', 'QR code en caisse et une phrase simple aux habitués. Cible : 30 avis le 3 décembre, 80 fin janvier.'],
+      ['fin', 'lun. 23 nov.', 'Lancer les cadeaux d’entreprise', '40 entreprises à moins de 500 m (Hôtel de Ville, agences, galeries) : coffrets personnalisés, commande avant le 10 décembre.'],
+      ['chef', 'mer. 25 nov.', 'Recalibrer après une semaine', 'Ajuster recettes et purges. Mesurer la freinte réelle face aux 800 g par kilo du modèle.'],
+      ['mkt', 'ven. 27 nov.', 'Mettre l’e-shop en ligne', 'C’est le Black Friday : pas de remise. Livraison offerte sur le premier coffret et carte terroir glissée dans le colis. QR codes des gobelets actifs.'],
+      ['fin', 'lun. 30 nov.', 'Premier point chiffres', 'Saisir les réels dans le simulateur, les comparer au scénario réaliste, décider d’un ajustement d’horaires ou d’équipe.']
+    ]},
+    { t: 'Soirée VIP et Noël', d: 'du 3 au 24 décembre', tasks: [
+      ['mkt', 'jeu. 3 déc.', 'Soirée d’ouverture officielle', 'Cupping, Qishr, Sabaya, 60 invités, un photographe. Attendus : 10 publications et 3 articles.'],
+      ['ops', 'lun. 7 déc.', 'Stocker pour le pic de Noël', 'Coffrets, sacs kraft, cartons d’expédition. Inventaire chaque lundi jusqu’au 4 janvier.'],
+      ['fin', 'jeu. 10 déc.', 'Premier cupping pro du jeudi', '6 à 8 acheteurs : torréfacteurs, coffee shops, F&B. Échantillon de 250 g, grille tarifaire, relance trois jours après.'],
+      ['mkt', 'ven. 18 déc.', 'Clore les commandes web de Noël', 'Date annoncée dès le 1er décembre. Retrait en boutique possible jusqu’au mercredi 23.'],
+      ['senior', 'chaque soir', 'Fermer en 30 minutes', 'Suivre la check-list chronométrée. Invendus proposés sur Too Good To Go.'],
+      ['fin', 'jeu. 24 déc.', 'Horaires des fêtes', 'Fermeture anticipée les 24 et 31, fermé les 25 et 1er janvier. Vitrine et fiche Google à jour une semaine avant.']
+    ]},
+    { t: 'Fidéliser dans le creux', d: 'janvier 2027', tasks: [
+      ['fin', 'lun. 4 janv.', 'Bilan du premier mois', 'Réels contre plan. Décision sur le quatrième poste et sur la rémunération des associés.'],
+      ['chef', 'mer. 6 janv.', 'Une galette des rois maison', 'Proposition : frangipane au miel et à la cardamome. À valider en dégustation avec votre pâtissier.'],
+      ['mkt', 'lun. 11 janv.', 'Relancer les acheteurs de Noël', 'Proposer la bascule vers l’abonnement mensuel dès leur deuxième commande.'],
+      ['ops', 'lun. 18 janv.', 'Caler le planning sur les vraies heures de pointe', 'Exporter les ventes par heure depuis SumUp et décaler les séquences en conséquence.'],
+      ['fin', 'chaque jeudi', 'Quatre cuppings pros', 'Objectif du mois : 3 commandes test, 30 kg livrés aux pros.']
+    ]},
+    { t: 'Saint-Valentin et Ramadan', d: 'février 2027', tasks: [
+      ['ops', 'lun. 1er févr.', 'Préparer le Ramadan (vers le 7-8 février)', 'Test d’ouverture jusqu’à 22 h du jeudi au samedi, avec une box ftour (dattes, Sabaya, Qishr). Planning adapté sans heures supplémentaires.'],
+      ['mkt', 'lun. 1er févr.', 'Coffret de la Saint-Valentin', 'Coffret Duo en édition limitée « Toits de Sanaa », en précommande jusqu’au 12 février.'],
+      ['fin', 'lun. 15 févr.', 'Candidater au Paris Café Festival', 'Édition annoncée du 24 au 26 avril 2027 (à confirmer). Stand partagé ou masterclass Qishr.'],
+      ['mkt', 'lun. 22 févr.', 'Précommandes des coffrets de l’Aïd', 'Associations, entreprises, clientèle du soir. Livraison avant le 9 mars.']
+    ]},
+    { t: 'Aïd el-Fitr et contrats B2B', d: 'mars 2027', tasks: [
+      ['equipe', 'mer. 10 mars', 'Aïd el-Fitr (date estimée)', 'Vitrine de fête, coffrets et pâtisseries yéménites mis en avant.'],
+      ['fin', 'lun. 15 mars', 'Signer 2 à 3 contrats pros', 'Un contrat de café torréfié pour un hôtel ou un restaurant, un contrat de café vert pour un torréfacteur.'],
+      ['chef', 'dim. 28 mars', 'Pâtisseries de Pâques', 'Une pièce de saison franco-yéménite, testée deux semaines avant.']
+    ]},
+    { t: 'Accélérer, puis faire le bilan', d: 'du 1er avril au 19 mai 2027', tasks: [
+      ['chef', 'mar. 6 avr.', 'Carte de printemps', 'Boissons froides : Qishr glacé et cold brew d’un lot de Haraz, à chiffrer avant lancement.'],
+      ['mkt', 'sam. 24 avr.', 'Paris Café Festival (si retenu)', 'Cupping public, coffrets, collecte d’adresses pour l’e-shop.'],
+      ['mkt', 'lun. 10 mai', 'Fête des mères (30 mai)', 'Précommandes des coffrets en boutique et en ligne.'],
+      ['fin', 'mer. 19 mai', 'Bilan des six mois', 'Résultat réel, trésorerie, avis clients. Décisions : recrutement, horaires du soir, développement B2B.']
+    ]}
+  ];
+
+  var filter = 'tous';
+  function renderFilters() {
+    var keys = ['tous'].concat(Object.keys(WHO));
+    document.getElementById('filters').innerHTML = keys.map(function (k) {
+      var label = k === 'tous' ? 'Tout le monde' : WHO[k][0];
+      var dot = k === 'tous' ? '' : '<span class="dot" style="background:' + WHO[k][1] + '"></span>';
+      return '<button type="button" class="chip" data-k="' + k + '" aria-pressed="' + (filter === k) + '">' + dot + esc(label) + '</button>';
+    }).join('');
+  }
+  function renderRoad() {
+    document.getElementById('road').innerHTML = PHASES.map(function (ph) {
+      var tasks = ph.tasks.filter(function (t) { return filter === 'tous' || t[0] === filter || (t[0] === 'equipe' && filter !== 'tous'); });
+      return '<div class="phase"><div class="phase-head"><h3>' + esc(ph.t) + '</h3><span>' + esc(ph.d) + '</span></div>' +
+        (tasks.length ? tasks.map(function (t) {
+          return '<div class="panel task"><div class="when">' + esc(t[1]) + '</div><div><div class="t">' + esc(t[2]) + '</div><div class="d">' + esc(t[3]) + '</div>' +
+            '<div class="who"><span class="dot" style="background:' + WHO[t[0]][1] + '"></span>' + esc(WHO[t[0]][0]) + '</div></div></div>';
+        }).join('') : '<div class="empty">Rien de spécifique sur cette période : renfort au comptoir et rituels.</div>') + '</div>';
+    }).join('');
+  }
+  document.getElementById('filters').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-k]');
+    if (!b) return;
+    filter = b.dataset.k;
+    try { localStorage.setItem('yk-filtre', filter); } catch (err) { /* stockage indisponible */ }
+    renderFilters(); renderRoad();
+  });
+  try { var saved = localStorage.getItem('yk-filtre'); if (saved && (saved === 'tous' || WHO[saved])) filter = saved; } catch (err) { /* stockage indisponible */ }
+  renderFilters(); renderRoad();
+
+  // Rituels
+  var RIT = [
+    ['Chaque jour · 7 h 50', 'Briefing de 2 minutes', 'Le produit du jour, la phrase de vente additionnelle, l’objectif de tasses du palier en cours.'],
+    ['Chaque soir · fermeture', 'Ticket Z et journal de bord', 'Encaissements, invendus, une remarque de client. Le responsable de fermeture signe.'],
+    ['Chaque lundi · 15 h', 'Point associés de 30 minutes', 'Chiffres SumUp de la semaine, solde Qonto, trois priorités. Pas de quatrième.'],
+    ['Chaque lundi', 'Virement de TVA', '9 % des encaissements de la semaine vers le sous-compte TVA de Qonto. Le surplus revient en fin de mois.'],
+    ['Chaque jeudi · 15 h–16 h 30', 'Cupping pro', 'À partir du 10 décembre. 6 à 8 acheteurs, relance trois jours après.'],
+    ['Chaque mois', 'Clôture et inventaire', 'Clôture Pennylane, déclaration de TVA, inventaire du vert, du torréfié et des emballages, entretien de 15 minutes avec chaque barista.']
+  ];
+  document.getElementById('rituals').innerHTML = RIT.map(function (r) {
+    return '<div class="panel ritual"><div class="w">' + esc(r[0]) + '</div><b>' + esc(r[1]) + '</b><span>' + esc(r[2]) + '</span></div>';
+  }).join('');
+
+  // Modules
+  var MOD = [
+    ['ready', 'Prêt', 'Simulateur financier sur 6 mois', 'Leviers en temps réel, 8 corrections proposées, compte de résultat mensuel, café vert à acheter, grille de marges recalculée, prix des concurrents.', 'À compléter : votre fichier source, le solde Qonto, les emprunts.', '01-dashboard-financier/index.html'],
+    ['next', 'Prochaine étape', 'Manuel d’onboarding des baristas', 'Fiches recettes illustrées, planning hebdomadaire refait pour 3 baristas et 3 associés, check-lists chronométrées à plastifier.', 'Il me faut : le modèle de machine et de moulins, le plan du bar, le nombre de places, le choix carafe ou minute.', ''],
+    ['later', 'À venir', 'Plan marketing, coffrets et soirée VIP', 'Rétroplanning, cartons d’invitation par segment, scripts de vente en caisse, fiches produits des coffrets.', 'Il me faut : le logo et la charte, la liste VIP, des photos du lieu.', ''],
+    ['later', 'À venir', 'Architecture e-commerce', 'Schéma du tunnel QR code, réglages des relances, textes complets des e-mails et SMS.', 'Il me faut : le nom de la plateforme et de l’outil d’e-mailing.', ''],
+    ['later', 'À venir', 'Pack juridique et commercial B2B', 'Contrat café vert pour les torréfacteurs, contrat café torréfié pour les coffee shops, hôtels et restaurants, plaquette tarifaire, protocole de cupping.', 'Il me faut : la forme sociale, le SIREN, vos conditions de paiement. Faites relire les contrats par un avocat avant signature.', '']
+  ];
+  document.getElementById('modules').innerHTML = MOD.map(function (m, i) {
+    return '<div class="panel module"><span class="status ' + m[0] + '">' + esc(m[1]) + '</span><h3>' + (i + 1) + '. ' + esc(m[2]) + '</h3><p>' + esc(m[3]) + '</p><div class="need">' + esc(m[4]) + '</div>' +
+      (m[5] ? '<a class="btn" href="' + m[5] + '" data-dash-link>Ouvrir</a>' : '') + '</div>';
+  }).join('');
+})();
+</script>
+<!-- @artifact-end -->
+</body>
+</html>
