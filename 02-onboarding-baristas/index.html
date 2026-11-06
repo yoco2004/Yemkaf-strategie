@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Manuel barista Yem'kaf</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Kufi+Arabic:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/yemkaf.css">
+<style>
+/* Mise en page : bandeau, sommaire en pastilles, puis fiches. Les check-lists sont des cartes A4 imprimables. */
+.toc { display: flex; flex-wrap: wrap; gap: 8px; }
+.toc a { text-decoration: none; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 12px; font-size: 14px; color: var(--ink); }
+.rules { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.rule { padding: 14px 16px; display: grid; gap: 4px; }
+.rule b { font-family: var(--font-display); font-size: 15px; }
+.rule span { color: var(--ink-2); font-size: 14px; }
+.station { padding: 14px 16px; display: grid; gap: 6px; }
+.station h3 { font-size: 16px; }
+.station .eq { font-size: 13px; color: var(--muted); }
+.recipes { display: grid; gap: 14px; }
+@media (min-width: 900px) { .recipes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.recipe { padding: 16px; display: grid; gap: 10px; align-content: start; }
+.recipe h3 { font-size: 18px; display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.recipe h3 .ar { font-size: 15px; color: var(--muted); font-weight: 400; }
+.specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
+.spec { background: var(--surface-2); border-radius: 10px; padding: 8px 10px; }
+.spec small { display: block; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
+.spec b { font-size: 16px; font-variant-numeric: tabular-nums; }
+.steps { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14px; }
+.allergen { font-size: 12px; font-weight: 700; color: var(--warn); }
+.plan td, .plan th { text-align: center; white-space: nowrap; }
+.plan td:first-child, .plan th:first-child { text-align: left; }
+.who { display: inline-block; padding: 3px 9px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+.who.b1 { background: #dcebe2; color: #1d4a34; }
+.who.b2 { background: #e8e0f0; color: #3d2a55; }
+.who.b3 { background: #f6e6c6; color: #6a4708; }
+.who.as { background: #f1d9d7; color: #6b1f1a; }
+:root[data-theme="dark"] .who.b1 { background: #1f3a2c; color: #bfe3cd; }
+:root[data-theme="dark"] .who.b2 { background: #33284a; color: #dccdf0; }
+:root[data-theme="dark"] .who.b3 { background: #3d2f12; color: #f2d79a; }
+:root[data-theme="dark"] .who.as { background: #452321; color: #f4c7c2; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .who.b1 { background: #1f3a2c; color: #bfe3cd; }
+  :root:not([data-theme="light"]) .who.b2 { background: #33284a; color: #dccdf0; }
+  :root:not([data-theme="light"]) .who.b3 { background: #3d2f12; color: #f2d79a; }
+  :root:not([data-theme="light"]) .who.as { background: #452321; color: #f4c7c2; }
+}
+.checklist { padding: 18px; display: grid; gap: 10px; }
+.checklist h3 { font-size: 20px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.checklist h3 span { font-size: 14px; color: var(--muted); font-weight: 600; font-family: var(--font-ui); }
+.cl { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.cl li { display: grid; grid-template-columns: 78px 22px minmax(0, 1fr); gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; align-items: start; }
+.cl li:last-child { border-bottom: 0; }
+.cl .t { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--brand-ink); }
+.cl .box { width: 18px; height: 18px; border: 2px solid var(--axis); border-radius: 4px; margin-top: 2px; }
+.script { padding: 14px 16px; display: grid; gap: 6px; }
+.script .when { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.script q { font-size: 16px; quotes: "« " " »"; }
+@media print {
+  .checklist { break-before: page; border: 2px solid #305640; }
+  .cl li { font-size: 12pt; }
+  .recipe { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;min-width:0">
+      <img class="logo logo-screen" src="../assets/marque/logo-creme.png" alt="Yem'kaf" width="139" height="58">
+      <img class="logo-print" src="../assets/marque/logo-vert.png" alt="Yem'kaf">
+      <div class="band-title"><h1>Manuel barista</h1><div class="lede">Accueil, bar, recettes, planning et check-lists · version du 6 novembre 2026</div></div>
+    </div>
+    <nav class="band-nav no-print" aria-label="Pages"><a href="../index.html">Feuille de route</a><a href="../00-marque/index.html">Marque</a></nav>
+  </div>
+  <img class="frise" src="../assets/marque/frise-sable.png" alt="">
+</header>
+
+<main class="wrap">
+  <nav class="toc no-print" aria-label="Sommaire">
+    <a href="#maison">La maison</a><a href="#bar">Le bar</a><a href="#recettes">Recettes</a><a href="#yemen">Boissons yéménites</a>
+    <a href="#planning">Planning</a><a href="#checklists">Check-lists</a><a href="#comptoir">Au comptoir</a><a href="#hygiene">Hygiène</a>
+  </nav>
+
+  <section id="maison" aria-labelledby="h-maison">
+    <div class="sec-head"><h2 id="h-maison">Les six règles de la maison</h2><p>Ce que chaque client doit vivre, quel que soit le barista.</p></div>
+    <div class="rules">
+      <div class="panel rule"><b>10 secondes</b><span>Tout client est salué dans les 10 secondes, même pendant le rush : un regard et « Bonjour, je suis à vous ».</span></div>
+      <div class="panel rule"><b>Une tasse de Qishr</b><span>Chaque nouveau client se voit proposer une petite tasse de Qishr (30 ml). C’est notre carte de visite.</span></div>
+      <div class="panel rule"><b>Nommer l’origine</b><span>On dit d’où vient le café de la tasse : « un Harazi, des montagnes du Haraz, à 2 000 m ».</span></div>
+      <div class="panel rule"><b>100 % Yémen</b><span>Tout café servi sous le nom Yem’kaf vient du Yémen. Si un produit fait exception, on le dit.</span></div>
+      <div class="panel rule"><b>Le bar propre en permanence</b><span>Un torchon par poste, plan de travail essuyé après chaque boisson, porte-filtres purgés et rincés.</span></div>
+      <div class="panel rule"><b>Pas de devinette</b><span>Un doute sur un allergène ou une recette : on demande au chef barista, on ne répond jamais au hasard.</span></div>
+    </div>
+  </section>
+
+  <section id="bar" aria-labelledby="h-bar">
+    <div class="sec-head"><h2 id="h-bar">Le bar, poste par poste</h2><p>D’après le plan du 4,14 m de comptoir reçu le 6 novembre. Les rôles des moulins sont une proposition du chef barista à valider.</p></div>
+    <div class="grid-3">
+      <div class="panel station"><h3>Poste espresso</h3><div class="eq">Machine La Marzocco · 2 moulins Mahlkönig E80</div><p>E80 n° 1 : café <b>Signature</b> de la maison (espresso et boissons lactées). E80 n° 2 : <b>café invité</b> de la semaine (micro-lot ou autre terroir yéménite). Un seul café par moulin : jamais de mélange dans une trémie.</p></div>
+      <div class="panel station"><h3>Poste filtre et rituels</h3><div class="eq">Moulin Mahlkönig EK43 (« T43 » sur le plan) · carafes isothermes</div><p>Mouture du V60, de la Qahwa Baydani et des boissons yéménites, et mouture des sachets « moulus » à la demande. Brossage de la sortie entre deux cafés.</p></div>
+      <div class="panel station"><h3>Froid</h3><div class="eq">Machine à glaçons · banque réfrigérée · réfrigérateur compact</div><p>Laits (entier, avoine) dans la banque sous la machine. Glaçons pour l’Iced Latte : pelle dédiée, jamais le verre dans le bac.</p></div>
+      <div class="panel station"><h3>Vitrine</h3><div class="eq">Vitrine réfrigérée · micro-ondes</div><p>Pâtisseries sur papier sulfurisé, étiquette prix et allergènes. Le plan ne montre pas de four ni de grill : il en faudra un pour le Kubaneh et les focaccias toastées.</p></div>
+      <div class="panel station"><h3>Plonge</h3><div class="eq">Lave-vaisselle (LV) · évier</div><p>Avec environ 25 places assises, la vaisselle réemployable est obligatoire sur place (loi AGEC). Les gobelets Packonic sont réservés à l’emporter.</p></div>
+      <div class="panel station"><h3>Caisse et réserve</h3><div class="eq">Caisse SumUp · sous-sol · bureau de stockage extérieur</div><p>Réassort du mur de sachets depuis le sous-sol. Le café vert et le gros stock restent au bureau de stockage : transfert planifié chaque lundi.</p></div>
+    </div>
+  </section>
+
+  <section id="recettes" aria-labelledby="h-rec">
+    <div class="sec-head"><h2 id="h-rec">Recettes classiques</h2><p>Doses et volumes du brief. Rendement, temps et température sont des points de départ à caler par le chef barista sur chaque lot (les cafés yéménites naturels supportent souvent un ratio un peu plus long).</p></div>
+    <div class="recipes">
+      <div class="panel recipe"><h3>Espresso</h3><div class="specs"><div class="spec"><small>Dose</small><b>10 g</b></div><div class="spec"><small>Rendement</small><b>20–22 g</b></div><div class="spec"><small>Temps</small><b>25–30 s</b></div><div class="spec"><small>Prix</small><b>3,00 €</b></div></div><ol class="steps"><li>Purger le groupe 2 secondes, essuyer le porte-filtre.</li><li>Moudre, distribuer, tasser à plat.</li><li>Extraire sur balance ; servir en tasse chaude avec un verre d’eau.</li></ol></div>
+      <div class="panel recipe"><h3>Double espresso</h3><div class="specs"><div class="spec"><small>Dose</small><b>18 g</b></div><div class="spec"><small>Rendement</small><b>36–40 g</b></div><div class="spec"><small>Temps</small><b>26–30 s</b></div><div class="spec"><small>Prix</small><b>4,20 €</b></div></div><p class="small muted">Base de toutes les boissons lactées. Supplément micro-lot : +1,00 € (moulin E80 n° 2).</p></div>
+      <div class="panel recipe"><h3>Cappuccino</h3><div class="specs"><div class="spec"><small>Café</small><b>18 g</b></div><div class="spec"><small>Lait</small><b>150 ml</b></div><div class="spec"><small>Lait à</small><b>60–65 °C</b></div><div class="spec"><small>Prix</small><b>5,00 €</b></div></div><p class="small"><span class="allergen">Allergène : lait</span> · Lait végétal +0,50 €</p></div>
+      <div class="panel recipe"><h3>Flat White</h3><div class="specs"><div class="spec"><small>Café</small><b>18 g</b></div><div class="spec"><small>Lait</small><b>165 ml</b></div><div class="spec"><small>Texture</small><b>micro-mousse</b></div><div class="spec"><small>Prix</small><b>5,20 €</b></div></div><p class="small"><span class="allergen">Allergène : lait</span></p></div>
+      <div class="panel recipe"><h3>Latte et Iced Latte</h3><div class="specs"><div class="spec"><small>Café</small><b>18 g</b></div><div class="spec"><small>Lait</small><b>220 ml</b></div><div class="spec"><small>Glacé</small><b>gobelet froid</b></div><div class="spec"><small>Prix</small><b>5,80 €</b></div></div><p class="small"><span class="allergen">Allergène : lait</span> · L’Iced Latte utilise le kit froid (0,354 €) : son coût réel est d’environ 1,79 € et non 1,66 €.</p></div>
+      <div class="panel recipe"><h3>V60 Grand Cru</h3><div class="specs"><div class="spec"><small>Café</small><b>15 g</b></div><div class="spec"><small>Eau</small><b>250 g à 93 °C</b></div><div class="spec"><small>Temps</small><b>2 min 45–3 min 15</b></div><div class="spec"><small>Prix</small><b>6,50 € · 8,50 € micro-lot</b></div></div><ol class="steps"><li>Mouture moyenne-fine à l’EK43, rincer le filtre.</li><li>Pré-infusion 40 g, 30 secondes.</li><li>Verser en spirale jusqu’à 250 g ; présenter la fiche du lot au client.</li></ol></div>
+    </div>
+  </section>
+
+  <section id="yemen" aria-labelledby="h-yem">
+    <div class="sec-head"><h2 id="h-yem">Boissons yéménites</h2><p>Recettes du brief. Infusion de 3 à 6 minutes : impossible à préparer à la minute pendant un rush. Je propose de tester un service en <b>carafe isotherme</b>, préparée par lot de 1 litre, renouvelée toutes les 45 minutes, jetée après 60 minutes, heure notée au feutre. Test à l’aveugle prévu avant l’ouverture.</p></div>
+    <div class="recipes">
+      <div class="panel recipe"><h3>Qishr Cascara Épicé <span class="ar" lang="ar">قشر</span></h3><div class="specs"><div class="spec"><small>Cascara</small><b>16 g</b></div><div class="spec"><small>Épices</small><b>4 g</b></div><div class="spec"><small>Eau</small><b>230 ml à 96 °C</b></div><div class="spec"><small>Prix</small><b>4,90 €</b></div></div><ol class="steps"><li>Concasser grossièrement les cosses avec le gingembre et l’écorce de cannelle.</li><li>Infuser 5 minutes à couvert.</li><li>Filtrer au tamis fin. En carafe : 70 g de cascara et 17 g d’épices pour 1 litre.</li></ol><p class="small muted">Sans lait. Boisson d’accueil offerte (30 ml).</p></div>
+      <div class="panel recipe"><h3>Shai Adeni Karak <span class="ar" lang="ar">شاي عدني</span></h3><div class="specs"><div class="spec"><small>Thé noir</small><b>9 g</b></div><div class="spec"><small>Lait concentré</small><b>45 ml</b></div><div class="spec"><small>Eau</small><b>185 ml à 98 °C</b></div><div class="spec"><small>Prix</small><b>5,10 €</b></div></div><ol class="steps"><li>Mijoter 6 minutes à feu doux avec clou de girofle, cardamome et muscade.</li><li>Ajouter le lait concentré, mijoter jusqu’à texture veloutée et caramélisée.</li></ol><p class="small"><span class="allergen">Allergène : lait</span></p></div>
+      <div class="panel recipe"><h3>Qahwa Baydani</h3><div class="specs"><div class="spec"><small>Café ambré</small><b>14 g</b></div><div class="spec"><small>Épices et lait</small><b>3 g</b></div><div class="spec"><small>Eau</small><b>195 ml à 93 °C</b></div><div class="spec"><small>Prix</small><b>5,60 €</b></div></div><ol class="steps"><li>Mouture fine d’une torréfaction très claire.</li><li>Frémir 3 minutes avec gingembre, cardamome et sésame.</li><li>Lier avec une touche de lait évaporé.</li></ol><p class="small"><span class="allergen">Allergènes : lait, sésame</span> · Le sésame est l’un des 14 allergènes à afficher.</p></div>
+      <div class="panel recipe"><h3>Mufawar Cardamome</h3><div class="specs"><div class="spec"><small>Café médium</small><b>15 g</b></div><div class="spec"><small>Cardamome, crème</small><b>3,5 g</b></div><div class="spec"><small>Eau</small><b>205 ml à 94 °C</b></div><div class="spec"><small>Prix</small><b>5,40 €</b></div></div><ol class="steps"><li>Infuser 4 minutes avec les gousses de cardamome verte écrasées minute.</li><li>Napper d’un nuage de crème liquide.</li></ol><p class="small"><span class="allergen">Allergène : lait</span></p></div>
+      <div class="panel recipe"><h3>Rada’i Gingembre</h3><div class="specs"><div class="spec"><small>Café noir</small><b>13 g</b></div><div class="spec"><small>Gingembre frais</small><b>4,5 g</b></div><div class="spec"><small>Eau</small><b>215 ml à 95 °C</b></div><div class="spec"><small>Prix</small><b>4,70 €</b></div></div><ol class="steps"><li>Râper le gingembre à la minute.</li><li>Extraire 3 minutes 30, filtrer. Sans produit laitier.</li></ol></div>
+      <div class="panel recipe"><h3>Pâtisseries et snacking</h3><p><b>Sabaya</b> (feuilleté au miel et beurre clarifié) · <b>Maamoul</b> aux dattes · dès M2, <b>Kubaneh</b> (brioche salée au zaatar, fromage affiné, huile d’olive) et <b>focaccias</b> toastées aux épices de Sanaa.</p><p class="small"><span class="allergen">Allergènes probables : gluten, lait, œuf, fruits à coque (Maamoul), sésame (zaatar)</span> · À confirmer avec la fiche technique de chaque fournisseur.</p></div>
+    </div>
+  </section>
+
+  <section id="planning" aria-labelledby="h-plan">
+    <div class="sec-head"><h2 id="h-plan">Planning hebdomadaire</h2><p>Trois baristas à 35 h (5 séquences de 7 h, pause de 30 minutes comprise, deux jours de repos consécutifs) et les trois associés sur les créneaux restants, selon leurs rôles. Ouverture de 7 h 30 à 14 h 30, midi et colis de 10 h 30 à 17 h 30, fermeture de 13 h à 20 h.</p></div>
+    <div class="table-scroll">
+      <table class="plan">
+        <thead><tr><th>Jour</th><th>Ouverture 7 h 30–14 h 30</th><th>Midi et colis 10 h 30–17 h 30</th><th>Fermeture 13 h–20 h</th><th>Renfort 8 h–10 h 30 (4 premières semaines)</th></tr></thead>
+        <tbody>
+          <tr><td>Lundi</td><td><span class="who b1">Chef barista</span></td><td><span class="who b3">Barista vente et web</span></td><td><span class="who as">Khaled</span></td><td><span class="who as">Amer</span></td></tr>
+          <tr><td>Mardi</td><td><span class="who b1">Chef barista</span></td><td><span class="who b3">Barista vente et web</span></td><td><span class="who as">Khaled</span></td><td><span class="who as">Amer</span></td></tr>
+          <tr><td>Mercredi</td><td><span class="who as">Amer</span></td><td><span class="who b3">Barista vente et web</span></td><td><span class="who b2">Barista senior</span></td><td><span class="who as">Yousif</span></td></tr>
+          <tr><td>Jeudi</td><td><span class="who as">Amer</span></td><td><span class="who b3">Barista vente et web</span></td><td><span class="who b2">Barista senior</span></td><td><span class="who as">Yousif</span></td></tr>
+          <tr><td>Vendredi</td><td><span class="who b1">Chef barista</span></td><td><span class="who b3">Barista vente et web</span></td><td><span class="who b2">Barista senior</span></td><td><span class="who as">Khaled</span></td></tr>
+          <tr><td>Samedi</td><td><span class="who b1">Chef barista</span></td><td><span class="who as">Yousif</span></td><td><span class="who b2">Barista senior</span></td><td>—</td></tr>
+          <tr><td>Dimanche</td><td><span class="who b1">Chef barista</span></td><td><span class="who as">Yousif</span></td><td><span class="who b2">Barista senior</span></td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-3">
+      <div class="panel card"><h3>Repos des baristas</h3><ul class="clean"><li>Chef barista : mercredi et jeudi</li><li>Barista senior : lundi et mardi</li><li>Barista vente et web : samedi et dimanche (pas d’enlèvement de colis le week-end)</li></ul></div>
+      <div class="panel card"><h3>Temps des associés en boutique</h3><ul class="clean"><li><b>Amer</b> (opérations) : 2 ouvertures + 2 renforts, environ 19 h</li><li><b>Khaled</b> (sourcing, B2B) : 2 fermetures + 1 renfort, environ 16 h, cupping le jeudi à 15 h</li><li><b>Yousif</b> (web, marketing) : 2 midis du week-end + 2 renforts, environ 19 h, idéal pour les photos au pic</li></ul></div>
+      <div class="panel card"><h3>Pauses de 30 minutes</h3><ul class="clean"><li>Ouverture : 10 h 45, avant le rush, quand le midi arrive</li><li>Midi : 15 h</li><li>Fermeture : 16 h 30</li></ul><p class="small muted">Une seule personne seule au bar de 17 h 30 à 20 h : à surveiller sur les premiers vendredis et samedis soir.</p></div>
+    </div>
+    <div class="callout warn"><p><strong>Semaine du soft opening (20 au 26 novembre).</strong> Si seuls deux baristas sont en poste avant la soirée du jeudi 26, le créneau « midi » est tenu par un associé chaque jour : vendredi 20 Amer, samedi 21 et dimanche 22 Yousif, lundi 23 Khaled, mardi 24 Amer, mercredi 25 Khaled, jeudi 26 Amer (Yousif et Khaled préparent la soirée). La troisième personne arrive le vendredi 27.</p>
+      <p><strong>Statut des associés.</strong> Un associé qui tient un poste au comptoir chaque semaine doit avoir un statut clair (mandataire social, ou contrat de travail). Vérifiez-le avec votre cabinet avant le 20 novembre.</p></div>
+  </section>
+
+  <section id="checklists" aria-labelledby="h-cl">
+    <div class="sec-head"><h2 id="h-cl">Check-lists chronométrées</h2><p>Une carte par service, à imprimer et plastifier (chaque carte démarre sur une nouvelle page). Deux changements par rapport au brief : la La Marzocco doit chauffer 25 à 30 minutes (programmez l’allumage automatique à 7 h), et la mouture de purge ne sert pas la carafe de dégustation (un café éventé ferait une mauvaise première impression) : la carafe d’accueil est le Qishr.</p></div>
+
+    <div class="panel checklist"><h3>Ouverture <span>7 h 30 → 8 h · 30 minutes</span></h3>
+      <ul class="cl">
+        <li><span class="t">7 h 30</span><span class="box"></span><span>Désactiver l’alarme, allumer salle, bar et enseigne. Vérifier que la La Marzocco est chaude (allumée par programmateur à 7 h) et lancer les bouilloires.</span></li>
+        <li><span class="t">7 h 33</span><span class="box"></span><span>Relever la température de la vitrine et du frigo (≤ 4 °C), noter dans le registre HACCP.</span></li>
+        <li><span class="t">7 h 35</span><span class="box"></span><span>Purger chaque groupe, rincer les porte-filtres. Régler l’E80 n° 1 sur le Signature : deux tirs pesés, ajuster jusqu’au rendement cible.</span></li>
+        <li><span class="t">7 h 42</span><span class="box"></span><span>Régler l’E80 n° 2 sur le café invité, puis l’EK43 pour le V60. Mouture de purge au compost ou en dégustation interne.</span></li>
+        <li><span class="t">7 h 45</span><span class="box"></span><span>Lancer la carafe de Qishr d’accueil (1 litre). Préparer les bocaux d’épices dosées : cardamome, gingembre frais râpé, cannelle, cascara.</span></li>
+        <li><span class="t">7 h 50</span><span class="box"></span><span>Dresser la vitrine sur papier sulfurisé, vérifier les étiquettes prix et allergènes. Briefing de 2 minutes si deux personnes sont présentes.</span></li>
+        <li><span class="t">7 h 55</span><span class="box"></span><span>Réassort gobelets, couvercles, serviettes, sacs kraft et tasses. Tester le terminal SumUp avec un paiement de 0,10 €, puis rembourser.</span></li>
+        <li><span class="t">8 h 00</span><span class="box"></span><span>Musique, porte ouverte, sourire.</span></li>
+      </ul></div>
+
+    <div class="panel checklist"><h3>Midi et colis web <span>prise de poste 10 h 30</span></h3>
+      <ul class="cl">
+        <li><span class="t">10 h 30</span><span class="box"></span><span>Imprimer les étiquettes des commandes WooCommerce de la veille (outil d’expédition), vérifier les adresses.</span></li>
+        <li><span class="t">10 h 35</span><span class="box"></span><span>Peser et ensacher (sachet fraîcheur avec valve), coller lot et date, glisser la fiche terroir et la carte de remerciement.</span></li>
+        <li><span class="t">10 h 55</span><span class="box"></span><span>Fermer les colis antichocs, scanner l’envoi, passer la commande en « expédiée » (l’e-mail de suivi part tout seul).</span></li>
+        <li><span class="t">11 h 15</span><span class="box"></span><span>Remise au transporteur ou dépôt au point relais. Pause de l’ouverture à 10 h 45 couverte.</span></li>
+        <li><span class="t">11 h 30</span><span class="box"></span><span>Poste snacking : préchauffer, sortir Kubaneh et focaccias, préparer les pichets de lait.</span></li>
+        <li><span class="t">12 h → 14 h 30</span><span class="box"></span><span>Binôme à la machine : l’un prend les commandes et encaisse, l’autre extrait. Proposer la formule midi.</span></li>
+        <li><span class="t">15 h 00</span><span class="box"></span><span>Pause. Puis réassort, plonge, renouvellement des carafes, réponses aux messages du site.</span></li>
+      </ul></div>
+
+    <div class="panel checklist"><h3>Fermeture <span>19 h 30 → 20 h · 30 minutes</span></h3>
+      <ul class="cl">
+        <li><span class="t">19 h 30</span><span class="box"></span><span>Dernière commande. Retirer la vitrine, compter les invendus dans le registre des pertes, préparer le panier Too Good To Go.</span></li>
+        <li><span class="t">19 h 35</span><span class="box"></span><span>Pâtisseries yéménites sèches en boîtes hermétiques datées. Réassort du mur de sachets depuis le sous-sol.</span></li>
+        <li><span class="t">19 h 40</span><span class="box"></span><span>Backflush de chaque groupe au détergent, rinçage, purge des buses vapeur, porte-filtres à tremper.</span></li>
+        <li><span class="t">19 h 45</span><span class="box"></span><span>Brosser les meules et les sorties des E80 et de l’EK43, vider les bacs à marc, laver les carafes. Lancer le lave-vaisselle.</span></li>
+        <li><span class="t">19 h 50</span><span class="box"></span><span>Désinfecter bar, poignées et terminal. Relever la température de la vitrine et du frigo.</span></li>
+        <li><span class="t">19 h 55</span><span class="box"></span><span>Ticket Z SumUp, compter la caisse espèces, noter dans le journal de bord (tasses, invendus, une remarque client).</span></li>
+        <li><span class="t">20 h 00</span><span class="box"></span><span>Machine en veille par le programmateur, climatisation coupée, lumières, alarme, fermeture à clé.</span></li>
+      </ul></div>
+  </section>
+
+  <section id="comptoir" aria-labelledby="h-comptoir">
+    <div class="sec-head"><h2 id="h-comptoir">Au comptoir : les phrases qui marchent</h2><p>À dire avec vos mots, sans réciter. Une seule proposition additionnelle par client.</p></div>
+    <div class="grid-2">
+      <div class="panel script"><span class="when">Nouveau client</span><q>Bonjour, bienvenue chez Yem’kaf. C’est votre première fois ? Goûtez notre Qishr, c’est une infusion de cosses de café aux épices, comme au Yémen.</q></div>
+      <div class="panel script"><span class="when">Il hésite devant la carte</span><q>Vous aimez plutôt doux ou intense ? Le Shai Adeni est doux et épicé, le Rada’i est vif, au gingembre frais.</q></div>
+      <div class="panel script"><span class="when">Commande d’un café seul le matin</span><q>Avec un Sabaya ? C’est un feuilleté yéménite au miel, il sort ce matin.</q></div>
+      <div class="panel script"><span class="when">Entre 11 h 30 et 14 h</span><q>À midi, on a la formule Marais : Kubaneh ou focaccia, une boisson et une pâtisserie, 16,50 €.</q></div>
+      <div class="panel script"><span class="when">Il a aimé son café</span><q>C’est un Harazi, on l’a en sachet de 150 ou 250 g, moulu comme vous voulez pour votre cafetière.</q></div>
+      <div class="panel script"><span class="when">Novembre à décembre</span><q>Vous avez des cadeaux à faire ? Le coffret Duo à 52 € part très bien, on peut ajouter un petit mot.</q></div>
+      <div class="panel script"><span class="when">« C’est cher »</span><q>Je comprends. Ce café vient de terrasses à 2 000 m, cueilli à la main, et il a traversé la mer Rouge. Goûtez-le, et vous me direz.</q></div>
+      <div class="panel script"><span class="when">Client content, au moment de payer</span><q>Si vous avez aimé, un avis Google nous aide beaucoup : le QR code est juste là. Et le gobelet vous mène à notre boutique en ligne.</q></div>
+    </div>
+  </section>
+
+  <section id="hygiene" aria-labelledby="h-hyg">
+    <div class="sec-head"><h2 id="h-hyg">Hygiène et sécurité</h2></div>
+    <div class="table-scroll"><table class="text">
+      <thead><tr><th>Quoi</th><th>Règle</th><th>Quand</th></tr></thead>
+      <tbody>
+        <tr><td>Températures</td><td>Vitrine et frigos à 4 °C ou moins (3 °C pour les pâtisseries à la crème). Relevé noté au registre.</td><td>Ouverture et fermeture</td></tr>
+        <tr><td>Lait ouvert</td><td>Bouteille datée à l’ouverture, au froid, jetée après 3 jours ou à la DLC.</td><td>À chaque ouverture de bouteille</td></tr>
+        <tr><td>Carafes yéménites</td><td>Heure de préparation notée, jetées après 60 minutes.</td><td>À chaque carafe</td></tr>
+        <tr><td>Allergènes</td><td>Tableau des 14 allergènes affiché en caisse et sur le site. Sésame dans la Qahwa Baydani et le zaatar.</td><td>À chaque nouveau produit</td></tr>
+        <tr><td>Machine à glaçons</td><td>Vidée, nettoyée et désinfectée.</td><td>Chaque semaine (lundi)</td></tr>
+        <tr><td>Moulins</td><td>Nettoyage des meules à la pastille dédiée, trémies lavées.</td><td>Chaque semaine (mercredi)</td></tr>
+        <tr><td>Machine</td><td>Changement des joints de groupe et vérification de la filtration d’eau.</td><td>Selon le contrat d’entretien</td></tr>
+        <tr><td>Formation</td><td>Au moins une personne formée à l’hygiène alimentaire (14 h). Plan de maîtrise sanitaire rangé au bar.</td><td>Avant le 20 novembre</td></tr>
+      </tbody></table></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <img class="frise" src="../assets/marque/frise-verte.png" alt="" style="opacity:.5">
+  <p>Ce manuel se met à jour avec l’équipe : chaque remarque du journal de bord peut devenir une règle. Version du 6 novembre 2026.</p>
+</footer>
+</body>
+</html>

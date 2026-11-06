@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plateforme de marque Yem'kaf</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Kufi+Arabic:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/yemkaf.css">
+<style>
+/* Mise en page : bandeau de marque, ouverture photo + promesse, puis sections de lecture en colonne large. */
+.hero { display: grid; gap: 22px; align-items: center; }
+@media (min-width: 900px) { .hero { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
+.hero h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; line-height: 1.08; color: var(--brand-ink); letter-spacing: -.02em; }
+.hero p { font-size: 17px; color: var(--ink-2); max-width: 60ch; }
+.hero figure { margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
+.hero figure img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.hero figcaption { font-size: 12px; color: var(--muted); padding: 8px 12px; background: var(--surface); }
+.promise { font-size: 15px; display: grid; gap: 10px; }
+.big-ar { font-family: var(--font-ar); font-size: 40px; color: var(--brand-ink); line-height: 1.3; }
+.five { counter-reset: n; display: grid; gap: 12px; }
+.five .panel { padding: 16px 18px; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
+.five .panel::before { counter-increment: n; content: counter(n); font-family: var(--font-display); font-weight: 800; font-size: 26px; color: var(--sand); line-height: 1; }
+:root[data-theme="dark"] .five .panel::before { color: var(--sand); }
+.five h3 { font-size: 17px; margin-bottom: 4px; }
+.five p { color: var(--ink-2); }
+.figs { display: grid; gap: 14px; }
+@media (min-width: 820px) { .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.figs figure { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.figs img { display: block; width: 100%; height: auto; }
+.figs figcaption { padding: 10px 14px; font-size: 13px; color: var(--ink-2); }
+.swatches { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.swatch { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+.swatch .chip { height: 70px; }
+.swatch .meta { padding: 10px 12px; font-size: 13px; display: grid; gap: 2px; }
+.swatch .meta b { font-size: 14px; }
+.fix td:first-child { font-weight: 600; }
+.verdict { display: grid; gap: 12px; }
+@media (min-width: 900px) { .verdict { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.option { padding: 16px; display: grid; gap: 8px; align-content: start; }
+.option h3 { font-size: 16px; }
+.option.reco { border: 2px solid var(--brand-ink); }
+.words { display: grid; gap: 12px; }
+@media (min-width: 820px) { .words { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;min-width:0">
+      <img class="logo logo-screen" src="../assets/marque/logo-creme.png" alt="Yem'kaf" width="139" height="58">
+      <img class="logo-print" src="../assets/marque/logo-vert.png" alt="Yem'kaf">
+      <div class="band-title"><h1>Plateforme de marque</h1><div class="lede">Ce qui compte, ce qu’il faut corriger, et la question du 100 % Yémen</div></div>
+    </div>
+    <nav class="band-nav" aria-label="Pages"><a href="../index.html">Feuille de route</a><a href="../01-dashboard-financier/index.html">Simulateur</a></nav>
+  </div>
+  <img class="frise" src="../assets/marque/frise-sable.png" alt="">
+</header>
+
+<main class="wrap">
+  <section class="hero" aria-labelledby="h-promesse">
+    <div class="promise">
+      <div class="eyebrow">La promesse</div>
+      <h2 id="h-promesse">Le Yémen, berceau de la culture du café, servi rue du Renard.</h2>
+      <p>Votre force n’est pas d’être un coffee shop de plus dans le Marais. C’est d’être <b>le seul lieu de Paris</b> où l’on boit le café du pays qui l’a fait connaître au monde, préparé comme on le prépare là-bas : Qishr, Shai Adeni, Qahwa Baydani. Je n’ai trouvé aucun café yéménite à Paris, seulement des restaurants.</p>
+      <div class="big-ar" lang="ar">يمكاف · قهوة · قشر</div>
+    </div>
+    <figure>
+      <img src="../assets/marque/devanture.jpg" alt="Devanture verte de Yem'kaf à l’angle, store « Berceau du Café »" width="900" height="1200" loading="lazy">
+      <figcaption>La devanture en bois vert et le store « Berceau du Café ».</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="h-five">
+    <div class="sec-head">
+      <h2 id="h-five">Les cinq choses qui comptent le plus</h2>
+      <p>Si vous ne gardez que cette liste, la marque tiendra.</p>
+    </div>
+    <div class="five">
+      <div class="panel"><div><h3>L’origine est la promesse : dites-la juste</h3><p>« Berceau du café » est fort et défendable si vous parlez de la <b>culture</b> du café : le Yémen est le premier pays à l’avoir cultivé et bu comme boisson (XVe siècle), et le port de Mokha a donné son nom au « moka ». La plante, elle, vient d’Éthiopie. Gardez la signature, mais écrivez « berceau de la culture du café » dans les textes longs : les journalistes et les amateurs vérifieront.</p></div></div>
+      <div class="panel"><div><h3>Une identité déjà forte, à tenir partout</h3><p>Le personnage au turban et à la tasse, la calligraphie koufique يمكاف, la frise des maisons-tours, des terrasses et des feuilles de caféier, le vert profond et le crème. C’est cohérent et rare. La règle : le même logo, le même vert, la même signature sur le store, les sachets, le site, les gobelets et la caisse.</p></div></div>
+      <div class="panel"><div><h3>Le terroir dans le nom du café</h3><p>Le système des maquettes (« Harazi Signature », « Raymi Éclat ») dit la région et le caractère en deux mots : il est clair et extensible à Ibb ou Bura. Il entre en conflit avec les douze noms du brief (Port de Mokha, Nuit d’Aden…). Proposition : les <b>cafés</b> portent le nom du terroir (Harazi, Raymi), les <b>coffrets, éditions et soirées</b> prennent les noms franco-yéménites (Coffret Toits de Sanaa, Soirée Nuit d’Aden).</p></div></div>
+      <div class="panel"><div><h3>Le rituel avant l’espresso</h3><p>Tout le Marais sait faire un cappuccino. Personne ne sert un Qishr aux épices ou un Shai Adeni mijoté. Mettez les boissons yéménites en tête de carte, servez une petite tasse de Qishr à chaque nouveau client et racontez-la en une phrase. C’est ce qui fera venir, revenir et publier.</p></div></div>
+      <div class="panel"><div><h3>La transparence comme preuve</h3><p>Village, altitude, producteur, date de torréfaction, prix payé : le QR code du sachet doit mener à la fiche du lot. Le règlement européen anti-déforestation imposera de toute façon la géolocalisation des parcelles (fin 2026 ou mi-2027 selon votre taille). Faites-en un atout de marque avant d’en faire une contrainte.</p></div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-fix">
+    <div class="sec-head">
+      <h2 id="h-fix">À corriger avant d’imprimer</h2>
+      <p>Des incohérences repérées dans les fichiers reçus. Aucune n’est grave, toutes coûtent cher une fois imprimées.</p>
+    </div>
+    <div class="callout bad"><p><strong>Le nuancier donne des valeurs à l’envers.</strong> Les lignes RVB, TSL et CMJN sont écrites de droite à gauche, sans doute à cause d’un logiciel réglé en arabe. Un imprimeur ou un développeur qui recopie « RVB 205, 232, 241 » obtiendra un bleu ciel au lieu du crème.</p></div>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#F1E8CD"></div><div class="meta"><b>Crème · #F1E8CD</b><span>RVB correct : <b>241, 232, 205</b> (fiche : 205, 232, 241)</span><span>TSL : 45°, 15 %, 95 % · CMJN : C5 M6 J20 N0</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#305640"></div><div class="meta"><b>Vert · #305640</b><span>RVB correct : <b>48, 86, 64</b> (fiche : 64, 86, 48)</span><span>TSL : 145°, 44 %, 34 % · CMJN : C79 M43 J76 N38</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#355A54"></div><div class="meta"><b>Vert des fichiers logo · #355A54</b><span>Les PNG du logo utilisent ce vert plus bleuté, différent de la charte. La frise, elle, est bien en #305640.</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#5C1F1C"></div><div class="meta"><b>Bordeaux des sachets · ≈ #5C1F1C</b><span>Relevé sur la maquette photo : absent du nuancier. Donnez-moi la valeur exacte.</span></div></div>
+    </div>
+    <div class="table-scroll">
+      <table class="text fix">
+        <thead><tr><th>Point</th><th>Ce que j’ai vu</th><th>Proposition</th></tr></thead>
+        <tbody>
+          <tr><td>Nom de la marque</td><td>« Yem’kaf » (logo), « Yem’Kaf » (zoom de la maquette bordeaux), « YEM’KAF » (brief), « YEMKAF » (enseigne sur le plan du bar)</td><td>« Yem’kaf » dans les textes, « YEM’KAF » seulement en capitales. Corriger l’enseigne du plan avant fabrication.</td></tr>
+          <tr><td>Signature</td><td>« Berceau du café » (logo, sachets), « Berceau du Café » (store), « YEMENI COFFEE » (enseigne prévue au-dessus du bar)</td><td>Une seule signature en français, « Berceau du café ». L’anglais peut venir en second sur le site.</td></tr>
+          <tr><td>Fiches des cafés</td><td>Les quatre Harazi ont les mêmes notes (Noisette torréfiée · Raisin · Pruneau sec), les quatre Raymi aussi (Chocolat noir · Pamplemousse · Finale courte). « Harazi Soleil » apparaît deux fois.</td><td>Des notes propres à chaque lot, issues d’un cupping. Remplacer le doublon par le cinquième café.</td></tr>
+          <tr><td>Mentions du sachet</td><td>La maquette indique le poids et « À consommer de préférence dans les 3 mois après torréfaction ».</td><td>Ajouter : la dénomination (« Café torréfié en grains » ou « moulu »), une vraie date (« À consommer de préférence avant le … ») et le numéro de lot (étiquette autocollante possible), le nom et l’adresse de l’exploitant, le logo Triman et l’Info-tri (obligatoires depuis 2022, amende jusqu’à 15 000 €). La date de torréfaction est un plus attendu par les amateurs.</td></tr>
+          <tr><td>« Micro-lot sélectionné »</td><td>Imprimé au dos de chaque sachet.</td><td>À réserver aux vrais micro-lots (Joyau de Marib, Brise de Socotra). Sur un café de la gamme, écrire « Lot sélectionné ».</td></tr>
+          <tr><td>Décaféiné</td><td>« Nuit d’Aden : profil doux, suave, velouté ou décaféiné » (brief).</td><td>Le décaféiné yéménite est quasi introuvable. Si vous en proposez un d’une autre origine, il ne peut pas porter un nom yéménite sans le dire (voir plus bas).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="figs">
+      <figure><img src="../assets/marque/cartes-harazi.jpg" alt="Fiches Harazi : mêmes notes sur les cinq cartes, Harazi Soleil en double" width="700" height="756" loading="lazy"><figcaption>Les fiches Harazi : mêmes notes partout, « Harazi Soleil » en double.</figcaption></figure>
+      <figure><img src="../assets/marque/nuancier.jpg" alt="Nuancier : valeurs RVB, TSL et CMJN écrites à l’envers" width="800" height="518" loading="lazy"><figcaption>Le nuancier : les valeurs sous les HEX sont inversées.</figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-yemen">
+    <div class="sec-head">
+      <h2 id="h-yemen">Servir uniquement du café yéménite, ou d’autres cafés aussi ?</h2>
+      <p>Trois options étudiées sur le coût, la marque, le risque d’approvisionnement et le droit. Coût net du Yémen : 62,50 € HT le kilo vendable (votre brief). Autre origine de spécialité : environ 12 € le kilo vert livré en Europe, soit 15 € le kilo vendable (estimation : je n’ai pas trouvé de cotation importateur 2026 ; le cours de l’arabica à New York était à 2,81 $ la livre le 5 novembre 2026).</p>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Café dans la tasse</th><th>Coût net / kg</th><th>Espresso 10 g</th><th>Boisson lactée 18 g</th><th>Sachet 250 g</th><th>Gain sur 6 mois*</th></tr></thead>
+        <tbody>
+          <tr><td>100 % Yémen</td><td>62,50 €</td><td>0,63 €</td><td>1,13 €</td><td>15,63 €</td><td>—</td></tr>
+          <tr><td>Assemblage 60 % Yémen / 40 % autre</td><td>43,50 €</td><td>0,44 €</td><td>0,78 €</td><td>10,88 €</td><td>≈ 2 900 €</td></tr>
+          <tr><td>Assemblage 50 / 50</td><td>38,75 €</td><td>0,39 €</td><td>0,70 €</td><td>9,69 €</td><td>≈ 3 700 €</td></tr>
+          <tr><td>Autre origine seule</td><td>15,00 €</td><td>0,15 €</td><td>0,27 €</td><td>3,75 €</td><td>≈ 7 300 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted">* Si l’on change seulement le café des boissons lactées et des doubles (48 % des tasses), sur les 17 986 tasses du scénario réaliste.</p>
+
+    <div class="verdict">
+      <div class="panel option"><span class="tag ko">Déconseillé</span><h3>Carte multi-origines</h3><p>Éthiopie, Colombie, Brésil à côté du Yémen. Vous économisez environ 7 300 € sur 6 mois, mais vous devenez un coffee shop de plus face à Terres de Café, à 5 minutes, sur son propre terrain. La promesse « Berceau du café » perd son sens.</p></div>
+      <div class="panel option reco"><span class="tag ok">Recommandé</span><h3>100 % Yémen au comptoir</h3><p>Espresso, filtre, boissons traditionnelles, sachets d’origine et coffrets : uniquement du Yémen. L’écart réel ne dépasse pas 0,43 € par boisson lactée, soit moins de 2 % du chiffre d’affaires. Pour le lait, Khaled peut tester un <b>assemblage maison de lots yéménites</b> de grade plus accessible : vous restez 100 % Yémen et réduisez le coût.</p></div>
+      <div class="panel option"><span class="tag warn">Possible, encadré</span><h3>Un mélange historique en sachet</h3><p>Pour votre « coffee mix » d’entrée de gamme, choisissez un assemblage qui raconte l’histoire : <b>Moka-Java</b> (le plus ancien assemblage connu, Yémen et Java) ou <b>Moka-Harar</b> (les deux rives du Bab el-Mandeb). Pourcentages affichés sur le sachet, au moins 50 % de Yémen, et jamais présenté comme un café yéménite.</p></div>
+    </div>
+    <div class="callout"><p><strong>Le droit.</strong> Le Code de la consommation interdit toute présentation trompeuse sur l’origine. Sous une marque nommée Yem’kaf avec la signature « Berceau du café », un client pensera que tout est yéménite. Un café d’une autre origine (mélange, décaféiné) doit donc l’indiquer clairement sur la carte, le sachet et le site, avec les pourcentages.</p>
+      <p><strong>L’approvisionnement.</strong> Depuis la prise de Mokha (septembre 2026), un mélange réduit votre dépendance au Yémen sur l’entrée de gamme. C’est un vrai argument pour le sachet mélange, pas pour la tasse.</p></div>
+  </section>
+
+  <section aria-labelledby="h-voice">
+    <div class="sec-head">
+      <h2 id="h-voice">Comment parler de Yem’kaf</h2>
+      <p>Une voix chaleureuse, précise et fière. Le Yémen raconté par ses montagnes, ses familles et son savoir-faire, jamais par la guerre ou la misère.</p>
+    </div>
+    <div class="words">
+      <div class="panel card"><h3>À dire</h3><ul class="clean">
+        <li>« Cultivé en terrasses à 2 000 m d’altitude, dans le Haraz. »</li>
+        <li>« Le Qishr (قشر) : une infusion de cosses de café aux épices, que l’on boit au Yémen depuis des siècles. »</li>
+        <li>« Lot de [village], récolte [année], torréfié le [date]. »</li>
+        <li>« Bienvenue chez Yem’kaf. Vous goûtez notre Qishr ? »</li>
+      </ul></div>
+      <div class="panel card"><h3>À éviter</h3><ul class="clean">
+        <li>« Le meilleur café du monde » : invérifiable.</li>
+        <li>Les images de conflit pour vendre : un article de LADN a déjà épinglé la mode du « café yéménite » sur TikTok.</li>
+        <li>« Bio », « équitable » ou « micro-lot » sans certificat ni preuve.</li>
+        <li>Tout nom yéménite sur un café qui ne l’est pas.</li>
+      </ul></div>
+    </div>
+    <div class="figs">
+      <figure><img src="../assets/marque/sachet-vert.jpg" alt="Maquette du sachet vert Raymi Éclat" width="1100" height="718" loading="lazy"><figcaption>Sachet vert : la référence. Ajouter dénomination, lot, date, exploitant, Triman et Info-tri.</figcaption></figure>
+      <figure><img src="../assets/marque/sachet-bordeaux.jpg" alt="Maquette du sachet bordeaux Raymi Éclat" width="1100" height="718" loading="lazy"><figcaption>Sachet bordeaux : idéal pour distinguer une gamme (micro-lots ou mélange), à condition de fixer la règle.</figcaption></figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-next">
+    <div class="sec-head"><h2 id="h-next">Décisions de marque à prendre</h2></div>
+    <ul class="clean">
+      <li>Valider la règle de nommage : terroir pour les cafés, noms franco-yéménites pour les coffrets et les éditions.</li>
+      <li>Faire corriger le nuancier et aligner le vert des fichiers logo sur #305640 (Yousif, avec le graphiste).</li>
+      <li>Choisir la signature unique pour l’enseigne au-dessus du bar avant sa fabrication.</li>
+      <li>Organiser un cupping des 8 cafés pour écrire de vraies notes de dégustation (Khaled, jeudi).</li>
+      <li>Décider du contenu du sachet mélange et de la couleur de gamme (vert ou bordeaux).</li>
+      <li>Compléter les mentions obligatoires du sachet avant la commande d’impression.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="wrap">
+  <img class="frise" src="../assets/marque/frise-verte.png" alt="" style="opacity:.5">
+  <div class="eyebrow">Sources</div>
+  <ul>
+    <li>Mocha-Java, plus ancien assemblage connu : <a href="https://library.sweetmarias.com/moka-java-constructing-the-worlds-oldest-blend/" target="_blank" rel="noopener">Sweet Maria’s</a>, <a href="https://www.coffeereview.com/mocha-java-blends/" target="_blank" rel="noopener">Coffee Review</a></li>
+    <li>Cours de l’arabica : <a href="https://azcoffeeshops.com/green-coffee-prices/" target="_blank" rel="noopener">AZ Coffee Shops (ICE, 5 novembre 2026)</a></li>
+    <li>Triman et Info-tri : <a href="https://projetcelsius.com/blog/triman-etiquette-ppwr/" target="_blank" rel="noopener">Projet Celsius</a>, <a href="https://www.adelphe.fr/sites/default/files/inline-files/adelphe_fiche_reflexe_info_tri_emb_aout_2022_vf_2.pdf" target="_blank" rel="noopener">Adelphe</a></li>
+    <li>Tendance du café yéménite : <a href="https://www.ladn.eu/nouveaux-usages/yemeni-coffee-la-guerre-oubliee-qui-finit-en-trend-tiktok/" target="_blank" rel="noopener">LADN</a> · Café yéménite en ligne en France : <a href="https://www.cafes-oce.fr/cafes-d-exception/2250-yemen-haraz.html" target="_blank" rel="noopener">Cafés d’Océ</a>, <a href="https://cafe-torifa.fr/en/products/village-bayt-a-llal-cafe-yemen-copie" target="_blank" rel="noopener">Café Torifa</a></li>
+  </ul>
+</footer>
+</body>
+</html>

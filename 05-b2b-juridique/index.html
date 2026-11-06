@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>B2B Yem'kaf</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Kufi+Arabic:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/yemkaf.css">
+<style>
+/* Mise en page : bandeau, plaquette tarifaire (deux tableaux), contrats, protocole de cupping chronométré, EUDR. */
+.tarif { display: grid; gap: 16px; }
+@media (min-width: 900px) { .tarif { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tarif .panel { padding: 18px; display: grid; gap: 12px; align-content: start; }
+.tarif h3 { font-size: 18px; color: var(--brand-ink); }
+.price-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 10px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.price-row:last-of-type { border-bottom: 0; }
+.price-row b { font-size: 15px; }
+.price-row .p { font-family: var(--font-display); font-weight: 800; font-size: 22px; font-variant-numeric: tabular-nums; }
+.price-row .c { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+.docs { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.doc { padding: 16px; display: grid; gap: 8px; align-content: start; }
+.doc h3 { font-size: 16px; }
+.cupping td:first-child { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--brand-ink); white-space: nowrap; }
+.params { display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.param { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.param small { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.param b { font-size: 16px; }
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;min-width:0">
+      <img class="logo logo-screen" src="../assets/marque/logo-creme.png" alt="Yem'kaf" width="139" height="58">
+      <img class="logo-print" src="../assets/marque/logo-vert.png" alt="Yem'kaf">
+      <div class="band-title"><h1>Professionnels : tarifs, contrats, cupping</h1><div class="lede">Torréfacteurs, coffee shops, hôtels et restaurants · piloté par <b>Khaled</b> (sourcing et B2B)</div></div>
+    </div>
+    <nav class="band-nav no-print" aria-label="Pages"><a href="../index.html">Feuille de route</a><a href="../00-marque/index.html">Marque</a></nav>
+  </div>
+  <img class="frise" src="../assets/marque/frise-sable.png" alt="">
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="h-tarif">
+    <div class="sec-head"><h2 id="h-tarif">Plaquette tarifaire professionnelle</h2><p>Prix hors taxes par kilogramme, valables pour la récolte en cours (grille du brief). Cette section s’imprime telle quelle pour un rendez-vous.</p></div>
+    <div class="tarif">
+      <div class="panel"><span class="eyebrow">Pour les torréfacteurs</span><h3>Café vert du Yémen</h3>
+        <div class="price-row"><b>Vert Micro-Lot</b><span class="p">72,00 €</span><span class="c">Par sac de 5 kg · score SCA ≥ 86 · lots rares de Haraz et de Raymah</span></div>
+        <div class="price-row"><b>Vert Signature</b><span class="p">66,00 €</span><span class="c">À partir de 15 kg par commande · score SCA ≥ 84</span></div>
+        <div class="price-row"><b>Vert Contrat</b><span class="p">61,50 €</span><span class="c">À partir de 30 kg par commande ou engagement annuel · réservation de récolte avec 30 % d’acompte</span></div>
+        <p class="small muted">Fiche de lot, géolocalisation des parcelles (règlement européen anti-déforestation), échantillon de 300 g avant réservation. Livraison offerte en Île-de-France dès 30 kg. Paiement à 30 jours.</p>
+      </div>
+      <div class="panel"><span class="eyebrow">Pour les coffee shops, hôtels et restaurants</span><h3>Café torréfié</h3>
+        <div class="price-row"><b>Torréfié Invité</b><span class="p">92,00 €</span><span class="c">De 3 à 9 kg par mois · formation initiale de 3 h</span></div>
+        <div class="price-row"><b>Torréfié Palace</b><span class="p">86,50 €</span><span class="c">De 10 à 24 kg par mois · une visite de formation par trimestre</span></div>
+        <div class="price-row"><b>Torréfié Résident</b><span class="p">81,00 €</span><span class="c">À partir de 25 kg par mois · exclusivité de quartier pour les coffee shops (rayon à définir)</span></div>
+        <p class="small muted">Livré au plus tard 7 jours après torréfaction, en sacs de 1 kg datés. Commande avant lundi 12 h, livraison le mercredi. Cartes de présentation des terroirs fournies.</p>
+      </div>
+    </div>
+    <div class="callout"><p><strong>Marges à surveiller.</strong> Sur le palier Vert Contrat, la marge tombe à 11,50 € par kilo (18,7 %). Réservez-le aux engagements annuels fermes, payés avec acompte : avec la situation à Mokha, un lot réservé et non payé est un risque de trésorerie.</p></div>
+  </section>
+
+  <section aria-labelledby="h-docs">
+    <div class="sec-head"><h2 id="h-docs">Les deux contrats-cadres</h2><p>Projets complets en Markdown, modifiables et suivis dans GitHub. À faire relire par un avocat avant toute signature, en particulier l’exclusivité de quartier.</p></div>
+    <div class="docs">
+      <div class="panel doc"><h3>Contrat café vert · torréfacteurs</h3><p class="small">Traçabilité à la parcelle et EUDR, spécifications (score SCA, humidité 9–12 %, activité de l’eau ≤ 0,70), échantillons et tolérances, calendrier de réservation des récoltes, paliers, révision de prix au-delà de 10 %, force majeure Yémen et mer Rouge avec lot de substitution, réserve de propriété, paiement à 30 jours.</p><a class="btn" href="contrat-cafe-vert-torrefacteurs.md">Ouvrir le contrat</a></div>
+      <div class="panel doc"><h3>Contrat café torréfié · CHR</h3><p class="small">Fraîcheur garantie à 7 jours, paliers trimestriels, formation initiale et continue, calibrage des moulins, supports de présentation et usage de la marque, exclusivité de quartier encadrée, révision de prix, force majeure, paiement à 30 jours.</p><a class="btn" href="contrat-cafe-torrefie-chr.md">Ouvrir le contrat</a></div>
+      <div class="panel doc"><h3>À compléter avant envoi</h3><ul class="clean small"><li>Forme sociale, capital, SIREN et siège de Yem’kaf</li><li>Rayon d’exclusivité (300 m proposés) et plan en annexe</li><li>Engagement annuel minimum du palier Contrat (300 kg proposés)</li><li>Tarif horaire de la formation continue (palier Invité)</li><li>Calendrier de la récolte 2027 (annexe C du contrat vert)</li></ul></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-cup">
+    <div class="sec-head"><h2 id="h-cup">Le cupping du jeudi, 15 h – 16 h 30</h2><p>Une séance privée chaque semaine, de 6 à 8 acheteurs, quatre à six cafés. Premier rendez-vous le jeudi 3 décembre, une semaine après la soirée d’ouverture.</p></div>
+    <div class="params">
+      <div class="param"><small>Dose</small><b>8,25 g</b></div>
+      <div class="param"><small>Eau</small><b>150 ml à 93 °C</b></div>
+      <div class="param"><small>Mouture</small><b>moyenne-grosse (EK43)</b></div>
+      <div class="param"><small>Torréfaction</small><b>claire, 8 à 24 h avant</b></div>
+      <div class="param"><small>Tasses par café</small><b>3 (5 pour noter)</b></div>
+      <div class="param"><small>Fiche</small><b>SCA ou fiche Yem’kaf</b></div>
+    </div>
+    <div class="table-scroll"><table class="text cupping">
+      <thead><tr><th>Heure</th><th>Étape</th><th>Qui</th></tr></thead>
+      <tbody>
+        <tr><td>14 h 30</td><td>Mise en place : table, tasses numérotées, cuillères, crachoirs, eau, fiches ; mouture de chaque café juste avant le début</td><td>Chef barista</td></tr>
+        <tr><td>15 h 00</td><td>Accueil avec une tasse de Qishr, tour de table (établissement, volume, besoin)</td><td>Khaled</td></tr>
+        <tr><td>15 h 10</td><td>Les terroirs en 5 minutes : Haraz, Raymah, Ibb ; traçabilité et règlement anti-déforestation</td><td>Khaled</td></tr>
+        <tr><td>15 h 15</td><td>Arômes à sec (dans les 15 minutes suivant la mouture)</td><td>Tous</td></tr>
+        <tr><td>15 h 20</td><td>Versement de l’eau ; à 4 minutes, casser la croûte, puis écumer</td><td>Chef barista</td></tr>
+        <tr><td>15 h 30</td><td>Dégustation à la cuillère, de chaud à tiède ; notes individuelles</td><td>Tous</td></tr>
+        <tr><td>15 h 55</td><td>Mise en commun, profils, usages (espresso, filtre, lait)</td><td>Khaled</td></tr>
+        <tr><td>16 h 10</td><td>Tarifs, disponibilités de la récolte, conditions ; remise de la plaquette</td><td>Khaled</td></tr>
+        <tr><td>16 h 30</td><td>Fin. Échantillon de 250 g du café préféré de chaque acheteur</td><td>Khaled</td></tr>
+        <tr><td>J+3</td><td>Relance : appel ou e-mail, proposition de commande test</td><td>Khaled</td></tr>
+      </tbody></table></div>
+    <div class="callout"><p><strong>Suivi commercial.</strong> Une ligne par acheteur dans un tableau partagé : établissement, contact, volume potentiel par mois, café préféré, prochaine étape et date. Comptez 6 à 10 semaines entre le premier cupping et un contrat signé.</p></div>
+  </section>
+
+  <section aria-labelledby="h-eudr">
+    <div class="sec-head"><h2 id="h-eudr">Règlement anti-déforestation : ce que Khaled doit préparer</h2><p>Le café est couvert par le règlement (UE) 2023/1115, reporté d’un an fin 2025. Application le 30 décembre 2026 pour les moyennes et grandes entreprises, le 30 juin 2027 pour les micro et petites. Une entreprise qui achète du café déjà importé reste concernée par la traçabilité. Calendrier exact à confirmer avec votre conseil.</p></div>
+    <ul class="clean">
+      <li>Pour chaque lot importé : coordonnées GPS de la parcelle (polygone au-delà de 4 hectares), date de récolte, quantité.</li>
+      <li>Preuve que la parcelle n’a pas été déboisée après le 31 décembre 2020.</li>
+      <li>Déclaration de diligence raisonnée déposée dans le système de l’Union, et sa référence transmise à chaque client professionnel.</li>
+      <li>Conservation des documents pendant 5 ans.</li>
+      <li>Fiche de lot type : annexe A du contrat café vert.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="wrap">
+  <img class="frise" src="../assets/marque/frise-verte.png" alt="" style="opacity:.5">
+  <ul>
+    <li>EUDR : <a href="https://www.coolset.com/academy/eudr-frequently-asked-questions" target="_blank" rel="noopener">Coolset</a>, <a href="https://sustainablefutures.linklaters.com/post/102ly55/eu-changes-to-deforestation-regulation-reach-the-finish-line" target="_blank" rel="noopener">Linklaters</a>, <a href="https://efi.int/sites/default/files/files/flegtredd/Sustainable-cocoa-programme/Factsheets/Geolocation_FactSheet-2026.pdf" target="_blank" rel="noopener">EFI (géolocalisation)</a>, <a href="https://projetcelsius.com/blog/eudr-reglement-deforestation-importee/" target="_blank" rel="noopener">Projet Celsius</a></li>
+    <li>Prise de Mokha : <a href="https://www.thenationalnews.com/news/gulf/2026/09/10/why-fall-of-yemens-historic-coffee-port-mokha-matters/" target="_blank" rel="noopener">The National</a></li>
+  </ul>
+</footer>
+</body>
+</html>

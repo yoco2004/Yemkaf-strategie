@@ -80,3 +80,26 @@ stock de sécurité (8 semaines conseillées, ~280 kg au rythme du lancement), c
   ([Sortir à Paris](https://www.sortiraparis.com/actualites/a-paris/articles/274470-ramadan-2023-quand-aura-lieu-l-aid-el-fitr-en-france-la-fete-qui-marque-la-fin-du-jeune),
   [calendriergratuit.fr](https://www.calendriergratuit.fr/ramadan/paris.html)).
 - Pâques : dimanche 28 mars 2027. Fête des mères : dimanche 30 mai 2027. Black Friday : vendredi 27 novembre 2026, le jour prévu pour l'ouverture de l'e-shop.
+
+## 7. Compléments du 6 novembre après-midi
+
+- **Mollie et Qonto** : partenariat depuis avril 2025 (Mollie Connect dans Qonto, Qonto Embed dans Mollie)
+  ([Mollie](https://www.mollie.com/news/qonto-mollie-collaboration), [aide Mollie](https://help.mollie.com/hc/en-us/articles/25949193447954)).
+  Carte CB de particulier : 1,4 % + 0,25 € selon [Moneyvox](https://www.moneyvox.fr/banque-pro/actualites/103161/compte-pro-cette-banque-en-ligne-devoile-une-nouvelle-solution-de-paiement) (à vérifier).
+  Offre WooCommerce : 0 % de frais sur les 50 000 premiers euros traités avant le 31/12/2026, nouveaux clients seulement
+  ([WooCommerce](https://woocommerce.com/products/mollie-payments-for-woocommerce)). Abonnements compatibles avec WooCommerce Subscriptions,
+  prélèvement SEPA à 0,35 € ([Mollie](https://docs.mollie.com/docs/woo-set-up-subscriptions), [SEPA](https://mollie.com/payments/direct-debit)).
+- **Brevo** : formule Starter dès 7 € HT, Standard 15 € ; SMS vers la France autour de 0,045 € ([Kanal, octobre 2026](https://getkanal.com/fr/blog/brevo-prix)).
+- **Cours de l'arabica** : 2,81 $ la livre à New York le 5 novembre 2026 ([AZ Coffee Shops](https://azcoffeeshops.com/green-coffee-prices/)).
+  Je n'ai pas trouvé de cotation importateur 2026 pour un vert de spécialité non yéménite : l'étude de marque retient 12 €/kg, à confirmer par Khaled.
+- **Yémen Haraz vendu en ligne en France** : Cafés d'Océ 17,50 € les 250 g en promotion (25 € sinon), Café Torifa 24,90 €, Maison Lagrange 23,80 €
+  ([Cafés d'Océ](https://www.cafes-oce.fr/cafes-d-exception/2250-yemen-haraz.html), [Café Torifa](https://cafe-torifa.fr/en/products/village-bayt-a-llal-cafe-yemen-copie),
+  [Maison Lagrange](https://www.maison-lagrange.com/de-specialite/1602-cafe-grain-yemen-mof-3760259315580.html)).
+- **Mocha-Java**, plus ancien assemblage connu (Yémen et Java) ; « Moka » désigne aussi le Harar éthiopien
+  ([Sweet Maria's](https://library.sweetmarias.com/moka-java-constructing-the-worlds-oldest-blend/), [Coffee Review](https://www.coffeereview.com/mocha-java-blends/)).
+- **EUDR** : règlement 2023/1115 reporté par le règlement 2025/2650 ; 30 décembre 2026 pour les moyennes et grandes entreprises,
+  30 juin 2027 pour les micro et petites ; date de référence 31 décembre 2020
+  ([Coolset](https://www.coolset.com/academy/eudr-frequently-asked-questions), [Linklaters](https://sustainablefutures.linklaters.com/post/102ly55/eu-changes-to-deforestation-regulation-reach-the-finish-line),
+  [EFI](https://efi.int/sites/default/files/files/flegtredd/Sustainable-cocoa-programme/Factsheets/Geolocation_FactSheet-2026.pdf)).
+- **Triman et Info-tri** obligatoires sur les emballages ménagers depuis 2022, amende jusqu'à 15 000 €
+  ([Projet Celsius](https://projetcelsius.com/blog/triman-etiquette-ppwr/)).

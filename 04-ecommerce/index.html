@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>E-shop Yem'kaf</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Kufi+Arabic:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="../assets/yemkaf.css">
+<style>
+/* Mise en page : bandeau, schéma du tunnel en étapes fléchées, pile technique, automatisations, textes, conformité. */
+.flow { display: grid; gap: 10px; grid-template-columns: 1fr; counter-reset: s; }
+@media (min-width: 980px) { .flow { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.step { position: relative; padding: 14px; display: grid; gap: 6px; align-content: start; }
+.step::before { counter-increment: s; content: counter(s); font-family: var(--font-display); font-weight: 800; font-size: 13px; color: var(--on-brand); background: var(--brand); width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; }
+.step b { font-size: 15px; }
+.step span { font-size: 13px; color: var(--ink-2); }
+.step .kpi { font-size: 12px; font-weight: 700; color: var(--brand-ink); }
+@media (min-width: 980px) { .step:not(:last-child)::after { content: "→"; position: absolute; right: -10px; top: 16px; color: var(--muted); font-weight: 700; } }
+.stack { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.tool { padding: 14px 16px; display: grid; gap: 4px; }
+.tool .role { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.tool b { font-size: 16px; }
+.tool span { font-size: 14px; color: var(--ink-2); }
+.mail { padding: 0; overflow: hidden; display: grid; }
+.mail .head { padding: 12px 16px; background: var(--surface-2); border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+.mail .head .trig { font-size: 12px; font-weight: 700; color: var(--brand-ink); text-transform: uppercase; letter-spacing: .05em; }
+.mail .head .subj { font-weight: 700; }
+.mail .head .pre { font-size: 13px; color: var(--muted); }
+.mail .body { padding: 14px 16px; white-space: pre-line; font-size: 14px; }
+.mail .cta { margin: 0 16px 16px; justify-self: start; background: var(--brand); color: var(--on-brand); border-radius: 8px; padding: 8px 14px; font-weight: 700; font-size: 14px; }
+.sms { padding: 14px 16px; display: grid; gap: 6px; }
+.sms .bubble { background: var(--brand); color: var(--on-brand); border-radius: 16px 16px 16px 4px; padding: 10px 14px; font-size: 14px; max-width: 46ch; }
+.sms .len { font-size: 12px; color: var(--muted); }
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;min-width:0">
+      <img class="logo logo-screen" src="../assets/marque/logo-creme.png" alt="Yem'kaf" width="139" height="58">
+      <img class="logo-print" src="../assets/marque/logo-vert.png" alt="Yem'kaf">
+      <div class="band-title"><h1>E-shop : architecture et relances</h1><div class="lede">WordPress, WooCommerce, Mollie et Qonto · mise en ligne le <b>vendredi 27 novembre</b> · piloté par <b>Yousif</b></div></div>
+    </div>
+    <nav class="band-nav no-print" aria-label="Pages"><a href="../index.html">Feuille de route</a><a href="../01-dashboard-financier/index.html">Simulateur</a></nav>
+  </div>
+  <img class="frise" src="../assets/marque/frise-sable.png" alt="">
+</header>
+
+<main class="wrap">
+  <section aria-labelledby="h-flow">
+    <div class="sec-head"><h2 id="h-flow">Le tunnel, du gobelet à l’abonnement</h2><p>Objectifs du brief entre parenthèses. Ils sont ambitieux : un QR code de gobelet est scanné par 1 à 3 % des clients, et un e-shop convertit en général 1,5 à 3 % de ses visites. Mesurez dès le premier jour et recalez les cibles en janvier.</p></div>
+    <div class="flow">
+      <div class="panel step"><b>QR code du gobelet ou du sachet</b><span>Lien vers la page du terroir dégusté, avec suivi UTM par support.</span><span class="kpi">Mesurer : scans par jour</span></div>
+      <div class="panel step"><b>Page terroir</b><span>Village, altitude, carte, notes, vidéo du rituel. Bouton « Recevoir ce café chez moi ».</span><span class="kpi">Mesurer : clics vers produit</span></div>
+      <div class="panel step"><b>Premier coffret, livraison offerte</b><span>Code appliqué automatiquement par le lien (?coupon=BIENVENUE).</span><span class="kpi">Brief : 12,5 % de conversion</span></div>
+      <div class="panel step"><b>Paiement Mollie</b><span>CB, Apple Pay, Google Pay. Relance du panier abandonné à 45 min.</span><span class="kpi">Brief : 18,4 % de paniers récupérés</span></div>
+      <div class="panel step"><b>Réassort à J+21</b><span>Après l’achat d’un sachet : « Votre Harazi touche à sa fin ? » et commande en un clic.</span><span class="kpi">Brief : 28 % de réachat</span></div>
+      <div class="panel step"><b>Abonnement</b><span>Proposé dès la deuxième commande : livraison mensuelle, pause ou arrêt à tout moment.</span><span class="kpi">Brief : 22,5 % de bascule</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-stack">
+    <div class="sec-head"><h2 id="h-stack">La pile technique</h2><p>Un outil par rôle, tous compatibles avec WordPress. Le schéma Mermaid détaillé est dans <code>04-ecommerce/architecture.md</code> (affiché tel quel sur GitHub).</p></div>
+    <div class="stack">
+      <div class="panel tool"><span class="role">Boutique</span><b>WordPress + WooCommerce</b><span>Catalogue (sachets 150, 200 et 250 g, mélange, coffrets, packs Qishr), stocks, commandes, codes promo.</span></div>
+      <div class="panel tool"><span class="role">Paiement</span><b>Mollie Payments for WooCommerce</b><span>CB, Apple Pay, prélèvement SEPA. Environ 1,4 % + 0,25 € par paiement CB (à vérifier) ; 0 % pour les nouveaux comptes jusqu’au 31/12/2026, dans la limite de 50 000 €. Versements sur Qonto, partenaire de Mollie depuis 2025.</span></div>
+      <div class="panel tool"><span class="role">Abonnement</span><b>WooCommerce Subscriptions</b><span>Extension payante (environ 279 $ par an), compatible Mollie : renouvellement automatique, relance des paiements refusés, pause et résiliation par le client.</span></div>
+      <div class="panel tool"><span class="role">E-mails et SMS</span><b>Brevo</b><span>Outil français, extension WooCommerce, scénarios de panier abandonné et de réachat. Environ 15 € par mois, SMS autour de 0,045 € l’unité vers la France.</span></div>
+      <div class="panel tool"><span class="role">Expédition</span><b>Boxtal, Sendcloud ou extension Mondial Relay</b><span>Étiquettes depuis WooCommerce, point relais (dès 3,89 € en compte pro) ou Colissimo à domicile (8,89 à 9,59 € en tarif public pour 1 kg).</span></div>
+      <div class="panel tool"><span class="role">Comptabilité</span><b>Pennylane, Qonto</b><span>Virements Mollie et SumUp rapprochés dans Qonto, factures WooCommerce exportées vers Pennylane chaque semaine.</span></div>
+    </div>
+    <div class="callout warn"><p><strong>Deux caisses, deux stocks.</strong> SumUp (boutique) et WooCommerce (site) ne partagent pas leur stock. Réservez un quota de sachets pour le web (par exemple 30) au bureau de stockage, et faites l’inventaire croisé chaque lundi pour éviter de vendre un sachet déjà parti.</p>
+      <p><strong>Prix en ligne face aux autres vendeurs.</strong> Le Yémen Haraz de 250 g se trouve en ligne autour de 17,50 € (Cafés d’Océ, en promotion) à 25 € (Café Torifa, Maison Lagrange). Votre sachet web à 31 € doit se justifier par la fraîcheur (date de torréfaction), la traçabilité au village et l’histoire. Le format 150 g à 19 € sert de porte d’entrée.</p></div>
+  </section>
+
+  <section aria-labelledby="h-auto">
+    <div class="sec-head"><h2 id="h-auto">Réglages des scénarios Brevo</h2></div>
+    <div class="table-scroll"><table class="text">
+      <thead><tr><th>Scénario</th><th>Déclencheur</th><th>Envois</th><th>Arrêt</th></tr></thead>
+      <tbody>
+        <tr><td>Panier abandonné</td><td>Panier non payé, e-mail connu</td><td>E-mail à 45 min · e-mail à 24 h · SMS à 45 min seulement si le client l’a accepté et entre 8 h et 20 h en semaine, sinon au prochain créneau autorisé</td><td>Commande passée</td></tr>
+        <tr><td>Bienvenue</td><td>Inscription à la lettre (QR code, site)</td><td>E-mail immédiat avec le code BIENVENUE · e-mail à J+3 sur le rituel du Qishr</td><td>Premier achat</td></tr>
+        <tr><td>Après achat</td><td>Commande livrée</td><td>E-mail à J+3 « bien préparer votre café » · demande d’avis à J+10</td><td>—</td></tr>
+        <tr><td>Réassort</td><td>Achat d’un sachet, 21 jours après</td><td>E-mail avec lien de commande en un clic · SMS à J+22 si accepté</td><td>Nouvelle commande</td></tr>
+        <tr><td>Bascule abonnement</td><td>Deuxième commande payée</td><td>E-mail à J+2 présentant l’abonnement flexible</td><td>Abonnement créé</td></tr>
+      </tbody></table></div>
+  </section>
+
+  <section aria-labelledby="h-mails">
+    <div class="sec-head"><h2 id="h-mails">Textes des e-mails</h2><p>Prêts à coller dans Brevo. Les mots entre crochets sont remplacés automatiquement.</p></div>
+    <div class="grid-2">
+      <div class="panel mail"><div class="head"><span class="trig">Panier abandonné · 45 min</span><span class="subj">Votre café vous attend, [Prénom]</span><span class="pre">Il est encore dans votre panier, torréfié cette semaine.</span></div>
+        <div class="body">Bonjour [Prénom],
+
+Vous avez laissé [Produit] dans votre panier. Bonne nouvelle : il est toujours là, et le lot a été torréfié cette semaine rue du Renard.
+
+Ce café vient de [Région], au Yémen, cultivé en terrasses à plus de 1 800 mètres. Il vous arrivera en 48 à 72 heures.
+
+Une question sur la mouture ou la préparation ? Répondez simplement à cet e-mail, l’un de nous vous répond.
+
+Yousif, pour Yem’kaf</div><span class="cta">Reprendre ma commande</span></div>
+      <div class="panel mail"><div class="head"><span class="trig">Panier abandonné · 24 h</span><span class="subj">Une dernière tasse avant de partir ?</span><span class="pre">La livraison du premier coffret est offerte.</span></div>
+        <div class="body">Bonjour [Prénom],
+
+Petit rappel : votre panier est toujours prêt. Pour un premier coffret, la livraison est offerte, sans code à saisir.
+
+Chaque sachet porte sa date de torréfaction et le nom du village d’origine. C’est notre façon de vous faire voyager jusqu’au Haraz depuis votre cuisine.
+
+À bientôt,
+L’équipe Yem’kaf</div><span class="cta">Finaliser mon panier</span></div>
+      <div class="panel mail"><div class="head"><span class="trig">Réassort · J+21</span><span class="subj">Votre [Produit] touche à sa fin ?</span><span class="pre">Recommandez-le en un clic, sans rien ressaisir.</span></div>
+        <div class="body">Bonjour [Prénom],
+
+Il y a trois semaines, vous avez choisi [Produit]. À raison de deux tasses par jour, votre sachet arrive bientôt au bout.
+
+Recommandez-le en un clic : même café, même mouture, même adresse. Le nouveau lot vient d’être torréfié.
+
+Envie de changer ? Le café invité de ce mois-ci vient de [Terroir invité].
+
+Amer, Khaled et Yousif</div><span class="cta">Recommander en un clic</span></div>
+      <div class="panel mail"><div class="head"><span class="trig">Bascule abonnement · deuxième commande</span><span class="subj">Ne tombez plus jamais à court</span><span class="pre">Votre café chaque mois, à mettre en pause quand vous voulez.</span></div>
+        <div class="body">Bonjour [Prénom],
+
+Merci pour cette deuxième commande. Vous semblez avoir trouvé votre café.
+
+Avec l’abonnement Yem’kaf, vous recevez 500 g de café yéménite fraîchement torréfié chaque mois, pour 54 €. Vous changez de terroir, sautez un mois ou arrêtez quand vous voulez, depuis votre compte.
+
+Les abonnés goûtent aussi en avant-première nos micro-lots les plus rares.
+
+L’équipe Yem’kaf</div><span class="cta">Découvrir l’abonnement</span></div>
+      <div class="panel mail"><div class="head"><span class="trig">Bienvenue · inscription</span><span class="subj">Bienvenue au berceau du café</span><span class="pre">Votre livraison offerte et l’histoire de notre première tasse.</span></div>
+        <div class="body">Bonjour [Prénom],
+
+Bienvenue chez Yem’kaf. Le Yémen est le pays qui a fait du café une boisson, il y a plus de cinq siècles, et le port de Mokha lui a donné son nom.
+
+Nous sommes trois amis, ensemble depuis 2022, et nous avons ouvert la première maison de café yéménite de Paris au 24 rue du Renard.
+
+Pour votre premier coffret, la livraison est offerte avec le code BIENVENUE.
+
+Yousif, Amer et Khaled</div><span class="cta">Choisir mon premier café</span></div>
+      <div class="panel mail"><div class="head"><span class="trig">Avis · J+10 après livraison</span><span class="subj">Alors, ce [Produit] ?</span><span class="pre">Votre avis aide d’autres amateurs à nous découvrir.</span></div>
+        <div class="body">Bonjour [Prénom],
+
+Vous avez reçu [Produit] il y a une dizaine de jours. On aimerait savoir comment vous le préparez et ce que vous en pensez.
+
+Un avis prend une minute et aide beaucoup une jeune maison comme la nôtre. Et si quelque chose ne vous a pas plu, répondez-nous directement : on corrige.
+
+Merci,
+L’équipe Yem’kaf</div><span class="cta">Laisser un avis</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-sms">
+    <div class="sec-head"><h2 id="h-sms">Textes des SMS</h2><p>Seulement pour les clients qui ont coché l’accord SMS. Pas d’envoi commercial le dimanche, les jours fériés, ni avant 8 h ou après 20 h. La mention STOP est obligatoire.</p></div>
+    <div class="grid-3">
+      <div class="panel sms"><span class="eyebrow">Panier abandonné</span><div class="bubble">Yem'kaf : votre [Produit] vous attend, torréfié cette semaine. Reprenez votre commande ici : [lien] STOP SMS : [STOP]</div><span class="len">≈ 125 caractères sans le lien</span></div>
+      <div class="panel sms"><span class="eyebrow">Réassort</span><div class="bubble">Yem'kaf : votre café touche à sa fin ? Recommandez-le en 1 clic, même mouture : [lien] STOP SMS : [STOP]</div><span class="len">≈ 110 caractères sans le lien</span></div>
+      <div class="panel sms"><span class="eyebrow">Expédition (transactionnel)</span><div class="bubble">Yem'kaf : votre colis est parti ! Suivi : [lien]. Bonne dégustation.</div><span class="len">Message de service : autorisé sans accord marketing</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-legal">
+    <div class="sec-head"><h2 id="h-legal">Avant la mise en ligne : conformité</h2></div>
+    <div class="table-scroll"><table class="text">
+      <thead><tr><th>Point</th><th>Ce qu’il faut</th></tr></thead>
+      <tbody>
+        <tr><td>Mentions légales et CGV</td><td>Société, SIREN, adresse, hébergeur ; prix TTC et frais de port affichés avant le paiement ; droit de rétractation de 14 jours sur les produits non ouverts (un sachet ouvert ne peut être repris pour raison d’hygiène).</td></tr>
+        <tr><td>Médiateur de la consommation</td><td>Adhésion obligatoire à un médiateur, nommé dans les CGV.</td></tr>
+        <tr><td>Informations produit</td><td>Dénomination, poids net, origine, ingrédients des packs Qishr (épices), allergènes, conditions de conservation. Si un sachet mélange contient un café non yéménite : pourcentages et origines visibles.</td></tr>
+        <tr><td>Données personnelles</td><td>Bandeau cookies avec refus aussi simple que l’acceptation, politique de confidentialité, case SMS non pré-cochée, désinscription en un clic dans chaque e-mail.</td></tr>
+        <tr><td>TVA</td><td>5,5 % sur le café et les coffrets ; les frais de port facturés suivent le taux des produits.</td></tr>
+      </tbody></table></div>
+  </section>
+
+  <section aria-labelledby="h-go">
+    <div class="sec-head"><h2 id="h-go">Les 21 jours avant le 27 novembre</h2></div>
+    <div class="table-scroll"><table class="text">
+      <thead><tr><th>Date</th><th>Tâche</th><th>Qui</th></tr></thead>
+      <tbody>
+        <tr><td>lun. 9 nov.</td><td>Ouvrir le compte Mollie (nouveau client pour l’offre 0 %), le relier à Qonto, installer l’extension WooCommerce</td><td>Yousif</td></tr>
+        <tr><td>mer. 11 nov.</td><td>Fiches produits : sachets 150, 200 et 250 g, mélange, coffrets, abonnement, avec photos et dates de torréfaction</td><td>Yousif, barista vente et web</td></tr>
+        <tr><td>ven. 13 nov.</td><td>Pages terroir (Haraz, Raymah) et QR codes avec UTM pour gobelets et sachets</td><td>Yousif</td></tr>
+        <tr><td>lun. 16 nov.</td><td>Brevo : extension WooCommerce, cinq scénarios, textes ci-dessus, test sur vos propres adresses</td><td>Yousif</td></tr>
+        <tr><td>mer. 18 nov.</td><td>Expédition : compte pro, grille de frais, étiquette test, colis test envoyé chez un associé</td><td>Amer</td></tr>
+        <tr><td>ven. 20 nov.</td><td>CGV, médiateur, mentions, cookies relus ; commande réelle de bout en bout, remboursement compris</td><td>Yousif, Amer</td></tr>
+        <tr><td>jeu. 26 nov.</td><td>Accès en avant-première pour les invités de la soirée</td><td>Yousif</td></tr>
+        <tr><td>ven. 27 nov.</td><td>Mise en ligne publique</td><td>Toute l’équipe</td></tr>
+      </tbody></table></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <img class="frise" src="../assets/marque/frise-verte.png" alt="" style="opacity:.5">
+  <ul>
+    <li>Mollie et Qonto : <a href="https://www.mollie.com/news/qonto-mollie-collaboration" target="_blank" rel="noopener">annonce Mollie</a>, <a href="https://help.mollie.com/hc/en-us/articles/25949193447954" target="_blank" rel="noopener">aide Mollie</a>, <a href="https://www.moneyvox.fr/banque-pro/actualites/103161/compte-pro-cette-banque-en-ligne-devoile-une-nouvelle-solution-de-paiement" target="_blank" rel="noopener">Moneyvox</a></li>
+    <li>Mollie et WooCommerce : <a href="https://woocommerce.com/products/mollie-payments-for-woocommerce" target="_blank" rel="noopener">fiche WooCommerce</a>, <a href="https://docs.mollie.com/docs/woo-set-up-subscriptions" target="_blank" rel="noopener">abonnements</a>, <a href="https://mollie.com/payments/direct-debit" target="_blank" rel="noopener">prélèvement SEPA</a></li>
+    <li>Brevo : <a href="https://getkanal.com/fr/blog/brevo-prix" target="_blank" rel="noopener">tarifs 2026 (Kanal)</a> · Prix en ligne du Yémen Haraz : <a href="https://www.cafes-oce.fr/cafes-d-exception/2250-yemen-haraz.html" target="_blank" rel="noopener">Cafés d’Océ</a>, <a href="https://cafe-torifa.fr/en/products/village-bayt-a-llal-cafe-yemen-copie" target="_blank" rel="noopener">Café Torifa</a>, <a href="https://www.maison-lagrange.com/de-specialite/1602-cafe-grain-yemen-mof-3760259315580.html" target="_blank" rel="noopener">Maison Lagrange</a></li>
+  </ul>
+</footer>
+</body>
+</html>

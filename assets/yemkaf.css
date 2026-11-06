@@ -1,0 +1,164 @@
+/* YEM'KAF : feuille de style commune aux outils internes.
+   Identité : vert #305640 et crème #F1E8CD (charte), frise en ligne claire, bordeaux des sachets.
+   Polices : approximations Google Fonts de la charte (Montserrat pour le titrage, Open Sans pour le texte,
+   Noto Kufi Arabic pour l'arabe). À remplacer par les fichiers de police de la charte s'ils existent. */
+
+:root {
+  --cream: #F1E8CD;          /* charte */
+  --green: #305640;          /* charte */
+  --sand: #DABD97;           /* frise */
+  --wine: #5C1F1C;           /* sachet bordeaux (relevé sur la maquette, à confirmer) */
+
+  --page: #f6f0df;
+  --surface: #fbf8ef;
+  --surface-2: #f2ecda;
+  --ink: #1c2b23;
+  --ink-2: #46564c;
+  --muted: #5f6e64;
+  --line: #e3dac2;
+  --axis: #c6bb9d;
+  --brand: #305640;
+  --brand-ink: #305640;       /* texte de marque sur fond clair */
+  --on-brand: #F1E8CD;
+  --on-brand-2: #cdd8cc;
+  --accent-wash: #eee3c6;
+  --good: #1d7442; --good-wash: #dfeedd;
+  --bad: #a3302a; --bad-wash: #f5e0d8;
+  --warn: #85560a; --warn-wash: #f4e6c4;
+  --focus: #2f78a6;
+  /* séries des graphiques (palette validée daltonisme et contraste) */
+  --s1: #1f8a5a; --s2: #d0902f; --s3: #2f78a6; --s4: #b04a55; --s5: #7f8f2c; --s6: #d27a9a;
+  --pos: #1f8a5a; --neg: #b04a55;
+
+  --font-display: "Montserrat", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-ui: "Open Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-ar: "Noto Kufi Arabic", "Geeza Pro", "Noto Sans Arabic", sans-serif;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(28, 43, 35, .06), 0 6px 18px rgba(28, 43, 35, .05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #101a15; --surface: #1a2620; --surface-2: #213029;
+    --ink: #f1e8cd; --ink-2: #d2c9b0; --muted: #a3ad9f; --line: #2d3b34; --axis: #435249;
+    --brand: #305640; --brand-ink: #9ccfb0; --on-brand: #F1E8CD; --on-brand-2: #c4d2c6;
+    --accent-wash: #2b3328;
+    --good: #6fcf93; --good-wash: #183224; --bad: #f08a80; --bad-wash: #3a1f1c; --warn: #e8b960; --warn-wash: #352b18;
+    --focus: #79b6e0;
+    --s1: #1f8a5a; --s2: #b8801f; --s3: #3a87b8; --s4: #c25a64; --s5: #8a9a34; --s6: #c96b8c;
+    --pos: #1f8a5a; --neg: #c25a64;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #101a15; --surface: #1a2620; --surface-2: #213029;
+  --ink: #f1e8cd; --ink-2: #d2c9b0; --muted: #a3ad9f; --line: #2d3b34; --axis: #435249;
+  --brand: #305640; --brand-ink: #9ccfb0; --on-brand: #F1E8CD; --on-brand-2: #c4d2c6;
+  --accent-wash: #2b3328;
+  --good: #6fcf93; --good-wash: #183224; --bad: #f08a80; --bad-wash: #3a1f1c; --warn: #e8b960; --warn-wash: #352b18;
+  --focus: #79b6e0;
+  --s1: #1f8a5a; --s2: #b8801f; --s3: #3a87b8; --s4: #c25a64; --s5: #8a9a34; --s6: #c96b8c;
+  --pos: #1f8a5a; --neg: #c25a64;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.55 var(--font-ui); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--brand); }
+img { max-width: 100%; height: auto; }
+a { color: var(--brand-ink); text-underline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3, h4 { text-wrap: balance; margin: 0; font-family: var(--font-display); }
+p { margin: 0; }
+.wrap { max-width: 1200px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.num { font-variant-numeric: tabular-nums; }
+.eyebrow { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; font-family: var(--font-display); }
+.ar { font-family: var(--font-ar); }
+
+/* Bandeau de marque */
+.band { background: var(--brand); color: var(--on-brand); position: relative; overflow: hidden; }
+.band .wrap { padding-block: 22px 24px; display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: space-between; position: relative; z-index: 1; }
+.band .logo { height: 58px; width: auto; display: block; }
+.band h1 { font-weight: 800; font-size: clamp(24px, 3.6vw, 36px); letter-spacing: -.01em; line-height: 1.1; }
+.band .lede { color: var(--on-brand-2); max-width: 72ch; margin-top: 6px; }
+.band .lede b { color: var(--on-brand); font-weight: 600; }
+.band-title { display: grid; gap: 4px; min-width: 0; }
+.band-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.band-nav a, .chip-cd { color: var(--on-brand); text-decoration: none; border: 1px solid rgba(241, 232, 205, .35); border-radius: 999px; padding: 6px 12px; font-size: 13px; white-space: nowrap; }
+.band-nav a:hover { background: rgba(241, 232, 205, .12); }
+.chip-cd b { font-weight: 700; }
+.frise { display: block; width: 100%; height: auto; opacity: .9; }
+.band .frise { position: absolute; left: 0; right: 0; bottom: -2px; opacity: .18; pointer-events: none; z-index: 0; }
+
+/* Blocs */
+main.wrap { padding-block: 26px 44px; display: grid; gap: 30px; }
+section { display: grid; gap: 14px; min-width: 0; }
+.sec-head { display: grid; gap: 6px; }
+.sec-head h2 { font-weight: 800; font-size: 24px; color: var(--brand-ink); letter-spacing: -.01em; }
+.sec-head p { color: var(--ink-2); max-width: 78ch; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); min-width: 0; }
+.card { padding: 18px; display: grid; gap: 10px; align-content: start; }
+.card h3 { font-weight: 700; font-size: 17px; }
+.grid-2 { display: grid; gap: 16px; }
+.grid-3 { display: grid; gap: 14px; }
+@media (min-width: 820px) { .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.callout { background: var(--accent-wash); border-radius: var(--radius); padding: 14px 18px; display: grid; gap: 6px; }
+.callout strong { color: var(--brand-ink); }
+.callout.warn { background: var(--warn-wash); }
+.callout.warn strong { color: var(--warn); }
+.callout.bad { background: var(--bad-wash); }
+.callout.bad strong { color: var(--bad); }
+ul.clean { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+
+/* Boutons, pastilles */
+.btn { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-size: 14px; font-weight: 600; border-radius: 10px; padding: 8px 14px; cursor: pointer; text-decoration: none;
+  border: 1px solid var(--line); background: var(--surface-2); color: var(--ink); }
+.btn.primary { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.btn:hover { filter: brightness(1.04); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+.pill.ok { background: var(--good-wash); color: var(--good); }
+.pill.warn { background: var(--warn-wash); color: var(--warn); }
+.pill.bad { background: var(--bad-wash); color: var(--bad); }
+.pill.info { background: var(--accent-wash); color: var(--brand-ink); }
+.tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 999px; }
+.tag.ok { background: var(--good-wash); color: var(--good); }
+.tag.round, .tag.warn { background: var(--warn-wash); color: var(--warn); }
+.tag.ko { background: var(--bad-wash); color: var(--bad); }
+
+/* Tableaux */
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 7px 10px; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child { text-align: left; position: sticky; left: 0; background: var(--surface); z-index: 1; }
+thead th { font-size: 12px; font-weight: 700; color: var(--muted); background: var(--surface-2); letter-spacing: .02em; }
+thead th:first-child { background: var(--surface-2); }
+tbody tr:last-child td { border-bottom: 0; }
+table.text td, table.text th { text-align: left; white-space: normal; vertical-align: top; }
+td.wrap-cell { white-space: normal; min-width: 200px; text-align: left; color: var(--ink-2); font-size: 13px; }
+td.neg, .neg { color: var(--bad); }
+
+footer.wrap { padding-block: 0 36px; font-size: 13px; color: var(--muted); display: grid; gap: 8px; }
+footer ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; }
+
+/* Impression (check-lists à plastifier, contrats) */
+@media print {
+  body { background: #fff; color: #000; font-size: 11pt; }
+  body::before, .no-print, .band-nav { display: none !important; }
+  .band { background: #fff; color: #000; border-bottom: 2px solid #305640; }
+  .band .logo { filter: none; }
+  .panel { border-color: #999; break-inside: avoid; }
+  .page-break { break-before: page; }
+  a { color: #000; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* Logo : crème à l'écran sur le bandeau vert, vert à l'impression */
+.logo-print { display: none; }
+@media print { .logo-screen { display: none !important; } .logo-print { display: block !important; height: 48px; width: auto; } }
