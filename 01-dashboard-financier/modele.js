@@ -7,8 +7,8 @@
  *     (prix, coût hors café, grammes de café, part des ventes), grille B2B, paramètres (SumUp, Mollie,
  *     prix du café vert, trésorerie).
  *  2. LEVIERS (curseurs d'exploration, non enregistrés) : volumes, panier web, B2B, franchise, stock.
- *  3. CORRECTIONS (propositions de Claude, désactivées par défaut) : montée en charge, saisonnalité,
- *     rodage web/B2B, frais de port, invendus.
+ *  3. HYPOTHÈSES PRUDENTES (désactivées dans le « Plan », toutes actives dans le « Scénario prudent ») :
+ *     montée en charge, saisonnalité, rodage web/B2B, frais de port, invendus.
  *
  * Coût d'un produit = coût hors café (gobelet, lait, épices, emballage…) + grammes de café × prix du vert ÷ rendement.
  * Montants HT sauf champs *Ttc ; TVA 10 % (boissons, pâtisseries, snacking), 5,5 % (café, coffrets, web).
@@ -19,7 +19,7 @@
 
   var TVA_10 = 0.10, TVA_55 = 0.055;
   var RENDEMENT = 0.80;          // 1 kg de vert → 800 g vendables (freinte, rétention, purges)
-  var VERT_REFERENCE = 50;       // prix du vert ayant servi aux coûts du brief (migration des données v2)
+  var VERT_REFERENCE = 50;       // prix du vert inclus dans les anciens coûts (conversion des données enregistrées en v2)
 
   // ---------------------------------------------------------------- calendrier
   var MOIS = [
@@ -114,14 +114,14 @@
       ]
     },
     parametres: {
-      prixVertKg: 55,            // café vert tout compris, 50 à 60 € annoncés
+      prixVertKg: 55,            // café vert tout compris, 50 à 60 € selon les lots
       sumupAbonnement: 90,       // contrat SumUp : 90 € par mois
       sumupTaux: 0.0049,         // et 0,49 % par paiement
       partCarte: 0.92,           // part des ventes boutique payées par carte
       mollieTaux: 0.014,         // Mollie CB : 1,4 % + 0,25 € (à vérifier)
       mollieFixe: 0.25,
       mollieOffre: true,         // 0 % pour les nouveaux comptes jusqu'au 31/12/2026
-      tresorerieDepart: 15000,   // solde Qonto annoncé le 12/11/2026
+      tresorerieDepart: 15000,   // solde Qonto au début de la période
       mensualitesEmprunt: 0      // aucun crédit en cours
     }
   };
@@ -130,7 +130,7 @@
     { type: 'fixe', nom: 'Mutuelle, médecine du travail, repas du personnel (HCR)', categorie: 'Équipe', montant: 180, note: 'Si non compris dans les 2 800 € par salarié.' },
     { type: 'fixe', nom: 'Licence WooCommerce Subscriptions (abonnement mensuel)', categorie: 'Commercial', montant: 22, note: 'Extension payante, environ 279 $ par an.' },
     { type: 'fixe', nom: 'Brevo (e-mails et SMS automatiques)', categorie: 'Commercial', montant: 40, note: 'Formule Standard environ 15 € + SMS à environ 0,045 € l’unité.' },
-    { type: 'fixe', nom: 'Entretien La Marzocco et cartouches de filtration', categorie: 'Local', montant: 60, note: 'Si non compris dans les 430 € du brief.' },
+    { type: 'fixe', nom: 'Entretien La Marzocco et cartouches de filtration', categorie: 'Local', montant: 60, note: 'Si non compris dans l’abonnement d’entretien.' },
     { type: 'fixe', nom: 'Logiciel de planning et paie', categorie: 'Gestion', montant: 40, note: 'Optionnel.' },
     { type: 'ponctuelle', nom: 'Vaisselle réemployable pour 25 places (loi AGEC)', montant: 800, mois: 1, note: 'Tasses, verres, assiettes, couverts.' },
     { type: 'ponctuelle', nom: 'Four ou grill pour le snacking (absent du plan du bar)', montant: 1200, mois: 2, note: 'Kubaneh et focaccias toastées dès M2.' },
@@ -139,7 +139,6 @@
   ];
 
   var REPARTITION_COFFRETS = [0.40, 0.22, 0.10, 0.12, 0.09, 0.07];
-  var PLAN_DECLARE = { ca: 278383, margeBrute: 164623, resultat: 49123, franchiseLoyer: 18000 };
   var MOLLIE_SANS_FRAIS = [1, 0.4, 0, 0, 0, 0];   // part du mois couverte par l'offre 0 % (jusqu'au 31/12)
 
   // ------------------------------------------------------- leviers d'exploration
@@ -158,10 +157,10 @@
     semainesStock: 0
   };
 
-  // ------------------------------------------------------- corrections proposées
+  // ------------------------------------------------------- hypothèses prudentes
   var CORRECTIONS = [
     { cle: 'rampe', titre: 'Montée en charge de la boutique',
-      resume: 'Le brief vise 135 tasses par jour dès le 20 novembre. Une adresse neuve construit sa clientèle sur plusieurs mois, et le Centre Pompidou voisin est fermé jusqu’en 2030 : moins de touristes devant la porte.',
+      resume: 'Le plan vise 135 tasses par jour dès le 20 novembre. Une adresse neuve construit sa clientèle sur plusieurs mois, et le Centre Pompidou voisin est fermé jusqu’en 2030 : moins de touristes devant la porte.',
       detail: 'Boutique à 50 % de l’objectif en M1, puis 62, 72, 82, 90 et 96 %.',
       valeurs: [0.50, 0.62, 0.72, 0.82, 0.90, 0.96] },
     { cle: 'calendrier', titre: 'Saisonnalité et jours réellement ouverts',
@@ -177,7 +176,7 @@
       detail: '5,00 € HT net par colis : transport moyen 6,20 €, moins 2,00 € de participation client en moyenne, plus 0,80 € de carton et calage.',
       parColis: 5.00 },
     { cle: 'pertes', titre: 'Invendus de vitrine',
-      resume: 'Le brief ne compte aucune perte. En vitrine fraîche, 6 à 10 % des pièces ne se vendent pas. Too Good To Go ou un « goûter des riverains » à 18 h en récupère une partie.',
+      resume: 'Le plan ne compte aucune perte. En vitrine fraîche, 6 à 10 % des pièces ne se vendent pas. Too Good To Go ou un « goûter des riverains » à 18 h en récupère une partie.',
       detail: '8 % du coût matière des pâtisseries et du snacking.',
       taux: 0.08 }
   ];
@@ -420,29 +419,6 @@
       contributionAutresCanaux: autres, cafeVertKgMoisRegime: netKg / RENDEMENT + kgVert };
   }
 
-  /** Vérifie la grille de marges du brief (§5) au centime près. */
-  function verifierGrille() {
-    var grille = [
-      ['Espresso Simple', 3.00, 0.76, 1.97, 72.3, TVA_10], ['Double Espresso', 4.20, 1.26, 2.56, 67.1, TVA_10],
-      ['Cappuccino', 5.00, 1.53, 3.02, 66.4, TVA_10], ['Flat White', 5.20, 1.55, 3.18, 67.2, TVA_10],
-      ['Latte ou Iced Latte', 5.80, 1.66, 3.62, 68.6, TVA_10], ['V60 Grand Cru', 6.50, 1.22, 4.69, 79.3, TVA_10],
-      ['Rada’i Gingembre', 4.70, 1.21, 3.06, 71.7, TVA_10], ['Qishr Cascara Épicé', 4.90, 0.64, 3.81, 85.5, TVA_10],
-      ['Shai Adeni Karak', 5.10, 0.74, 3.89, 84.0, TVA_10], ['Mufawar Cardamome', 5.40, 1.35, 3.56, 72.5, TVA_10],
-      ['Qahwa Baydani', 5.60, 1.33, 3.76, 73.9, TVA_10], ['Pâtisserie Parisienne', 4.50, 1.48, 2.61, 63.9, TVA_10],
-      ['Pâtisserie Yéménite', 5.50, 1.54, 3.46, 69.3, TVA_10], ['Snacking Salé Yéménite', 9.50, 2.74, 5.90, 68.3, TVA_10],
-      ['Formule Midi Marais', 16.50, 5.45, 9.55, 63.7, TVA_10], ['Sachet Boutique Classique', 25.00, 13.15, 10.55, 44.5, TVA_55],
-      ['Sachet Boutique Grand', 30.00, 16.32, 12.11, 42.6, TVA_55], ['Coffret Duo Boutique', 52.00, 28.10, 21.19, 43.0, TVA_55],
-      ['Coffret Prestige Écrin', 79.00, 44.50, 30.38, 40.6, TVA_55], ['Coffret Web Trois Terroirs', 69.00, 42.20, 23.20, 35.5, TVA_55],
-      ['Abonnement Web Mensuel', 54.00, 34.65, 16.53, 32.3, TVA_55], ['Sachet Unitaire Web', 31.00, 17.70, 11.68, 39.8, TVA_55],
-      ['Pack Rituel Qishr Web', 22.00, 6.70, 14.15, 67.9, TVA_55]
-    ];
-    return grille.map(function (g) {
-      var ht = g[1] / (1 + g[5]), marge = ht - g[2], taux = marge / ht * 100;
-      return { nom: g[0], ttc: g[1], tva: g[5], ht: round2(ht), cout: g[2], margeBrief: g[3], margeCalculee: round2(marge),
-        tauxBrief: g[4], tauxCalcule: Math.round(taux * 10) / 10 };
-    });
-  }
-
   /** Export CSV (séparateur « ; », décimales à virgule, pour Excel en français). */
   function exportCSV(r) {
     function n(v) { return (Math.round(v * 100) / 100).toFixed(2).replace('.', ','); }
@@ -451,7 +427,7 @@
     var tot = function (f) { return ms.reduce(function (a, m) { return a + f(m); }, 0); };
     function row(label, f) { out.push(ligne([label].concat(ms.map(function (m) { return n(f(m)); })).concat([n(tot(f))]))); }
     out.push(ligne(['YEM\'KAF - compte de résultat prévisionnel (HT, en euros)']));
-    out.push(ligne(['Corrections appliquées', CORRECTIONS.filter(function (c) { return r.actives[c.cle]; }).map(function (c) { return c.titre; }).join(' / ') || 'aucune']));
+    out.push(ligne(['Hypothèses prudentes appliquées', CORRECTIONS.filter(function (c) { return r.actives[c.cle]; }).map(function (c) { return c.titre; }).join(' / ') || 'aucune']));
     out.push('');
     out.push(ligne(['Poste'].concat(ms.map(function (m) { return m.id + ' (' + m.periode + ')'; })).concat(['6 mois'])));
     [['boissons', 'CA boissons'], ['patisseries', 'CA pâtisseries'], ['snacking', 'CA snacking'], ['boutique', 'CA sachets et coffrets'], ['web', 'CA e-commerce'], ['b2b', 'CA B2B']]
@@ -478,9 +454,9 @@
 
   var API = {
     MOIS: MOIS, DONNEES_DEFAUT: DONNEES_DEFAUT, SUGGESTIONS: SUGGESTIONS, CORRECTIONS: CORRECTIONS,
-    LEVIERS_DEFAUT: LEVIERS_DEFAUT, PLAN_DECLARE: PLAN_DECLARE, REPARTITION_COFFRETS: REPARTITION_COFFRETS,
+    LEVIERS_DEFAUT: LEVIERS_DEFAUT, REPARTITION_COFFRETS: REPARTITION_COFFRETS,
     RENDEMENT: RENDEMENT, TVA_10: TVA_10, TVA_55: TVA_55,
-    normaliserDonnees: normaliserDonnees, simuler: simuler, unitaires: unitaires, verifierGrille: verifierGrille,
+    normaliserDonnees: normaliserDonnees, simuler: simuler, unitaires: unitaires,
     fixesDuMois: fixesDuMois, coutTotal: coutTotal, exportCSV: exportCSV
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;

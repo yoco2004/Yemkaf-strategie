@@ -3,14 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Plateforme de marque Yem'kaf</title>
+<title>Charte de marque Yem'kaf</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Kufi+Arabic:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="../assets/yemkaf.css">
 <style>
-/* Mise en page : bandeau de marque, ouverture photo + promesse, puis sections de lecture en colonne large. */
 .hero { display: grid; gap: 22px; align-items: center; }
 @media (min-width: 900px) { .hero { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
 .hero h2 { font-size: clamp(28px, 4vw, 42px); font-weight: 800; line-height: 1.08; color: var(--brand-ink); letter-spacing: -.02em; }
@@ -23,7 +22,6 @@
 .five { counter-reset: n; display: grid; gap: 12px; }
 .five .panel { padding: 16px 18px; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
 .five .panel::before { counter-increment: n; content: counter(n); font-family: var(--font-display); font-weight: 800; font-size: 26px; color: var(--sand); line-height: 1; }
-:root[data-theme="dark"] .five .panel::before { color: var(--sand); }
 .five h3 { font-size: 17px; margin-bottom: 4px; }
 .five p { color: var(--ink-2); }
 .figs { display: grid; gap: 14px; }
@@ -36,7 +34,7 @@
 .swatch .chip { height: 70px; }
 .swatch .meta { padding: 10px 12px; font-size: 13px; display: grid; gap: 2px; }
 .swatch .meta b { font-size: 14px; }
-.fix td:first-child { font-weight: 600; }
+.rules td:first-child { font-weight: 600; }
 .verdict { display: grid; gap: 12px; }
 @media (min-width: 900px) { .verdict { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .option { padding: 16px; display: grid; gap: 8px; align-content: start; }
@@ -44,6 +42,10 @@
 .option.reco { border: 2px solid var(--brand-ink); }
 .words { display: grid; gap: 12px; }
 @media (min-width: 820px) { .words { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.check { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.check li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: start; }
+.check li::before { content: ""; width: 16px; height: 16px; margin-top: 3px; border: 2px solid var(--brand-ink); border-radius: 4px; }
+.check b { color: var(--ink); }
 </style>
 </head>
 <body>
@@ -52,7 +54,7 @@
     <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;min-width:0">
       <img class="logo logo-screen" src="../assets/marque/logo-creme.png" alt="Yem'kaf" width="139" height="58">
       <img class="logo-print" src="../assets/marque/logo-vert.png" alt="Yem'kaf">
-      <div class="band-title"><h1>Plateforme de marque</h1><div class="lede">Ce qui compte, ce qu’il faut corriger, et la question du 100 % Yémen</div></div>
+      <div class="band-title"><h1>Charte de marque</h1><div class="lede">La promesse, les noms des cafés, les couleurs, l’étiquetage et la façon de parler de Yem’kaf</div></div>
     </div>
     <nav class="band-nav" aria-label="Pages"><a href="../index.html">Feuille de route</a><a href="../01-dashboard-financier/index.html">Simulateur</a></nav>
   </div>
@@ -60,101 +62,140 @@
 </header>
 
 <main class="wrap">
+  <section class="panel guide" aria-labelledby="h-guide">
+    <div class="guide-head"><h2 id="h-guide">Mode d’emploi</h2><span class="muted small">Module 3 · Charte de marque</span></div>
+    <div class="guide-cols">
+      <div class="guide-col"><h3>À quoi elle sert</h3><p>C’est la référence commune pour tout ce qui est écrit, imprimé ou publié au nom de Yem’kaf : sachets, carte, site, réseaux sociaux, enseigne, plaquette. En cas de doute sur un nom, une couleur ou une phrase, la réponse est ici.</p></div>
+      <div class="guide-col"><h3>Pour qui</h3><p>Toute l’équipe. Yousif pour le site, les réseaux et le graphiste ; Khaled pour le nom des cafés ; les baristas pour la façon de présenter les boissons.</p></div>
+      <div class="guide-col"><h3>Comment l’utiliser</h3><ol>
+        <li>Lisez <b>la promesse</b> et <b>les cinq principes</b> : c’est ce que chacun doit savoir dire.</li>
+        <li>Pour nommer un café, suivez <b>Les noms des cafés</b> et la règle d’origine.</li>
+        <li>Envoyez <b>Couleurs et logo</b> au graphiste, à l’imprimeur et au développeur du site.</li>
+        <li>Avant chaque commande d’impression, cochez la liste <b>Étiquetage des sachets</b>.</li>
+        <li>Pour un texte ou un post, relisez <b>Comment parler de Yem’kaf</b>.</li>
+      </ol></div>
+    </div>
+  </section>
+
   <section class="hero" aria-labelledby="h-promesse">
     <div class="promise">
       <div class="eyebrow">La promesse</div>
       <h2 id="h-promesse">Le Yémen, berceau de la culture du café, servi rue du Renard.</h2>
-      <p>Votre force n’est pas d’être un coffee shop de plus dans le Marais. C’est d’être <b>le seul lieu de Paris</b> où l’on boit le café du pays qui l’a fait connaître au monde, préparé comme on le prépare là-bas : Qishr, Shai Adeni, Qahwa Baydani. Je n’ai trouvé aucun café yéménite à Paris, seulement des restaurants.</p>
+      <p>Yem’kaf n’est pas un coffee shop de plus dans le Marais. C’est le lieu de Paris où l’on boit le café du pays qui l’a fait connaître au monde, préparé comme on le prépare là-bas : Qishr, Shai Adeni, Qahwa Baydani. À Paris, le Yémen se trouve surtout dans les restaurants ; Yem’kaf en fait une maison du café.</p>
       <div class="big-ar" lang="ar">يمكاف · قهوة · قشر</div>
     </div>
     <figure>
       <img src="../assets/marque/devanture.jpg" alt="Devanture verte de Yem'kaf à l’angle, store « Berceau du Café »" width="900" height="1200" loading="lazy">
-      <figcaption>La devanture en bois vert et le store « Berceau du Café ».</figcaption>
+      <figcaption>La devanture en bois vert et le store « Berceau du café ».</figcaption>
     </figure>
   </section>
 
   <section aria-labelledby="h-five">
     <div class="sec-head">
-      <h2 id="h-five">Les cinq choses qui comptent le plus</h2>
-      <p>Si vous ne gardez que cette liste, la marque tiendra.</p>
+      <h2 id="h-five">Les cinq principes</h2>
+      <p>Si l’on ne retient qu’une chose de cette charte, c’est cette liste.</p>
     </div>
     <div class="five">
-      <div class="panel"><div><h3>L’origine est la promesse : dites-la juste</h3><p>« Berceau du café » est fort et défendable si vous parlez de la <b>culture</b> du café : le Yémen est le premier pays à l’avoir cultivé et bu comme boisson (XVe siècle), et le port de Mokha a donné son nom au « moka ». La plante, elle, vient d’Éthiopie. Gardez la signature, mais écrivez « berceau de la culture du café » dans les textes longs : les journalistes et les amateurs vérifieront.</p></div></div>
-      <div class="panel"><div><h3>Une identité déjà forte, à tenir partout</h3><p>Le personnage au turban et à la tasse, la calligraphie koufique يمكاف, la frise des maisons-tours, des terrasses et des feuilles de caféier, le vert profond et le crème. C’est cohérent et rare. La règle : le même logo, le même vert, la même signature sur le store, les sachets, le site, les gobelets et la caisse.</p></div></div>
-      <div class="panel"><div><h3>Deux registres de noms, chacun sa place</h3><p>Décidé le 6 novembre : le <b>café vert</b> vendu aux torréfacteurs garde le nom de son terroir (Harazi, Raymi), le langage des professionnels. Les <b>sachets</b> vendus aux clients prennent vos 17 noms franco-yéménites (Port de Moka, Terrasses de Raymah, Cimes de Haraz…), avec l’origine réelle en sous-titre. Les maquettes « Raymi Éclat » sont donc à renommer.</p></div></div>
-      <div class="panel"><div><h3>Le rituel avant l’espresso</h3><p>Tout le Marais sait faire un cappuccino. Personne ne sert un Qishr aux épices ou un Shai Adeni mijoté. Mettez les boissons yéménites en tête de carte, servez une petite tasse de Qishr à chaque nouveau client et racontez-la en une phrase. C’est ce qui fera venir, revenir et publier.</p></div></div>
-      <div class="panel"><div><h3>La transparence comme preuve</h3><p>Village, altitude, producteur, date de torréfaction, prix payé : le QR code du sachet doit mener à la fiche du lot. Le règlement européen anti-déforestation imposera de toute façon la géolocalisation des parcelles (fin 2026 ou mi-2027 selon votre taille). Faites-en un atout de marque avant d’en faire une contrainte.</p></div></div>
+      <div class="panel"><div><h3>L’origine est la promesse : la dire juste</h3><p>« Berceau du café » est fort et défendable quand on parle de la <b>culture</b> du café : le Yémen est le premier pays à l’avoir cultivé et bu comme boisson (XVe siècle), et le port de Mokha a donné son nom au « moka ». La plante, elle, vient d’Éthiopie. La signature reste « Berceau du café » ; dans les textes longs, on écrit « berceau de la culture du café ».</p></div></div>
+      <div class="panel"><div><h3>Une identité forte, tenue partout</h3><p>Le personnage au turban et à la tasse, la calligraphie koufique يمكاف, la frise des maisons-tours, des terrasses et des feuilles de caféier, le vert profond et le crème. Le même logo, le même vert et la même signature sur le store, les sachets, le site, les gobelets et la caisse.</p></div></div>
+      <div class="panel"><div><h3>Deux registres de noms, chacun sa place</h3><p>Le <b>café vert</b> vendu aux torréfacteurs porte le nom de son terroir (Harazi, Raymi) : c’est le langage des professionnels. Les <b>sachets</b> vendus aux clients portent les noms franco-yéménites de la gamme (Port de Moka, Terrasses de Raymah, Cimes de Haraz…), avec l’origine réelle en sous-titre.</p></div></div>
+      <div class="panel"><div><h3>Le rituel avant l’espresso</h3><p>Tout le Marais sait faire un cappuccino. Personne ne sert un Qishr aux épices ou un Shai Adeni mijoté. Les boissons yéménites sont en tête de carte, et chaque nouveau client se voit proposer une petite tasse de Qishr, racontée en une phrase. C’est ce qui fait venir, revenir et publier.</p></div></div>
+      <div class="panel"><div><h3>La transparence comme preuve</h3><p>Village, altitude, producteur, date de torréfaction, prix payé : le QR code du sachet mène à la fiche du lot. Le règlement européen contre la déforestation imposera de toute façon la géolocalisation des parcelles (fin 2026 ou mi-2027 selon la taille de l’entreprise) : autant en faire un atout.</p></div></div>
     </div>
   </section>
 
   <section aria-labelledby="h-noms">
     <div class="sec-head">
-      <h2 id="h-noms">Vos 17 noms de cafés</h2>
-      <p>Direction « Élégance franco-yéménite » : un mot français chic ou architectural et un lieu mythique du Yémen. Ces noms habillent les sachets vendus aux clients ; le café vert vendu aux pros garde le nom de son terroir (décision du 6 novembre).</p>
+      <h2 id="h-noms">Les noms des cafés</h2>
+      <p>Direction « Élégance franco-yéménite » : un mot français chic ou architectural et un lieu mythique du Yémen. Ces noms habillent les sachets vendus aux clients ; le café vert vendu aux pros garde le nom de son terroir.</p>
     </div>
-    <div class="callout warn"><p><strong>Une règle pour ne pas tromper le client.</strong> Shibam, Tarim, Socotra, Aden ou le Wadi Hadramaout ne cultivent pas de café. Ces noms sont des noms de fantaisie : chaque sachet doit dire sous le nom d’où vient vraiment le café, par exemple « Café du Yémen · région de Haraz · village de … ». À l’inverse, un nom de région caféière (Haraz, Raymah, Bura’a, Taëz) ne s’utilise que si le café vient bien de là.</p>
-      <p><strong>Avant d’imprimer :</strong> une recherche d’antériorité à l’INPI sur les noms retenus (« Temple du Soleil » ou « Port de Moka » peuvent déjà être déposés par d’autres) et le dépôt de la marque Yem’kaf si ce n’est pas fait.</p></div>
-    <div class="table-scroll"><table class="text"><thead><tr><th>Nom</th><th>Lieu et histoire</th><th>Usage conseillé</th><th>Statut</th></tr></thead><tbody><tr><td><b>Port de Moka</b></td><td class="wrap-cell">Le port d’où le café yéménite partait vers le monde</td><td class="wrap-cell">Assemblage maison de l’espresso : tout le café du Yémen passait par Moka</td><td><span class="tag ok">Maison</span></td></tr><tr><td><b>Cimes de Haraz</b></td><td class="wrap-cell">Les sommets de la région de Haraz</td><td class="wrap-cell">Café d’origine Haraz</td><td><span class="tag ok">Origine réelle</span></td></tr><tr><td><b>Terrasses de Raymah</b></td><td class="wrap-cell">Les montagnes en terrasses de Raymah</td><td class="wrap-cell">Café d’origine Raymah</td><td><span class="tag ok">Origine réelle</span></td></tr><tr><td><b>Jardins de Bura’a</b></td><td class="wrap-cell">Les montagnes vertes de Bura’a, terrasses et forêt</td><td class="wrap-cell">Café d’origine Bura’a</td><td><span class="tag ok">Origine réelle</span></td></tr><tr><td><b>Citadelle de …</b></td><td class="wrap-cell">Une forteresse de Taëz (al-Qahira)</td><td class="wrap-cell">À compléter : café de la région de Taëz</td><td><span class="tag ko">À compléter</span></td></tr><tr><td><b>Château de Ghumdan</b></td><td class="wrap-cell">Le palais-tour légendaire de Sanaa (قصر غمدان), corrigé depuis « Hamdan »</td><td class="wrap-cell">Micro-lot rare, coffret Prestige</td><td><span class="tag warn">Nom de fantaisie</span></td></tr><tr><td><b>Belqees la Belle</b></td><td class="wrap-cell">Bilqis, la reine de Saba</td><td class="wrap-cell">Micro-lot prestige ou édition de fête</td><td><span class="tag warn">Nom de fantaisie</span></td></tr><tr><td><b>Toits de Sanaa</b></td><td class="wrap-cell">Les maisons-tours de la vieille ville</td><td class="wrap-cell">Coffret de la Saint-Valentin, ou café des hauts plateaux de Sanaa</td><td><span class="tag warn">Nom de fantaisie</span></td></tr><tr><td><b>Passage de l’encens</b></td><td class="wrap-cell">La route de l’encens, richesse de Saba et du Hadramaout</td><td class="wrap-cell">Le mélange épicé : les épices de la route de l’encens</td><td><span class="tag warn">Nom de fantaisie</span></td></tr><tr><td><b>Nuit d’Aden</b></td><td class="wrap-cell">La ville portuaire, avec un air de chanson française</td><td class="wrap-cell">Café doux du soir</td><td><span class="tag warn">Nom de fantaisie</span></td></tr><tr><td><b>Tours de Shibam</b></td><td class="wrap-cell">Les tours de terre, « Manhattan du désert »</td><td class="wrap-cell">Édition limitée ou coffret</td><td><span class="tag warn">Nom de fantaisie</span></td></tr><tr><td><b>Temple du Soleil</b></td><td class="wrap-cell">La reine de Saba et le culte du soleil</td><td class="wrap-cell">Édition limitée</td><td><span class="tag warn">Nom de fantaisie</span></td></tr><tr><td><b>Oasis du Wadi</b></td><td class="wrap-cell">Les palmiers du Wadi Hadramaout</td><td class="wrap-cell">Édition limitée</td><td><span class="tag warn">Nom de fantaisie</span></td></tr><tr><td><b>Rive de Tarim</b></td><td class="wrap-cell">Tarim, ville savante du Hadramaout</td><td class="wrap-cell">Édition limitée</td><td><span class="tag warn">Nom de fantaisie</span></td></tr><tr><td><b>Île de Socotra</b></td><td class="wrap-cell">L’île et son arbre à sang-de-dragon</td><td class="wrap-cell">Café expérimental ou fermenté</td><td><span class="tag warn">Nom de fantaisie</span></td></tr><tr><td><b>Vallée de …</b></td><td class="wrap-cell">Une grande vallée du Yémen</td><td class="wrap-cell">À compléter (par exemple Vallée de Dhahr, le palais sur son rocher)</td><td><span class="tag ko">À compléter</span></td></tr><tr><td><b>Comptoir de …</b></td><td class="wrap-cell">Un ancien poste de commerce</td><td class="wrap-cell">À compléter (par exemple Comptoir de Bayt al-Faqih, le grand marché du café au XVIIIe siècle)</td><td><span class="tag ko">À compléter</span></td></tr></tbody></table></div>
+    <div class="callout warn"><p><strong>La règle d’origine.</strong> Shibam, Tarim, Socotra, Aden ou le Wadi Hadramaout ne cultivent pas de café. Ces noms sont des noms de fantaisie : chaque sachet indique sous le nom d’où vient vraiment le café, par exemple « Café du Yémen · région de Haraz · village de … ». À l’inverse, un nom de région caféière (Haraz, Raymah, Bura’a, Taëz) ne s’utilise que si le café vient bien de là.</p>
+      <p><strong>Avant d’imprimer un nouveau nom :</strong> recherche d’antériorité à l’INPI (un nom comme « Temple du Soleil » ou « Port de Moka » peut déjà être déposé), et dépôt de la marque Yem’kaf si ce n’est pas fait.</p></div>
+    <div class="table-scroll"><table class="text"><thead><tr><th>Nom</th><th>Lieu et histoire</th><th>Usage</th><th>Type de nom</th></tr></thead><tbody><tr><td><b>Port de Moka</b></td><td class="wrap-cell">Le port d’où le café yéménite partait vers le monde</td><td class="wrap-cell">Assemblage maison de l’espresso : tout le café du Yémen passait par Moka</td><td><span class="tag ok">Maison</span></td></tr><tr><td><b>Cimes de Haraz</b></td><td class="wrap-cell">Les sommets de la région de Haraz</td><td class="wrap-cell">Café d’origine Haraz</td><td><span class="tag ok">Origine réelle</span></td></tr><tr><td><b>Terrasses de Raymah</b></td><td class="wrap-cell">Les montagnes en terrasses de Raymah</td><td class="wrap-cell">Café d’origine Raymah</td><td><span class="tag ok">Origine réelle</span></td></tr><tr><td><b>Jardins de Bura’a</b></td><td class="wrap-cell">Les montagnes vertes de Bura’a, terrasses et forêt</td><td class="wrap-cell">Café d’origine Bura’a</td><td><span class="tag ok">Origine réelle</span></td></tr><tr><td><b>Citadelle de …</b></td><td class="wrap-cell">Une forteresse de Taëz (al-Qahira)</td><td class="wrap-cell">Café de la région de Taëz</td><td><span class="tag ko">Nom à choisir</span></td></tr><tr><td><b>Château de Ghumdan</b></td><td class="wrap-cell">Le palais-tour légendaire de Sanaa (قصر غمدان)</td><td class="wrap-cell">Micro-lot rare, coffret Prestige</td><td><span class="tag warn">Fantaisie</span></td></tr><tr><td><b>Belqees la Belle</b></td><td class="wrap-cell">Bilqis, la reine de Saba</td><td class="wrap-cell">Micro-lot prestige ou édition de fête</td><td><span class="tag warn">Fantaisie</span></td></tr><tr><td><b>Toits de Sanaa</b></td><td class="wrap-cell">Les maisons-tours de la vieille ville</td><td class="wrap-cell">Coffret de la Saint-Valentin, ou café des hauts plateaux de Sanaa</td><td><span class="tag warn">Fantaisie</span></td></tr><tr><td><b>Passage de l’encens</b></td><td class="wrap-cell">La route de l’encens, richesse de Saba et du Hadramaout</td><td class="wrap-cell">Le mélange épicé : les épices de la route de l’encens</td><td><span class="tag warn">Fantaisie</span></td></tr><tr><td><b>Nuit d’Aden</b></td><td class="wrap-cell">La ville portuaire, avec un air de chanson française</td><td class="wrap-cell">Café doux du soir</td><td><span class="tag warn">Fantaisie</span></td></tr><tr><td><b>Tours de Shibam</b></td><td class="wrap-cell">Les tours de terre, « Manhattan du désert »</td><td class="wrap-cell">Édition limitée ou coffret</td><td><span class="tag warn">Fantaisie</span></td></tr><tr><td><b>Temple du Soleil</b></td><td class="wrap-cell">La reine de Saba et le culte du soleil</td><td class="wrap-cell">Édition limitée</td><td><span class="tag warn">Fantaisie</span></td></tr><tr><td><b>Oasis du Wadi</b></td><td class="wrap-cell">Les palmiers du Wadi Hadramaout</td><td class="wrap-cell">Édition limitée</td><td><span class="tag warn">Fantaisie</span></td></tr><tr><td><b>Rive de Tarim</b></td><td class="wrap-cell">Tarim, ville savante du Hadramaout</td><td class="wrap-cell">Édition limitée</td><td><span class="tag warn">Fantaisie</span></td></tr><tr><td><b>Île de Socotra</b></td><td class="wrap-cell">L’île et son arbre à sang-de-dragon</td><td class="wrap-cell">Café expérimental ou fermenté</td><td><span class="tag warn">Fantaisie</span></td></tr><tr><td><b>Vallée de …</b></td><td class="wrap-cell">Une grande vallée du Yémen</td><td class="wrap-cell">Piste : Vallée de Dhahr, le palais sur son rocher</td><td><span class="tag ko">Nom à choisir</span></td></tr><tr><td><b>Comptoir de …</b></td><td class="wrap-cell">Un ancien poste de commerce</td><td class="wrap-cell">Piste : Comptoir de Bayt al-Faqih, le grand marché du café au XVIIIe siècle</td><td><span class="tag ko">Nom à choisir</span></td></tr></tbody></table></div>
+    <p class="small muted">« Origine réelle » : le café vient de ce lieu. « Fantaisie » : le lieu évoque le Yémen sans cultiver de café, l’origine réelle s’écrit en sous-titre. « Maison » : assemblage de plusieurs lots yéménites.</p>
   </section>
 
-  <section aria-labelledby="h-fix">
+  <section aria-labelledby="h-couleurs">
     <div class="sec-head">
-      <h2 id="h-fix">À corriger avant d’imprimer</h2>
-      <p>Des incohérences repérées dans les fichiers reçus. Aucune n’est grave, toutes coûtent cher une fois imprimées.</p>
+      <h2 id="h-couleurs">Couleurs et logo</h2>
+      <p>Les valeurs officielles à transmettre au graphiste, à l’imprimeur et au développeur du site.</p>
     </div>
-    <div class="callout bad"><p><strong>Le nuancier donne des valeurs à l’envers.</strong> Les lignes RVB, TSL et CMJN sont écrites de droite à gauche, sans doute à cause d’un logiciel réglé en arabe. Un imprimeur ou un développeur qui recopie « RVB 205, 232, 241 » obtiendra un bleu ciel au lieu du crème.</p></div>
     <div class="swatches">
-      <div class="swatch"><div class="chip" style="background:#F1E8CD"></div><div class="meta"><b>Crème · #F1E8CD</b><span>RVB correct : <b>241, 232, 205</b> (fiche : 205, 232, 241)</span><span>TSL : 45°, 15 %, 95 % · CMJN : C5 M6 J20 N0</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#305640"></div><div class="meta"><b>Vert · #305640</b><span>RVB correct : <b>48, 86, 64</b> (fiche : 64, 86, 48)</span><span>TSL : 145°, 44 %, 34 % · CMJN : C79 M43 J76 N38</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#355A54"></div><div class="meta"><b>Vert des fichiers logo · #355A54</b><span>Les PNG du logo utilisent ce vert plus bleuté, différent de la charte. La frise, elle, est bien en #305640.</span></div></div>
-      <div class="swatch"><div class="chip" style="background:#5C1F1C"></div><div class="meta"><b>Bordeaux des sachets · ≈ #5C1F1C</b><span>Relevé sur la maquette photo : absent du nuancier. Donnez-moi la valeur exacte.</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#305640"></div><div class="meta"><b>Vert Yem’kaf · #305640</b><span>RVB 48, 86, 64</span><span>TSL 145°, 44 %, 34 % · CMJN C79 M43 J76 N38</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#F1E8CD"></div><div class="meta"><b>Crème · #F1E8CD</b><span>RVB 241, 232, 205</span><span>TSL 45°, 15 %, 95 % · CMJN C5 M6 J20 N0</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#DABD97"></div><div class="meta"><b>Sable de la frise · #DABD97</b><span>RVB 218, 189, 151</span><span>Couleur d’accompagnement</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#5C1F1C"></div><div class="meta"><b>Bordeaux · ≈ #5C1F1C</b><span>RVB ≈ 92, 31, 28</span><span>Sachets d’une seconde gamme (valeur exacte à fixer avec le graphiste)</span></div></div>
     </div>
     <div class="table-scroll">
-      <table class="text fix">
-        <thead><tr><th>Point</th><th>Ce que j’ai vu</th><th>Proposition</th></tr></thead>
+      <table class="text rules">
+        <thead><tr><th>Élément</th><th>Règle</th></tr></thead>
         <tbody>
-          <tr><td>Nom de la marque</td><td>« Yem’kaf » (logo), « Yem’Kaf » (zoom de la maquette bordeaux), « YEM’KAF » (brief), « YEMKAF » (enseigne sur le plan du bar)</td><td>« Yem’kaf » dans les textes, « YEM’KAF » seulement en capitales. Corriger l’enseigne du plan avant fabrication.</td></tr>
-          <tr><td>Signature</td><td>« Berceau du café » (logo, sachets), « Berceau du Café » (store), « YEMENI COFFEE » (enseigne prévue au-dessus du bar)</td><td>Une seule signature en français, « Berceau du café ». L’anglais peut venir en second sur le site.</td></tr>
-          <tr><td>Maquettes des sachets</td><td>« Raymi Éclat », « Harazi Signature » sur les sachets grand public.</td><td>Renommer avec les noms franco-yéménites (par exemple « Terrasses de Raymah »), garder « Raymah, Yémen » en sous-titre. Les noms Harazi et Raymi restent pour le café vert.</td></tr>
-          <tr><td>Fiches des cafés</td><td>Les quatre Harazi ont les mêmes notes (Noisette torréfiée · Raisin · Pruneau sec), les quatre Raymi aussi (Chocolat noir · Pamplemousse · Finale courte). « Harazi Soleil » apparaît deux fois.</td><td>Des notes propres à chaque lot, issues d’un cupping. Remplacer le doublon par le cinquième café.</td></tr>
-          <tr><td>Mentions du sachet</td><td>La maquette indique le poids et « À consommer de préférence dans les 3 mois après torréfaction ».</td><td>Ajouter : la dénomination (« Café torréfié en grains » ou « moulu »), une vraie date (« À consommer de préférence avant le … ») et le numéro de lot (étiquette autocollante possible), le nom et l’adresse de l’exploitant, le logo Triman et l’Info-tri (obligatoires depuis 2022, amende jusqu’à 15 000 €). La date de torréfaction est un plus attendu par les amateurs.</td></tr>
-          <tr><td>« Micro-lot sélectionné »</td><td>Imprimé au dos de chaque sachet.</td><td>À réserver aux vrais micro-lots (Joyau de Marib, Brise de Socotra). Sur un café de la gamme, écrire « Lot sélectionné ».</td></tr>
-          <tr><td>Prix des boissons</td><td>Grille du brief entre Terres de Café et L’Arbre à Café.</td><td>Décidé le 6 novembre : grille « Premium Yémen » (espresso 3,50 €, V60 8 €, micro-lot 12 €). L’Arbre à Café vend son V60 de 10 à 18 € : un café rare se paie.</td></tr>
-          <tr><td>Décaféiné</td><td>« Nuit d’Aden : profil doux, suave, velouté ou décaféiné » (brief).</td><td>Le décaféiné yéménite est quasi introuvable. Si vous en proposez un d’une autre origine, il ne peut pas porter un nom yéménite sans le dire (voir plus bas).</td></tr>
+          <tr><td>Vert</td><td>Un seul vert : #305640, partout (logo, frise, site, sachets, store). Les fichiers du logo actuellement en #355A54 sont à réexporter en #305640.</td></tr>
+          <tr><td>Valeurs RVB</td><td>Utiliser les valeurs ci-dessus. L’ancien nuancier affiche les RVB, TSL et CMJN à l’envers (de droite à gauche) : « 205, 232, 241 » donnerait un bleu ciel au lieu du crème.</td></tr>
+          <tr><td>Logo</td><td>Crème sur fond vert, vert sur fond clair. Ne pas le déformer, ne pas changer ses couleurs, laisser un espace libre autour.</td></tr>
+          <tr><td>Nom de la marque</td><td>« Yem’kaf » dans les textes (apostrophe, k minuscule) ; « YEM’KAF » seulement quand tout le texte est en capitales.</td></tr>
+          <tr><td>Signature</td><td>« Berceau du café », en français, partout (store, enseigne, sachets). L’anglais peut venir en second sur le site.</td></tr>
+          <tr><td>Arabe</td><td><bdi class="ar" lang="ar">يمكاف</bdi> en koufique sur le logo ; le nom arabe des boissons (<bdi class="ar" lang="ar">قشر</bdi> pour le Qishr, <bdi class="ar" lang="ar">شاي عدني</bdi> pour le Shai Adeni) peut accompagner le nom français sur la carte.</td></tr>
         </tbody>
       </table>
     </div>
+  </section>
+
+  <section aria-labelledby="h-etiquette">
+    <div class="sec-head">
+      <h2 id="h-etiquette">Étiquetage des sachets</h2>
+      <p>À cocher avant chaque commande d’impression : une mention oubliée coûte cher une fois les sachets imprimés.</p>
+    </div>
+    <div class="grid-2">
+      <div class="panel card"><h3>Mentions obligatoires</h3><ul class="check">
+        <li><span><b>Dénomination</b> : « Café torréfié en grains » ou « Café torréfié moulu ».</span></li>
+        <li><span><b>Poids net</b> : 150 g, 200 g ou 250 g.</span></li>
+        <li><span><b>Date de durabilité minimale</b> : « À consommer de préférence avant le … » (une vraie date, étiquette autocollante possible).</span></li>
+        <li><span><b>Numéro de lot</b>.</span></li>
+        <li><span><b>Nom et adresse de l’exploitant</b> : YEM’KAF SAS, 24 rue du Renard, 75004 Paris.</span></li>
+        <li><span><b>Logo Triman et Info-tri</b> (obligatoires depuis 2022, amende jusqu’à 15 000 €).</span></li>
+        <li><span><b>Liste des ingrédients</b> pour le mélange épicé (café, cardamome, gingembre…), avec les pourcentages.</span></li>
+      </ul></div>
+      <div class="panel card"><h3>Mentions de marque</h3><ul class="check">
+        <li><span><b>Nom de la gamme</b> (voir le tableau des noms) et, en sous-titre, l’origine réelle : région, village, altitude.</span></li>
+        <li><span><b>Date de torréfaction</b> : attendue par les amateurs.</span></li>
+        <li><span><b>Notes de dégustation</b> propres à chaque lot, issues d’un cupping (jamais les mêmes notes sur plusieurs cafés).</span></li>
+        <li><span><b>QR code</b> vers la fiche du lot sur le site.</span></li>
+        <li><span><b>« Micro-lot »</b> uniquement pour un vrai micro-lot ; sinon « Lot sélectionné ».</span></li>
+        <li><span><b>Couleur du sachet</b> : vert pour la gamme, bordeaux pour une seconde gamme (micro-lots ou mélange épicé).</span></li>
+      </ul></div>
+    </div>
     <div class="figs">
-      <figure><img src="../assets/marque/cartes-harazi.jpg" alt="Fiches Harazi : mêmes notes sur les cinq cartes, Harazi Soleil en double" width="700" height="756" loading="lazy"><figcaption>Les fiches Harazi : mêmes notes partout, « Harazi Soleil » en double.</figcaption></figure>
-      <figure><img src="../assets/marque/nuancier.jpg" alt="Nuancier : valeurs RVB, TSL et CMJN écrites à l’envers" width="800" height="518" loading="lazy"><figcaption>Le nuancier : les valeurs sous les HEX sont inversées.</figcaption></figure>
+      <figure><img src="../assets/marque/sachet-vert.jpg" alt="Maquette du sachet vert" width="1100" height="718" loading="lazy"><figcaption>Sachet vert : la gamme. Le nom imprimé suit le tableau des noms.</figcaption></figure>
+      <figure><img src="../assets/marque/sachet-bordeaux.jpg" alt="Maquette du sachet bordeaux" width="1100" height="718" loading="lazy"><figcaption>Sachet bordeaux : une seconde gamme, reconnaissable au premier regard.</figcaption></figure>
     </div>
   </section>
 
   <section aria-labelledby="h-yemen">
     <div class="sec-head">
-      <h2 id="h-yemen">Servir uniquement du café yéménite, ou d’autres cafés aussi ?</h2>
-      <p>Trois options étudiées sur le coût, la marque, le risque d’approvisionnement et le droit. Coût net du Yémen : 62,50 € HT le kilo vendable (votre brief). Autre origine de spécialité : environ 12 € le kilo vert livré en Europe, soit 15 € le kilo vendable (estimation : je n’ai pas trouvé de cotation importateur 2026 ; le cours de l’arabica à New York était à 2,81 $ la livre le 5 novembre 2026).</p>
+      <h2 id="h-yemen">Notre choix : 100 % Yémen</h2>
+      <p>Pourquoi la carte ne sert que du café yéménite, et ce que cela coûte. Café du Yémen : environ 55 € le kilo vert tout compris, soit 68,75 € le kilo vendable après torréfaction. Autre origine de spécialité : environ 12 € le kilo vert livré en Europe, soit 15 € le kilo vendable.</p>
     </div>
     <div class="table-scroll">
       <table>
-        <thead><tr><th>Café dans la tasse</th><th>Coût net / kg</th><th>Espresso 10 g</th><th>Boisson lactée 18 g</th><th>Sachet 250 g</th><th>Gain sur 6 mois*</th></tr></thead>
+        <thead><tr><th>Café dans la tasse</th><th>Coût par kg vendable</th><th>Espresso 10 g</th><th>Boisson lactée 18 g</th><th>Sachet 250 g</th><th>Économie par boisson lactée</th></tr></thead>
         <tbody>
-          <tr><td>100 % Yémen</td><td>62,50 €</td><td>0,63 €</td><td>1,13 €</td><td>15,63 €</td><td>—</td></tr>
-          <tr><td>Assemblage 60 % Yémen / 40 % autre</td><td>43,50 €</td><td>0,44 €</td><td>0,78 €</td><td>10,88 €</td><td>≈ 2 900 €</td></tr>
-          <tr><td>Assemblage 50 / 50</td><td>38,75 €</td><td>0,39 €</td><td>0,70 €</td><td>9,69 €</td><td>≈ 3 700 €</td></tr>
-          <tr><td>Autre origine seule</td><td>15,00 €</td><td>0,15 €</td><td>0,27 €</td><td>3,75 €</td><td>≈ 7 300 €</td></tr>
+          <tr><td>100 % Yémen</td><td>68,75 €</td><td>0,69 €</td><td>1,24 €</td><td>17,19 €</td><td>—</td></tr>
+          <tr><td>Assemblage 60 % Yémen / 40 % autre</td><td>47,25 €</td><td>0,47 €</td><td>0,85 €</td><td>11,81 €</td><td>0,39 €</td></tr>
+          <tr><td>Assemblage 50 / 50</td><td>41,88 €</td><td>0,42 €</td><td>0,75 €</td><td>10,47 €</td><td>0,49 €</td></tr>
+          <tr><td>Autre origine seule</td><td>15,00 €</td><td>0,15 €</td><td>0,27 €</td><td>3,75 €</td><td>0,97 €</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="small muted">* Si l’on change seulement le café des boissons lactées et des doubles (48 % des tasses), sur les 17 986 tasses du scénario réaliste.</p>
+    <p class="small muted">Le prix du café vert se règle dans le simulateur (« Vos chiffres », onglet Paramètres) ; ce tableau suppose 55 € le kilo.</p>
 
     <div class="verdict">
-      <div class="panel option"><span class="tag ko">Déconseillé</span><h3>Carte multi-origines</h3><p>Éthiopie, Colombie, Brésil à côté du Yémen. Vous économisez environ 7 300 € sur 6 mois, mais vous devenez un coffee shop de plus face à Terres de Café, à 5 minutes, sur son propre terrain. La promesse « Berceau du café » perd son sens.</p></div>
-      <div class="panel option reco"><span class="tag ok">Recommandé</span><h3>100 % Yémen au comptoir</h3><p>Espresso, filtre, boissons traditionnelles, sachets d’origine et coffrets : uniquement du Yémen. L’écart réel ne dépasse pas 0,43 € par boisson lactée, soit moins de 2 % du chiffre d’affaires. Pour le lait, Khaled peut tester un <b>assemblage maison de lots yéménites</b> de grade plus accessible : vous restez 100 % Yémen et réduisez le coût.</p></div>
-      <div class="panel option reco"><span class="tag ok">Décidé le 6 novembre</span><h3>Le « mix » devient un mélange épicé</h3><p>Café yéménite moulu avec des épices (cardamome, gingembre, cannelle, clou de girofle), environ 85 / 15, pour préparer une qahwa maison. Proposé à 24 € les 200 g (coût estimé 12,36 €). Il reste 100 % Yémen côté café : la promesse tient. Liste des ingrédients obligatoire sur le sachet.</p></div>
+      <div class="panel option"><span class="tag ko">Écarté</span><h3>Carte multi-origines</h3><p>Éthiopie, Colombie, Brésil à côté du Yémen. Moins d’un euro d’économie par boisson, mais Yem’kaf deviendrait un coffee shop de plus face à Terres de Café, à cinq minutes, sur son propre terrain. La promesse « Berceau du café » perdrait son sens.</p></div>
+      <div class="panel option reco"><span class="tag ok">Notre règle</span><h3>100 % Yémen au comptoir</h3><p>Espresso, filtre, boissons traditionnelles, sachets d’origine et coffrets : uniquement du Yémen. Pour les boissons lactées, un <b>assemblage maison de lots yéménites</b> de grade plus accessible réduit le coût tout en restant 100 % Yémen.</p></div>
+      <div class="panel option reco"><span class="tag ok">Notre mélange</span><h3>Le mélange épicé</h3><p>Café yéménite moulu avec des épices (cardamome, gingembre, cannelle, clou de girofle), environ 85 / 15, pour préparer une qahwa maison. Vendu 24 € les 200 g. Le café reste 100 % Yémen ; la liste des ingrédients figure sur le sachet.</p></div>
     </div>
-    <div class="callout"><p><strong>Le droit.</strong> Le Code de la consommation interdit toute présentation trompeuse sur l’origine. Sous une marque nommée Yem’kaf avec la signature « Berceau du café », un client pensera que tout est yéménite. Un café d’une autre origine (mélange, décaféiné) doit donc l’indiquer clairement sur la carte, le sachet et le site, avec les pourcentages.</p>
-      <p><strong>L’approvisionnement.</strong> Depuis la prise de Mokha (septembre 2026), le stock de sécurité et le torréfacteur à façon sont vos vraies protections : la carte reste 100 % Yémen.</p></div>
+    <div class="callout"><p><strong>Le droit.</strong> Le Code de la consommation interdit toute présentation trompeuse sur l’origine. Sous une marque nommée Yem’kaf avec la signature « Berceau du café », un client pense que tout est yéménite. Si un café d’une autre origine est un jour proposé (un décaféiné, par exemple : le décaféiné yéménite est quasi introuvable), il est indiqué clairement sur la carte, le sachet et le site, avec les pourcentages, et ne porte pas de nom yéménite.</p>
+      <p><strong>L’approvisionnement.</strong> Depuis la prise du port de Mokha (septembre 2026), le stock de sécurité et un torréfacteur à façon de secours sont les vraies protections de la carte 100 % Yémen.</p></div>
   </section>
 
   <section aria-labelledby="h-voice">
@@ -171,27 +212,11 @@
       </ul></div>
       <div class="panel card"><h3>À éviter</h3><ul class="clean">
         <li>« Le meilleur café du monde » : invérifiable.</li>
-        <li>Les images de conflit pour vendre : un article de LADN a déjà épinglé la mode du « café yéménite » sur TikTok.</li>
+        <li>Les images de conflit pour vendre : la presse a déjà épinglé la mode du « café yéménite » sur TikTok.</li>
         <li>« Bio », « équitable » ou « micro-lot » sans certificat ni preuve.</li>
         <li>Tout nom yéménite sur un café qui ne l’est pas.</li>
       </ul></div>
     </div>
-    <div class="figs">
-      <figure><img src="../assets/marque/sachet-vert.jpg" alt="Maquette du sachet vert Raymi Éclat" width="1100" height="718" loading="lazy"><figcaption>Sachet vert : la référence. Ajouter dénomination, lot, date, exploitant, Triman et Info-tri.</figcaption></figure>
-      <figure><img src="../assets/marque/sachet-bordeaux.jpg" alt="Maquette du sachet bordeaux Raymi Éclat" width="1100" height="718" loading="lazy"><figcaption>Sachet bordeaux : idéal pour distinguer une gamme (micro-lots ou mélange), à condition de fixer la règle.</figcaption></figure>
-    </div>
-  </section>
-
-  <section aria-labelledby="h-next">
-    <div class="sec-head"><h2 id="h-next">Décisions de marque à prendre</h2></div>
-    <ul class="clean">
-      <li>Renommer les maquettes des sachets avec les noms franco-yéménites (décision du 6 novembre).</li>
-      <li>Faire corriger le nuancier et aligner le vert des fichiers logo sur #305640 (Yousif, avec le graphiste).</li>
-      <li>Choisir la signature unique pour l’enseigne au-dessus du bar avant sa fabrication.</li>
-      <li>Organiser un cupping des 8 cafés pour écrire de vraies notes de dégustation (Khaled, jeudi).</li>
-      <li>Fixer la recette du mélange épicé et sa couleur de sachet (le bordeaux le distinguerait bien).</li>
-      <li>Compléter les mentions obligatoires du sachet avant la commande d’impression.</li>
-    </ul>
   </section>
 </main>
 
@@ -199,10 +224,10 @@
   <img class="frise" src="../assets/marque/frise-verte.png" alt="" style="opacity:.5">
   <div class="eyebrow">Sources</div>
   <ul>
-    <li>Mocha-Java, plus ancien assemblage connu : <a href="https://library.sweetmarias.com/moka-java-constructing-the-worlds-oldest-blend/" target="_blank" rel="noopener">Sweet Maria’s</a>, <a href="https://www.coffeereview.com/mocha-java-blends/" target="_blank" rel="noopener">Coffee Review</a></li>
-    <li>Cours de l’arabica : <a href="https://azcoffeeshops.com/green-coffee-prices/" target="_blank" rel="noopener">AZ Coffee Shops (ICE, 5 novembre 2026)</a></li>
+    <li>Histoire du moka et du Mocha-Java : <a href="https://library.sweetmarias.com/moka-java-constructing-the-worlds-oldest-blend/" target="_blank" rel="noopener">Sweet Maria’s</a>, <a href="https://www.coffeereview.com/mocha-java-blends/" target="_blank" rel="noopener">Coffee Review</a></li>
+    <li>Cours de l’arabica : <a href="https://azcoffeeshops.com/green-coffee-prices/" target="_blank" rel="noopener">AZ Coffee Shops</a></li>
     <li>Triman et Info-tri : <a href="https://projetcelsius.com/blog/triman-etiquette-ppwr/" target="_blank" rel="noopener">Projet Celsius</a>, <a href="https://www.adelphe.fr/sites/default/files/inline-files/adelphe_fiche_reflexe_info_tri_emb_aout_2022_vf_2.pdf" target="_blank" rel="noopener">Adelphe</a></li>
-    <li>Tendance du café yéménite : <a href="https://www.ladn.eu/nouveaux-usages/yemeni-coffee-la-guerre-oubliee-qui-finit-en-trend-tiktok/" target="_blank" rel="noopener">LADN</a> · Café yéménite en ligne en France : <a href="https://www.cafes-oce.fr/cafes-d-exception/2250-yemen-haraz.html" target="_blank" rel="noopener">Cafés d’Océ</a>, <a href="https://cafe-torifa.fr/en/products/village-bayt-a-llal-cafe-yemen-copie" target="_blank" rel="noopener">Café Torifa</a></li>
+    <li>Le café yéménite dans les médias : <a href="https://www.ladn.eu/nouveaux-usages/yemeni-coffee-la-guerre-oubliee-qui-finit-en-trend-tiktok/" target="_blank" rel="noopener">LADN</a> · Café yéménite en ligne en France : <a href="https://www.cafes-oce.fr/cafes-d-exception/2250-yemen-haraz.html" target="_blank" rel="noopener">Cafés d’Océ</a>, <a href="https://cafe-torifa.fr/en/products/village-bayt-a-llal-cafe-yemen-copie" target="_blank" rel="noopener">Café Torifa</a></li>
   </ul>
 </footer>
 </body>

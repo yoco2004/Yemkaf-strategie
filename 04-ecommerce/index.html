@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>E-shop Yem'kaf</title>
+<title>Boutique en ligne Yem'kaf</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,13 @@
 .sms { padding: 14px 16px; display: grid; gap: 6px; }
 .sms .bubble { background: var(--brand); color: var(--on-brand); border-radius: 16px 16px 16px 4px; padding: 10px 14px; font-size: 14px; max-width: 46ch; }
 .sms .len { font-size: 12px; color: var(--muted); }
+.copy { justify-self: start; }
+.mail .copy { margin: 0 16px 16px; }
+.diagram { padding: 16px; display: grid; gap: 10px; }
+.diagram h3 { font-size: 16px; }
+.diagram .mermaid { margin: 0; overflow-x: auto; font-size: 14px; }
+.diagram .mermaid:not([data-processed]) { visibility: hidden; height: 0; }
+.diagram .mermaid svg { max-width: 100%; height: auto; }
 </style>
 </head>
 <body>
@@ -42,7 +49,7 @@
     <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;min-width:0">
       <img class="logo logo-screen" src="../assets/marque/logo-creme.png" alt="Yem'kaf" width="139" height="58">
       <img class="logo-print" src="../assets/marque/logo-vert.png" alt="Yem'kaf">
-      <div class="band-title"><h1>E-shop : architecture et relances</h1><div class="lede">WordPress, WooCommerce, Mollie et Qonto · mise en ligne le <b>vendredi 27 novembre</b> · piloté par <b>Yousif</b></div></div>
+      <div class="band-title"><h1>Boutique en ligne</h1><div class="lede">WordPress, WooCommerce, Mollie et Qonto · mise en ligne le <b>vendredi 27 novembre</b> · piloté par <b>Yousif</b></div></div>
     </div>
     <nav class="band-nav no-print" aria-label="Pages"><a href="../index.html">Feuille de route</a><a href="../01-dashboard-financier/index.html">Simulateur</a></nav>
   </div>
@@ -50,30 +57,96 @@
 </header>
 
 <main class="wrap">
+  <section class="panel guide no-print" aria-labelledby="h-guide">
+    <div class="guide-head"><h2 id="h-guide">Mode d’emploi</h2><span class="muted small">Module 5 · Boutique en ligne</span></div>
+    <div class="guide-cols">
+      <div class="guide-col"><h3>À quoi il sert</h3><p>Expliquer comment fonctionne le site WordPress : le parcours du client, les outils et leur rôle (paiement Mollie versé sur Qonto, e-mails et SMS Brevo, expédition, comptabilité), les relances automatiques avec leurs textes prêts à coller, et la liste de conformité avant la mise en ligne.</p></div>
+      <div class="guide-col"><h3>Pour qui</h3><p>Yousif, qui construit et gère le site. La barista vente et web pour la préparation des colis. Amer pour l’expédition.</p></div>
+      <div class="guide-col"><h3>Comment l’utiliser</h3><ol>
+        <li>Lire <b>le tunnel</b> et <b>les schémas</b> pour comprendre le chemin d’un client, du QR code du gobelet à l’abonnement.</li>
+        <li>Installer les outils de <b>La pile technique</b>, dans l’ordre du calendrier en bas de page.</li>
+        <li>Dans Brevo, créer les scénarios du tableau, puis coller chaque texte avec son bouton « Copier ».</li>
+        <li>Avant la mise en ligne, cocher chaque ligne de <b>Conformité</b>.</li>
+        <li>Après l’ouverture, comparer chaque mois les résultats réels aux objectifs de chaque étape.</li>
+      </ol></div>
+    </div>
+  </section>
+
   <section aria-labelledby="h-flow">
-    <div class="sec-head"><h2 id="h-flow">Le tunnel, du gobelet à l’abonnement</h2><p>Objectifs du brief entre parenthèses. Ils sont ambitieux : un QR code de gobelet est scanné par 1 à 3 % des clients, et un e-shop convertit en général 1,5 à 3 % de ses visites. Mesurez dès le premier jour et recalez les cibles en janvier.</p></div>
+    <div class="sec-head"><h2 id="h-flow">Le tunnel, du gobelet à l’abonnement</h2><p>L’objectif de chaque étape est indiqué en bas de sa carte. Ces objectifs sont ambitieux : un QR code de gobelet est scanné par 1 à 3 % des clients, et une boutique en ligne convertit en général 1,5 à 3 % de ses visites. Mesurer dès le premier jour et ajuster les cibles en janvier.</p></div>
     <div class="flow">
       <div class="panel step"><b>QR code du gobelet ou du sachet</b><span>Lien vers la page du terroir dégusté, avec suivi UTM par support.</span><span class="kpi">Mesurer : scans par jour</span></div>
       <div class="panel step"><b>Page terroir</b><span>Village, altitude, carte, notes, vidéo du rituel. Bouton « Recevoir ce café chez moi ».</span><span class="kpi">Mesurer : clics vers produit</span></div>
-      <div class="panel step"><b>Premier coffret, livraison offerte</b><span>Code appliqué automatiquement par le lien (?coupon=BIENVENUE).</span><span class="kpi">Brief : 12,5 % de conversion</span></div>
-      <div class="panel step"><b>Paiement Mollie</b><span>CB, Apple Pay, Google Pay. Relance du panier abandonné à 45 min.</span><span class="kpi">Brief : 18,4 % de paniers récupérés</span></div>
-      <div class="panel step"><b>Réassort à J+21</b><span>Après l’achat d’un sachet : « Votre Harazi touche à sa fin ? » et commande en un clic.</span><span class="kpi">Brief : 28 % de réachat</span></div>
-      <div class="panel step"><b>Abonnement</b><span>Proposé dès la deuxième commande : livraison mensuelle, pause ou arrêt à tout moment.</span><span class="kpi">Brief : 22,5 % de bascule</span></div>
+      <div class="panel step"><b>Premier coffret, livraison offerte</b><span>Code appliqué automatiquement par le lien (?coupon=BIENVENUE).</span><span class="kpi">Objectif : 12,5 % de conversion</span></div>
+      <div class="panel step"><b>Paiement Mollie</b><span>CB, Apple Pay, Google Pay. Relance du panier abandonné à 45 min.</span><span class="kpi">Objectif : 18,4 % de paniers récupérés</span></div>
+      <div class="panel step"><b>Réassort à J+21</b><span>Après l’achat d’un sachet : « Votre Harazi touche à sa fin ? » et commande en un clic.</span><span class="kpi">Objectif : 28 % de réachat</span></div>
+      <div class="panel step"><b>Abonnement</b><span>Proposé dès la deuxième commande : livraison mensuelle, pause ou arrêt à tout moment.</span><span class="kpi">Objectif : 22,5 % de bascule</span></div>
     </div>
   </section>
 
   <section aria-labelledby="h-stack">
-    <div class="sec-head"><h2 id="h-stack">La pile technique</h2><p>Un outil par rôle, tous compatibles avec WordPress. Le schéma Mermaid détaillé est dans <code>04-ecommerce/architecture.md</code> (affiché tel quel sur GitHub).</p></div>
+    <div class="sec-head"><h2 id="h-stack">La pile technique</h2><p>Un outil par rôle, tous compatibles avec WordPress.</p></div>
     <div class="stack">
       <div class="panel tool"><span class="role">Boutique</span><b>WordPress + WooCommerce</b><span>Catalogue (sachets 150, 200 et 250 g aux noms franco-yéménites, mélange épicé, coffrets, packs Qishr), stocks, commandes, codes promo.</span></div>
-      <div class="panel tool"><span class="role">Paiement</span><b>Mollie Payments for WooCommerce</b><span>CB, Apple Pay, prélèvement SEPA. Environ 1,4 % + 0,25 € par paiement CB (à vérifier) ; 0 % pour les nouveaux comptes jusqu’au 31/12/2026, dans la limite de 50 000 €. Versements sur Qonto, partenaire de Mollie depuis 2025.</span></div>
+      <div class="panel tool"><span class="role">Paiement</span><b>Mollie Payments for WooCommerce</b><span>CB, Apple Pay, prélèvement SEPA. Environ 1,4 % + 0,25 € par paiement CB selon la grille publique de Mollie ; 0 % pour les nouveaux comptes jusqu’au 31/12/2026, dans la limite de 50 000 €. Versements sur Qonto, partenaire de Mollie depuis 2025.</span></div>
       <div class="panel tool"><span class="role">Abonnement</span><b>WooCommerce Subscriptions</b><span>Extension payante (environ 279 $ par an), compatible Mollie : renouvellement automatique, relance des paiements refusés, pause et résiliation par le client.</span></div>
       <div class="panel tool"><span class="role">E-mails et SMS</span><b>Brevo</b><span>Outil français, extension WooCommerce, scénarios de panier abandonné et de réachat. Environ 15 € par mois, SMS autour de 0,045 € l’unité vers la France.</span></div>
       <div class="panel tool"><span class="role">Expédition</span><b>Boxtal, Sendcloud ou extension Mondial Relay</b><span>Étiquettes depuis WooCommerce, point relais (dès 3,89 € en compte pro) ou Colissimo à domicile (8,89 à 9,59 € en tarif public pour 1 kg).</span></div>
       <div class="panel tool"><span class="role">Comptabilité</span><b>Pennylane, Qonto</b><span>Virements Mollie et SumUp rapprochés dans Qonto, factures WooCommerce exportées vers Pennylane chaque semaine.</span></div>
     </div>
     <div class="callout warn"><p><strong>Deux caisses, deux stocks.</strong> SumUp (boutique) et WooCommerce (site) ne partagent pas leur stock. Réservez un quota de sachets pour le web (par exemple 30) au bureau de stockage, et faites l’inventaire croisé chaque lundi pour éviter de vendre un sachet déjà parti.</p>
-      <p><strong>Prix en ligne face aux autres vendeurs.</strong> Le Yémen Haraz de 250 g se trouve en ligne autour de 17,50 € (Cafés d’Océ, en promotion) à 25 € (Café Torifa, Maison Lagrange). Décision du 6 novembre : le sachet web de 250 g passe de 31 € à <b>27,90 €</b> (marge d’environ 33 %), justifié par la date de torréfaction, la traçabilité au village et l’histoire. Le format 150 g à 19 € sert de porte d’entrée.</p></div>
+      <p><strong>Prix en ligne face aux autres vendeurs.</strong> Le Yémen Haraz de 250 g se trouve en ligne autour de 17,50 € (Cafés d’Océ, en promotion) à 25 € (Café Torifa, Maison Lagrange). Le sachet web de 250 g est à <b>27,90 €</b> (marge d’environ 27 % avec un vert à 55 € le kilo), un prix justifié par la date de torréfaction, la traçabilité au village et l’histoire. Le format 150 g à 19 € sert de porte d’entrée.</p></div>
+  </section>
+
+  <section aria-labelledby="h-schemas">
+    <div class="sec-head"><h2 id="h-schemas">Les schémas</h2><p>Comment l’argent, les commandes et les messages circulent entre les outils, puis le parcours d’un client avec chaque relance automatique.</p></div>
+    <div class="grid-2">
+      <div class="panel diagram"><h3>Flux entre les outils</h3>
+<pre class="mermaid">
+flowchart LR
+  subgraph Boutique["Boutique rue du Renard"]
+    SU[Caisse SumUp]
+    QR[QR codes gobelets et sachets]
+  end
+  subgraph Site["Site WordPress"]
+    WC[WooCommerce<br/>catalogue, stocks, commandes]
+    SUB[Abonnement mensuel]
+    PT[Pages terroir]
+  end
+  MO[Mollie<br/>CB, Apple Pay, SEPA]
+  BR[Brevo<br/>e-mails et SMS]
+  EX[Expédition<br/>point relais, Colissimo]
+  QO[(Qonto)]
+  PL[Pennylane]
+  QR --> PT --> WC
+  WC -- paiement --> MO
+  SUB -- renouvellement --> MO
+  MO -- versements --> QO
+  SU -- versements --> QO
+  WC -- panier et commande --> BR
+  BR -- relances --> WC
+  WC -- étiquettes --> EX
+  QO -- relevés --> PL
+  WC -- factures --> PL
+</pre><p class="small muted" data-repli hidden>Le schéma n’a pas pu s’afficher (connexion). En résumé : les QR codes mènent aux pages terroir et à WooCommerce ; Mollie encaisse et verse sur Qonto, comme SumUp ; Brevo envoie les relances ; Qonto et WooCommerce alimentent Pennylane.</p></div>
+      <div class="panel diagram"><h3>Parcours client et relances</h3>
+<pre class="mermaid">
+flowchart TD
+  A[Scan du QR code] --> B[Page terroir]
+  B --> C{Ajout au panier}
+  C -- paiement --> D[Commande payée]
+  C -- abandon --> E[E-mail à 45 min<br/>SMS si accord, 8 h-20 h, hors dimanche]
+  E --> F[E-mail à 24 h]
+  E -- reprise --> D
+  F -- reprise --> D
+  D --> G[J+3 : bien préparer son café]
+  G --> H[J+10 : demande d’avis]
+  D -- sachet --> I[J+21 : réassort en un clic]
+  I --> J[Deuxième commande]
+  J --> K[J+2 : proposition d’abonnement]
+  K --> L[Abonné mensuel]
+</pre><p class="small muted" data-repli hidden>Le schéma n’a pas pu s’afficher (connexion). Voir le tableau des scénarios Brevo ci-dessous.</p></div>
+    </div>
   </section>
 
   <section aria-labelledby="h-auto">
@@ -90,7 +163,7 @@
   </section>
 
   <section aria-labelledby="h-mails">
-    <div class="sec-head"><h2 id="h-mails">Textes des e-mails</h2><p>Prêts à coller dans Brevo. Les mots entre crochets sont remplacés automatiquement.</p></div>
+    <div class="sec-head"><h2 id="h-mails">Textes des e-mails</h2><p>Prêts à coller dans Brevo avec le bouton « Copier ». Les mots entre crochets sont remplacés automatiquement par Brevo (prénom, produit…).</p></div>
     <div class="grid-2">
       <div class="panel mail"><div class="head"><span class="trig">Panier abandonné · 45 min</span><span class="subj">Votre café vous attend, [Prénom]</span><span class="pre">Il est encore dans votre panier, torréfié cette semaine.</span></div>
         <div class="body">Bonjour [Prénom],
@@ -167,7 +240,7 @@ L’équipe Yem’kaf</div><span class="cta">Laisser un avis</span></div>
     <div class="table-scroll"><table class="text">
       <thead><tr><th>Point</th><th>Ce qu’il faut</th></tr></thead>
       <tbody>
-        <tr><td>Mentions légales et CGV</td><td>YEM’KAF, SAS au capital de 2 000 €, RCS Paris 887 788 834, 24 rue du Renard, 75004 Paris, président Khaled Al Maweri. La page actuelle de yemkaf.fr indique encore Guyancourt : à corriger. Ajouter l’hébergeur ; prix TTC et frais de port affichés avant le paiement ; droit de rétractation de 14 jours sur les produits non ouverts (un sachet ouvert ne peut être repris pour raison d’hygiène).</td></tr>
+        <tr><td>Mentions légales et CGV</td><td>YEM’KAF, SAS au capital de 2 000 €, RCS Paris 887 788 834, 24 rue du Renard, 75004 Paris, président Khaled Al Maweri. Le siège affiché est celui de la rue du Renard (et non plus Guyancourt) sur toutes les pages. Ajouter l’hébergeur ; prix TTC et frais de port affichés avant le paiement ; droit de rétractation de 14 jours sur les produits non ouverts (un sachet ouvert ne peut être repris pour raison d’hygiène).</td></tr>
         <tr><td>Médiateur de la consommation</td><td>Adhésion obligatoire à un médiateur, nommé dans les CGV.</td></tr>
         <tr><td>Informations produit</td><td>Dénomination, poids net, origine, conditions de conservation. Liste d’ingrédients pour les packs Qishr et le mélange épicé (café yéménite et épices, par ordre décroissant de poids), allergènes s’il y en a. Le nom franco-yéménite du sachet ne remplace pas l’origine : « Café du Yémen, région de Raymah ».</td></tr>
         <tr><td>Données personnelles</td><td>Bandeau cookies avec refus aussi simple que l’acceptation, politique de confidentialité, case SMS non pré-cochée, désinscription en un clic dans chaque e-mail.</td></tr>
@@ -183,7 +256,7 @@ L’équipe Yem’kaf</div><span class="cta">Laisser un avis</span></div>
         <tr><td>lun. 9 nov.</td><td>Ouvrir le compte Mollie (nouveau client pour l’offre 0 %), le relier à Qonto, installer l’extension WooCommerce</td><td>Yousif</td></tr>
         <tr><td>mer. 11 nov.</td><td>Fiches produits : sachets 150, 200 et 250 g, mélange, coffrets, abonnement, avec photos et dates de torréfaction</td><td>Yousif, barista vente et web</td></tr>
         <tr><td>ven. 13 nov.</td><td>Pages terroir (Haraz, Raymah) et QR codes avec UTM pour gobelets et sachets</td><td>Yousif</td></tr>
-        <tr><td>lun. 16 nov.</td><td>Brevo : extension WooCommerce, cinq scénarios, textes ci-dessus, test sur vos propres adresses</td><td>Yousif</td></tr>
+        <tr><td>lun. 16 nov.</td><td>Brevo : extension WooCommerce, cinq scénarios, textes ci-dessus, test sur nos propres adresses</td><td>Yousif</td></tr>
         <tr><td>mer. 18 nov.</td><td>Expédition : compte pro, grille de frais, étiquette test, colis test envoyé chez un associé</td><td>Amer</td></tr>
         <tr><td>ven. 20 nov.</td><td>CGV, médiateur, mentions, cookies relus ; commande réelle de bout en bout, remboursement compris</td><td>Yousif, Amer</td></tr>
         <tr><td>jeu. 26 nov.</td><td>Code « SOIRÉE » (livraison offerte) créé pour les invités du samedi 12 décembre</td><td>Yousif</td></tr>
@@ -200,5 +273,46 @@ L’équipe Yem’kaf</div><span class="cta">Laisser un avis</span></div>
     <li>Brevo : <a href="https://getkanal.com/fr/blog/brevo-prix" target="_blank" rel="noopener">tarifs 2026 (Kanal)</a> · Prix en ligne du Yémen Haraz : <a href="https://www.cafes-oce.fr/cafes-d-exception/2250-yemen-haraz.html" target="_blank" rel="noopener">Cafés d’Océ</a>, <a href="https://cafe-torifa.fr/en/products/village-bayt-a-llal-cafe-yemen-copie" target="_blank" rel="noopener">Café Torifa</a>, <a href="https://www.maison-lagrange.com/de-specialite/1602-cafe-grain-yemen-mof-3760259315580.html" target="_blank" rel="noopener">Maison Lagrange</a></li>
   </ul>
 </footer>
+
+<script>
+(function () {
+  'use strict';
+  function copier(btn, texte, cible) {
+    var ok = function () { btn.textContent = 'Copié'; setTimeout(function () { btn.textContent = 'Copier'; }, 2000); };
+    var repli = function () { var r = document.createRange(); r.selectNodeContents(cible); var s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Sélectionné : Ctrl+C'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(texte).then(ok, repli); else repli();
+  }
+  document.querySelectorAll('.mail').forEach(function (m) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'btn copy no-print'; b.textContent = 'Copier';
+    b.addEventListener('click', function () {
+      copier(b, 'Objet : ' + m.querySelector('.subj').textContent + '\nAperçu : ' + m.querySelector('.pre').textContent + '\n\n' + m.querySelector('.body').textContent + '\n\nBouton : ' + m.querySelector('.cta').textContent, m.querySelector('.body'));
+    });
+    m.appendChild(b);
+  });
+  document.querySelectorAll('.sms').forEach(function (m) {
+    var bulle = m.querySelector('.bubble');
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'btn copy no-print'; b.textContent = 'Copier';
+    b.addEventListener('click', function () { copier(b, bulle.textContent, bulle); });
+    m.appendChild(b);
+  });
+
+  function repli() { document.querySelectorAll('[data-repli]').forEach(function (p) { p.hidden = false; }); document.querySelectorAll('pre.mermaid').forEach(function (p) { p.style.display = 'none'; }); }
+  var sc = document.createElement('script');
+  sc.src = 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js';
+  sc.onerror = repli;
+  sc.onload = function () {
+    var cs = getComputedStyle(document.documentElement), v = function (n) { return cs.getPropertyValue(n).trim(); };
+    try {
+      window.mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', theme: 'base', flowchart: { htmlLabels: true, curve: 'basis' },
+        themeVariables: { fontFamily: 'Open Sans, system-ui, sans-serif', fontSize: '14px', primaryColor: v('--surface-2'), primaryTextColor: v('--ink'),
+          primaryBorderColor: v('--brand-ink'), lineColor: v('--muted'), secondaryColor: v('--accent-wash'), tertiaryColor: v('--surface'),
+          clusterBkg: v('--surface'), clusterBorder: v('--line'), edgeLabelBackground: v('--surface'), textColor: v('--ink') } });
+      window.mermaid.run({ querySelector: 'pre.mermaid' }).catch(repli);
+    } catch (e) { repli(); }
+  };
+  document.head.appendChild(sc);
+  setTimeout(function () { if (!document.querySelector('pre.mermaid[data-processed]')) repli(); }, 10000);
+})();
+</script>
 </body>
 </html>

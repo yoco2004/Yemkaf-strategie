@@ -154,8 +154,8 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
 <div class="scenario">
   <div class="wrap">
     <div class="seg" role="group" aria-label="Scénario">
-      <button type="button" id="sc-brief" aria-pressed="true">Plan des associés</button>
-      <button type="button" id="sc-real" aria-pressed="false">Toutes mes corrections</button>
+      <button type="button" id="sc-plan" aria-pressed="true">Plan</button>
+      <button type="button" id="sc-real" aria-pressed="false">Scénario prudent</button>
     </div>
     <div class="state">
       <span id="state-pill" class="pill warn"></span>
@@ -166,6 +166,21 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
 </div>
 
 <main class="wrap">
+  <section class="panel guide" aria-labelledby="h-guide">
+    <div class="guide-head"><h2 id="h-guide">Mode d’emploi</h2><span class="muted small">Module 1 · Simulateur financier</span></div>
+    <div class="guide-cols">
+      <div class="guide-col"><h3>À quoi il sert</h3><p>Prévoir le chiffre d’affaires, la marge, le résultat et la trésorerie des six premiers mois (20 novembre 2026 → 19 mai 2027), et voir l’effet d’un changement de ventes, de prix ou de charges.</p></div>
+      <div class="guide-col"><h3>Pour qui</h3><p>Les trois associés. Yousif tient les chiffres à jour.</p></div>
+      <div class="guide-col"><h3>Comment l’utiliser</h3><ol>
+        <li><b>Lire</b> : les cinq chiffres juste en dessous résument les six mois.</li>
+        <li><b>Choisir un scénario</b> : « Plan » suppose les objectifs atteints dès l’ouverture ; « Scénario prudent » ajoute un démarrage progressif, la saisonnalité, les frais de port et les invendus.</li>
+        <li><b>Tester</b> : les curseurs de l’onglet « Leviers » changent les volumes (tasses, colis, kilos vendus aux pros…). Ils ne sont pas enregistrés.</li>
+        <li><b>Mettre à jour</b> : en bas de page, « Vos chiffres » contient les vraies charges, les prix, les tarifs pros et les paramètres (SumUp, café vert, solde Qonto). Ces chiffres sont enregistrés pour toute l’équipe.</li>
+        <li><b>Exporter</b> : bouton « Exporter (Excel) » à côté du titre « Compte de résultat mensuel », pour le comptable ou la banque.</li>
+      </ol></div>
+    </div>
+  </section>
+
   <section class="kpis" id="kpis" aria-label="Indicateurs clés sur 6 mois"></section>
   <div class="callout" id="callout"></div>
 
@@ -173,11 +188,11 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     <aside class="panel side" aria-label="Réglages">
       <div class="tabs" role="tablist">
         <button type="button" role="tab" id="tab-leviers" aria-controls="pane-leviers" aria-selected="true">Leviers</button>
-        <button type="button" role="tab" id="tab-corr" aria-controls="pane-corr" aria-selected="false">Corrections <span id="tab-corr-count"></span></button>
+        <button type="button" role="tab" id="tab-corr" aria-controls="pane-corr" aria-selected="false">Hypothèses prudentes <span id="tab-corr-count"></span></button>
       </div>
       <div class="tabpanel" role="tabpanel" id="pane-leviers" aria-labelledby="tab-leviers"></div>
       <div class="tabpanel" role="tabpanel" id="pane-corr" aria-labelledby="tab-corr" hidden>
-        <p class="hint" style="margin:12px 0 4px">Rien n’est appliqué sans vous. Chaque case active une correction que je propose ; le montant indique son effet sur le résultat des 6 mois avec vos réglages actuels.</p>
+        <p class="hint" style="margin:12px 0 4px">Chaque case ajoute une hypothèse prudente au plan. Le montant à droite indique son effet sur le résultat des six mois. Toutes cochées, c’est le « Scénario prudent ».</p>
         <div id="corr-list"></div>
         <div class="corr-actions">
           <button type="button" class="btn primary" id="corr-all">Tout appliquer</button>
@@ -198,8 +213,8 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
           <div class="chart-box"><canvas id="ch-res" aria-label="Résultat mensuel et trésorerie cumulée"></canvas></div>
         </section>
         <section class="panel chart-card" aria-labelledby="h-cmp">
-          <div class="card-head"><h2 id="h-cmp">Résultat cumulé : plan contre réglages</h2></div>
-          <span class="hint">La courbe grise reprend vos chiffres sans correction. Le losange marque le résultat annoncé dans le brief avec 4 salariés (49 123 €).</span>
+          <div class="card-head"><h2 id="h-cmp">Résultat cumulé : plan et scénario affiché</h2></div>
+          <span class="hint">La courbe grise suit le plan (objectifs atteints dès l’ouverture), la courbe verte le scénario affiché.</span>
           <div class="chart-box"><canvas id="ch-cmp" aria-label="Comparaison du résultat cumulé"></canvas></div>
         </section>
       </div>
@@ -225,11 +240,11 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
           <div class="risk"><b>Mokha aux mains des Houthis</b><span>Port pris le 10 septembre 2026. Sécurisez 8 à 12 semaines de vert et des clauses de force majeure dans vos contrats B2B.</span></div>
           <div class="risk"><b>Règlement européen anti-déforestation</b><span>Le café y est soumis : 30 décembre 2026 pour les moyennes et grandes entreprises, 30 juin 2027 pour les petites. Il faut la géolocalisation des parcelles au Yémen.</span></div>
           <div class="risk"><b>Centre Pompidou fermé jusqu’en 2030</b><span>Moins de touristes rue du Renard. Misez sur les bureaux voisins, les riverains et les 25 places assises.</span></div>
-          <div class="risk"><b>Prix du café vert : 50 à 60 € le kilo</b><span>Chaque 5 € par kilo coûte environ 5 400 € de résultat sur 6 mois. Réglage dans « Vos chiffres › Paramètres ». La grille pro a été relevée pour garder au moins 14 % de marge à 60 €.</span></div>
+          <div class="risk"><b>Prix du café vert : 50 à 60 € le kilo</b><span>Chaque 5 € par kilo coûte environ 5 400 € de résultat sur 6 mois. Réglage dans « Vos chiffres › Paramètres ». La grille pro garde au moins 14 % de marge à 60 €.</span></div>
         </div>
       </section>
       <section class="panel chart-card" aria-labelledby="h-grid">
-        <div class="card-head"><h2 id="h-grid">Votre grille de marges du brief, recalculée</h2><span class="hint">HT = TTC ÷ (1 + TVA).</span></div>
+        <div class="card-head"><h2 id="h-grid">Marge de chaque produit</h2><span class="hint">Prix et coûts de « Vos chiffres », café vert au prix des paramètres. HT = TTC ÷ (1 + TVA).</span></div>
         <div class="table-scroll"><table id="t-grid"></table></div>
       </section>
     </div>
@@ -260,7 +275,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
 
 <footer class="wrap">
   <img class="frise" src="../assets/marque/frise-verte.png" alt="" style="opacity:.5">
-  <div class="eyebrow">Sources consultées le 6 novembre 2026</div>
+  <div class="eyebrow">Sources</div>
   <ul>
     <li>Prise de Mokha : <a href="https://www.aljazeera.com/amp/news/2026/9/10/houthis-capture-yemeni-town-of-mocha-why-it-matters" target="_blank" rel="noopener">Al Jazeera</a> · EUDR : <a href="https://www.coolset.com/academy/eudr-frequently-asked-questions" target="_blank" rel="noopener">Coolset</a>, <a href="https://sustainablefutures.linklaters.com/post/102ly55/eu-changes-to-deforestation-regulation-reach-the-finish-line" target="_blank" rel="noopener">Linklaters</a></li>
     <li>SumUp : <a href="https://www.sumup.com/fr-fr/tarifs/" target="_blank" rel="noopener">tarifs</a> · Mollie et Qonto : <a href="https://www.mollie.com/news/qonto-mollie-collaboration" target="_blank" rel="noopener">annonce Mollie</a>, <a href="https://www.moneyvox.fr/banque-pro/actualites/103161/compte-pro-cette-banque-en-ligne-devoile-une-nouvelle-solution-de-paiement" target="_blank" rel="noopener">Moneyvox</a>, <a href="https://woocommerce.com/products/mollie-payments-for-woocommerce" target="_blank" rel="noopener">Mollie pour WooCommerce</a></li>
@@ -417,17 +432,17 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
   // ================================================================ LEVIERS
   var LEVIERS_UI = [
     { g: 'Boutique' },
-    { cle: 'tassesJour', label: 'Tasses par jour', min: 30, max: 240, step: 1, fmt: function (v) { return fInt.format(v); }, foot: 'Brief : 135' },
-    { cle: 'tauxPatisserie', label: 'Pâtisseries pour 100 tasses', min: 0, max: 0.8, step: 0.01, fmt: function (v) { return fInt.format(v * 100); }, foot: 'Brief : 41 (55 pour 135)' },
-    { cle: 'snackingJour', label: 'Snacking et formules midi par jour', min: 0, max: 80, step: 1, fmt: function (v) { return fInt.format(v); }, foot: 'Brief : 28' },
-    { cle: 'debutSnacking', label: 'Lancement du snacking salé', type: 'seg', options: [[1, 'M1'], [2, 'M2'], [3, 'M3']], foot: 'Brief : dès le deuxième mois' },
-    { cle: 'sachetsJour', label: 'Sachets vendus en boutique par jour', min: 0, max: 25, step: 1, fmt: function (v) { return fInt.format(v); }, foot: 'Brief : 6' },
+    { cle: 'tassesJour', label: 'Tasses par jour', min: 30, max: 240, step: 1, fmt: function (v) { return fInt.format(v); }, foot: 'Objectif : 135' },
+    { cle: 'tauxPatisserie', label: 'Pâtisseries pour 100 tasses', min: 0, max: 0.8, step: 0.01, fmt: function (v) { return fInt.format(v * 100); }, foot: 'Objectif : 41 (55 pour 135 tasses)' },
+    { cle: 'snackingJour', label: 'Snacking et formules midi par jour', min: 0, max: 80, step: 1, fmt: function (v) { return fInt.format(v); }, foot: 'Objectif : 28' },
+    { cle: 'debutSnacking', label: 'Lancement du snacking salé', type: 'seg', options: [[1, 'M1'], [2, 'M2'], [3, 'M3']], foot: 'Prévu : dès le deuxième mois' },
+    { cle: 'sachetsJour', label: 'Sachets vendus en boutique par jour', min: 0, max: 25, step: 1, fmt: function (v) { return fInt.format(v); }, foot: 'Objectif : 6' },
     { g: 'Coffrets et e-commerce' },
-    { cle: 'coffrets6Mois', label: 'Coffrets cadeaux sur 6 mois', min: 0, max: 600, step: 10, fmt: function (v) { return fInt.format(v); }, foot: 'Brief : 210 · 40 % avant Noël' },
-    { cle: 'colisMois', label: 'Commandes web par mois', min: 0, max: 400, step: 5, fmt: function (v) { return fInt.format(v); }, foot: 'Brief : 120' },
-    { cle: 'panierWebTtc', label: 'Panier moyen web TTC', min: 25, max: 90, step: 0.1, fmt: function (v) { return fEur2.format(v); }, foot: 'Brief : 49,10 €' },
+    { cle: 'coffrets6Mois', label: 'Coffrets cadeaux sur 6 mois', min: 0, max: 600, step: 10, fmt: function (v) { return fInt.format(v); }, foot: 'Objectif : 210 · 40 % avant Noël' },
+    { cle: 'colisMois', label: 'Commandes web par mois', min: 0, max: 400, step: 5, fmt: function (v) { return fInt.format(v); }, foot: 'Objectif : 120' },
+    { cle: 'panierWebTtc', label: 'Panier moyen web TTC', min: 25, max: 90, step: 0.1, fmt: function (v) { return fEur2.format(v); }, foot: 'Objectif : 49,10 €' },
     { g: 'Pros (B2B)' },
-    { cle: 'kgB2BMois', label: 'Café livré aux pros par mois', min: 0, max: 300, step: 5, fmt: function (v) { return fInt.format(v) + ' kg'; }, foot: 'Brief : 60 kg' },
+    { cle: 'kgB2BMois', label: 'Café livré aux pros par mois', min: 0, max: 300, step: 5, fmt: function (v) { return fInt.format(v) + ' kg'; }, foot: 'Objectif : 60 kg' },
     { cle: 'partVertB2B', label: 'Part de café vert dans le B2B', min: 0, max: 1, step: 0.05, fmt: function (v) { return fInt.format(v * 100) + ' %'; }, foot: 'Hypothèse : 50 %' },
     { g: 'Loyer et stock' },
     { cle: 'moisFranchise', label: 'Franchise de loyer obtenue', min: 0, max: 3, step: 1, fmt: function (v) { return v + ' mois'; }, foot: 'S’applique à la ligne « Loyer » de vos charges' },
@@ -488,7 +503,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
   }
   document.getElementById('tab-leviers').addEventListener('click', function () { selectSideTab('leviers'); });
   document.getElementById('tab-corr').addEventListener('click', function () { selectSideTab('corr'); });
-  document.getElementById('sc-brief').addEventListener('click', function () { setAll(false); });
+  document.getElementById('sc-plan').addEventListener('click', function () { setAll(false); });
   document.getElementById('sc-real').addEventListener('click', function () { setAll(true); selectSideTab('corr'); });
 
   // ================================================================ ÉDITEUR « VOS CHIFFRES »
@@ -509,7 +524,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     }).join('');
     var sugg = M.SUGGESTIONS.filter(function (s) { return s.type === 'fixe' && !donnees.chargesFixes.some(function (c) { return c.nom === s.nom; }); });
     document.getElementById('ed-fixes').innerHTML =
-      '<p class="hint">Montants HT par mois. « De » et « à » fixent les mois concernés (M1 = 20 nov.–19 déc.). Le brief prévoyait 4 salariés : vous partez à 3 baristas ; décalez le « De » d’une arrivée tardive.</p>' +
+      '<p class="hint">Montants HT par mois. « De » et « à » fixent les mois concernés (M1 = 20 nov.–19 déc.). Pour une arrivée ou un départ en cours de période, changez le mois « De » ou « À ».</p>' +
       '<div class="table-scroll"><table class="ed-table" id="t-fixes"><thead><tr><th>Charge</th><th>Catégorie</th><th>€ HT / mois</th><th>De</th><th>À</th><th>Total 6 mois</th><th></th></tr></thead><tbody>' + rows +
       '</tbody><tfoot><tr><td colspan="5">Total des charges fixes sur 6 mois</td><td class="num" id="cf-total"></td><td></td></tr></tfoot></table></div>' +
       '<div class="row-actions"><button type="button" class="btn primary" data-act="add-fixe">Ajouter une charge</button></div>' +
@@ -572,7 +587,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
   var B2B_UI = [['vert', 'Café vert pour torréfacteurs', 1], ['torrefie', 'Café torréfié pour coffee shops, hôtels et restaurants', 1 / M.RENDEMENT]];
   function renderB2B() {
     document.getElementById('ed-b2b').innerHTML =
-      '<p class="hint">Prix HT par kilo. Le coût du kilo vendu vaut le prix du vert (' + eur(pv()) + ') pour le café vert, et le prix du vert ÷ 0,8 pour le torréfié (freinte), plus les frais hors café (sacs, transport, torréfaction à façon). Grille relevée le 12 novembre pour garder au moins 14 % de marge avec un vert à 60 €.</p>' +
+      '<p class="hint">Prix HT par kilo. Le coût du kilo vendu vaut le prix du vert (' + eur(pv()) + ') pour le café vert, et le prix du vert ÷ 0,8 pour le torréfié (freinte), plus les frais hors café (sacs, transport, torréfaction à façon). Avec un vert à 60 € le kilo, chaque palier garde au moins 14 % de marge.</p>' +
       B2B_UI.map(function (b) {
         var rows = donnees.b2b[b[0]].map(function (l, i) {
           var cout = pv() * b[2] + l.extra;
@@ -591,16 +606,16 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
 
   var PARAMS_UI = [
     { g: 'Café vert' },
-    { k: 'prixVertKg', label: 'Prix du café vert, tout compris', unite: '€ HT/kg', step: 0.5, note: 'Entre 50 et 60 € annoncés. Chaque 5 € par kilo coûte environ 5 400 € de résultat sur 6 mois.' },
+    { k: 'prixVertKg', label: 'Prix du café vert, tout compris', unite: '€ HT/kg', step: 0.5, note: 'Entre 50 et 60 € selon les lots. Chaque 5 € par kilo coûte environ 5 400 € de résultat sur 6 mois.' },
     { g: 'Paiements' },
-    { k: 'sumupAbonnement', label: 'SumUp : abonnement mensuel', unite: '€ HT', step: 1, note: 'Votre contrat : 90 € par mois.' },
-    { k: 'sumupTaux', label: 'SumUp : commission par paiement', unite: '%', step: 0.01, pct: true, note: 'Votre contrat : 0,49 %.' },
+    { k: 'sumupAbonnement', label: 'SumUp : abonnement mensuel', unite: '€ HT', step: 1, note: 'Contrat actuel : 90 € par mois.' },
+    { k: 'sumupTaux', label: 'SumUp : commission par paiement', unite: '%', step: 0.01, pct: true, note: 'Contrat actuel : 0,49 % du montant.' },
     { k: 'partCarte', label: 'Part des ventes boutique payées par carte', unite: '%', step: 1, pct: true, note: 'Le reste en espèces.' },
-    { k: 'mollieTaux', label: 'Mollie : commission par paiement en ligne', unite: '%', step: 0.01, pct: true, note: 'Environ 1,4 % pour une carte française, à vérifier.' },
+    { k: 'mollieTaux', label: 'Mollie : commission par paiement en ligne', unite: '%', step: 0.01, pct: true, note: 'Environ 1,4 % pour une carte française (grille publique de Mollie).' },
     { k: 'mollieFixe', label: 'Mollie : frais fixes par paiement', unite: '€', step: 0.01, note: 'Environ 0,25 €.' },
     { k: 'mollieOffre', label: 'Mollie : offre 0 % jusqu’au 31 décembre', type: 'check', note: 'Pour les nouveaux comptes, dans la limite de 50 000 €.' },
     { g: 'Trésorerie' },
-    { k: 'tresorerieDepart', label: 'Solde Qonto au 20 novembre', unite: '€', step: 500, note: 'Environ 15 000 € annoncés.' },
+    { k: 'tresorerieDepart', label: 'Solde Qonto au 20 novembre', unite: '€', step: 500, note: 'Solde au début de la période.' },
     { k: 'mensualitesEmprunt', label: 'Mensualités d’emprunt ou de leasing', unite: '€ / mois', step: 50, note: 'Aucun crédit en cours.' }
   ];
   function renderParam() {
@@ -629,13 +644,13 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
   function renderSave() {
     document.getElementById('ed-save').innerHTML =
       '<p class="hint">' + (store.mode === 'db'
-        ? 'Les données de cette page sont partagées entre toutes les personnes qui ont accès au simulateur. Claude peut aussi les relire pour mettre à jour les autres modules.'
+        ? 'Les données de cette page sont partagées entre toutes les personnes qui ont accès au simulateur.'
         : 'Les données sont gardées dans ce navigateur. Pour les transférer vers la page partagée, copiez-les ici puis importez-les là-bas.') + '</p>' +
       '<div class="row-actions"><button type="button" class="btn primary" data-act="export-csv">Exporter le compte de résultat (Excel)</button>' +
       '<button type="button" class="btn" data-act="export-json">Exporter toutes les données (JSON)</button><span id="export-msg" class="small"></span></div>' +
       '<p class="hint">Le fichier Excel (CSV) reprend le scénario affiché : compte de résultat mois par mois, chaque charge, les volumes et le café vert. Le fichier JSON contient toutes vos données et se réimporte ci-dessous.</p>' +
       '<div class="row-actions"><button type="button" class="btn" data-act="copy-json">Copier les données</button>' +
-      '<button type="button" class="btn" data-act="ask-reset">Revenir aux chiffres du brief</button></div>' +
+      '<button type="button" class="btn" data-act="ask-reset">Revenir aux chiffres de départ</button></div>' +
       '<div id="reset-confirm"></div>' +
       '<label for="json-in" class="small muted">Coller des données copiées depuis une autre version (fichier local ou page publiée), puis importer :</label>' +
       '<textarea id="json-in" spellcheck="false" placeholder="{ &quot;version&quot;: 3, … }"></textarea>' +
@@ -745,7 +760,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
       return;
     }
     else if (act === 'ask-reset') {
-      document.getElementById('reset-confirm').innerHTML = '<div class="confirm">Remplacer toutes les charges, dépenses et prix par ceux du brief' + (store.mode === 'db' ? ', pour toute l’équipe' : '') + ' ? <button type="button" class="btn primary" data-act="do-reset">Oui, remplacer</button><button type="button" class="btn" data-act="cancel-reset">Annuler</button></div>';
+      document.getElementById('reset-confirm').innerHTML = '<div class="confirm">Remplacer toutes les charges, dépenses, prix et paramètres par les chiffres de départ' + (store.mode === 'db' ? ', pour toute l’équipe' : '') + ' ? <button type="button" class="btn primary" data-act="do-reset">Oui, remplacer</button><button type="button" class="btn" data-act="cancel-reset">Annuler</button></div>';
       return;
     }
     else if (act === 'cancel-reset') { document.getElementById('reset-confirm').innerHTML = ''; return; }
@@ -780,10 +795,10 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     var plan = M.simuler(leviers, {}, donnees);
     var t = r.totaux, n = nbActives();
 
-    document.getElementById('sc-brief').setAttribute('aria-pressed', String(n === 0));
+    document.getElementById('sc-plan').setAttribute('aria-pressed', String(n === 0));
     document.getElementById('sc-real').setAttribute('aria-pressed', String(n === NB_CORR));
     var pill = document.getElementById('state-pill');
-    pill.textContent = n === 0 ? 'Aucune correction appliquée (' + NB_CORR + ' proposées)' : (n === NB_CORR ? 'Les ' + NB_CORR + ' corrections appliquées' : n + ' correction' + (n > 1 ? 's' : '') + ' sur ' + NB_CORR);
+    pill.textContent = n === 0 ? 'Plan : objectifs atteints dès l’ouverture' : (n === NB_CORR ? 'Scénario prudent : ' + NB_CORR + ' hypothèses' : n + ' hypothèse' + (n > 1 ? 's' : '') + ' prudente' + (n > 1 ? 's' : '') + ' sur ' + NB_CORR);
     pill.className = 'pill ' + (n === 0 ? 'warn' : 'ok');
     document.getElementById('tab-corr-count').textContent = n + '/' + NB_CORR;
 
@@ -791,16 +806,15 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     var drawdown = Math.max(0, r.parametres.tresorerieDepart - r.tresorerieMin);
     var coussin = drawdown + r.pointMort.chargesFixesMois;
     document.getElementById('kpis').innerHTML =
-      tile('Résultat d’exploitation · 6 mois', '<span class="' + (t.resultat < 0 ? 'neg' : '') + '">' + eur(t.resultat) + '</span>', deltaSpan(t.resultat - plan.totaux.resultat, true) + ' · brief : ' + eur(M.PLAN_DECLARE.resultat)) +
-      tile('Chiffre d’affaires HT · 6 mois', eur(t.caTotal), deltaSpan(t.caTotal - plan.totaux.caTotal, true) + ' · brief : ' + eur(M.PLAN_DECLARE.ca)) +
-      tile('Marge brute', eur(t.margeBrute), pct(t.margeBrute / t.caTotal) + ' du CA · brief : ' + eur(M.PLAN_DECLARE.margeBrute)) +
+      tile('Résultat d’exploitation · 6 mois', '<span class="' + (t.resultat < 0 ? 'neg' : '') + '">' + eur(t.resultat) + '</span>', deltaSpan(t.resultat - plan.totaux.resultat, true)) +
+      tile('Chiffre d’affaires HT · 6 mois', eur(t.caTotal), deltaSpan(t.caTotal - plan.totaux.caTotal, true)) +
+      tile('Marge brute', eur(t.margeBrute), pct(t.margeBrute / t.caTotal) + ' du chiffre d’affaires') +
       tile('Point mort en régime', fInt.format(Math.ceil(pm)) + ' tasses/jour', marge >= 0 ? 'Marge de sécurité ' + fInt.format(marge * 100) + ' % sous vos ' + fInt.format(leviers.tassesJour) : 'Au-dessus de vos ' + fInt.format(leviers.tassesJour) + ' tasses') +
       tile('Point bas de trésorerie', eur(r.tresorerieMin), 'en ' + r.moisTresorerieMin + ' · coussin conseillé : ' + eur(coussin));
 
-    var caBrief = M.simuler(M.LEVIERS_DEFAUT, {}, donnees).totaux.caTotal;
     document.getElementById('callout').innerHTML =
-      '<p><strong>Votre plan avec vos chiffres actuels.</strong> Avec vos charges (' + eur(r.pointMort.chargesFixesMois) + ' par mois en régime, abonnement SumUp compris), la grille « Premium Yémen » et un café vert à ' + eur(r.parametres.prixVertKg) + ' le kilo, vos objectifs quotidiens donnent ' + eur(plan.totaux.resultat) + ' de résultat sur 6 mois, pour ' + eur(caBrief) + ' de CA. Le brief annonçait 49 123 € avec 4 salariés et l’ancienne grille ; son fichier source reste utile pour caler le mix de ventes.</p>' +
-      '<p><strong>Trésorerie.</strong> En partant de ' + eur(r.parametres.tresorerieDepart) + ' sur Qonto, le point le plus bas est atteint en ' + r.moisTresorerieMin + ' (' + eur(r.tresorerieMin) + ') et vous terminez à ' + eur(r.tresorerieFin) + '. Coussin conseillé : le creux plus un mois de charges, soit <b>' + eur(coussin) + '</b>' + (r.tresorerieMin < r.pointMort.chargesFixesMois ? ' : <b>au point bas, vous avez moins d’un mois de charges devant vous</b>.' : '.') + '</p>';
+      '<p><strong>En résumé.</strong> ' + (n === 0 ? 'Selon le plan' : (n === NB_CORR ? 'Dans le scénario prudent' : 'Avec ' + n + ' hypothèse' + (n > 1 ? 's' : '') + ' prudente' + (n > 1 ? 's' : ''))) + ', les six mois donnent ' + eur(t.caTotal) + ' de chiffre d’affaires et ' + eur(t.resultat) + ' de résultat d’exploitation. Les charges fixes s’élèvent à ' + eur(r.pointMort.chargesFixesMois) + ' par mois en rythme de croisière ; il faut vendre environ ' + fInt.format(Math.ceil(pm)) + ' tasses par jour pour les couvrir.</p>' +
+      '<p><strong>Trésorerie.</strong> En partant de ' + eur(r.parametres.tresorerieDepart) + ' sur Qonto, le point le plus bas est atteint en ' + r.moisTresorerieMin + ' (' + eur(r.tresorerieMin) + ') et la période se termine à ' + eur(r.tresorerieFin) + '. Coussin conseillé : le creux plus un mois de charges, soit ' + eur(coussin) + (r.tresorerieMin < r.pointMort.chargesFixesMois ? ' : <b>au point bas, il reste moins d’un mois de charges en caisse</b>.' : '.') + '</p>';
 
     document.getElementById('hint-ca').textContent = 'Total ' + eur(t.caTotal) + ' HT · ' + fInt.format(t.quantites.tasses) + ' tasses';
     var fs = document.getElementById('foot-stock');
@@ -817,6 +831,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     });
     updateFixesTotals();
     renderTables(r);
+    renderMarges();
     renderCharts(r, plan);
   }
 
@@ -868,15 +883,18 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
       row('minor', 'Budget café vert à ' + eur(r.parametres.prixVertKg) + '/kg', get(function (m) { return m.cafeVertKg * r.parametres.prixVertKg; })) + '</tbody>';
   }
 
-  function renderGrid() {
-    var AR = { 'Qishr Cascara Épicé': 'قشر', 'Shai Adeni Karak': 'شاي عدني' };
-    document.getElementById('t-grid').innerHTML = '<thead><tr><th>Produit</th><th>Prix TTC</th><th>TVA</th><th>Prix HT</th><th>Coût HT</th><th>Marge (brief)</th><th>Recalculée</th><th>Taux (brief)</th><th>Recalculé</th><th>Contrôle</th></tr></thead><tbody>' +
-      M.verifierGrille().map(function (x) {
-        var dT = Math.abs(x.tauxCalcule - x.tauxBrief), dM = Math.abs(x.margeCalculee - x.margeBrief);
-        var tag = dM <= 0.011 && dT <= 0.11 ? '<span class="tag ok">Exact</span>' : (dM <= 0.011 && dT <= 0.31 ? '<span class="tag round">Arrondi ' + fDec1.format(dT) + ' pt</span>' : '<span class="tag ko">À revoir</span>');
-        return '<tr><td>' + esc(x.nom) + (AR[x.nom] ? ' <span class="ar muted" lang="ar">' + AR[x.nom] + '</span>' : '') + '</td><td>' + fEur2.format(x.ttc) + '</td><td>' + (x.tva === 0.1 ? '10 %' : '5,5 %') + '</td><td>' + fEur2.format(x.ht) +
-          '</td><td>' + fEur2.format(x.cout) + '</td><td>' + fEur2.format(x.margeBrief) + '</td><td>' + fEur2.format(x.margeCalculee) + '</td><td>' + fDec1.format(x.tauxBrief) + ' %</td><td>' + fDec1.format(x.tauxCalcule) + ' %</td><td>' + tag + '</td></tr>';
-      }).join('') + '</tbody>';
+  function renderMarges() {
+    var AR = { qishr: 'قشر', shai: 'شاي عدني' };
+    var html = '<thead><tr><th>Produit</th><th>Prix TTC</th><th>TVA</th><th>Prix HT</th><th>Coût total HT</th><th>Marge HT</th><th>Taux</th></tr></thead><tbody>';
+    CANAUX_PRIX.forEach(function (ch) {
+      html += '<tr><td colspan="7" style="background:var(--surface-2);font-weight:700">' + esc(ch.nom) + '</td></tr>';
+      donnees.catalogue[ch.cle].forEach(function (l) {
+        var ht = l.ttc / (1 + ch.tva), ct = M.coutTotal(l, pv()), m = ht - ct;
+        html += '<tr><td>' + esc(l.nom) + (AR[l.id] ? ' <span class="ar muted" lang="ar">' + AR[l.id] + '</span>' : '') + '</td><td>' + fEur2.format(l.ttc) + '</td><td>' + (ch.tva === 0.1 ? '10 %' : '5,5 %') +
+          '</td><td>' + fEur2.format(ht) + '</td><td>' + fEur2.format(ct) + '</td><td>' + fEur2.format(m) + '</td><td>' + (ht > 0 ? fDec1.format(m / ht * 100) + ' %' : '—') + '</td></tr>';
+      });
+    });
+    document.getElementById('t-grid').innerHTML = html + '</tbody>';
   }
 
   // ================================================================ GRAPHIQUES
@@ -952,9 +970,8 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     oC.layout = { padding: { right: 56 } };
     oC.plugins.tooltip.filter = function (i) { return i.raw !== null && i.raw !== undefined; };
     charts.cmp = new Chart(document.getElementById('ch-cmp'), { type: 'line', data: { labels: labelsMois(), datasets: [
-      { label: 'Vos réglages', data: [], borderColor: T.s[0], backgroundColor: T.s[0], borderWidth: 2, pointRadius: 4, pointHoverRadius: 6, pointBackgroundColor: T.s[0], pointBorderColor: T.surface, pointBorderWidth: 2, tension: 0, endLabel: true },
-      { label: 'Plan sans correction', data: [], borderColor: T.muted, backgroundColor: T.muted, borderWidth: 2, pointRadius: 3, pointBackgroundColor: T.muted, pointBorderColor: T.surface, pointBorderWidth: 2, tension: 0, endLabel: true },
-      { label: 'Brief (49 123 €, 4 salariés)', data: [null, null, null, null, null, M.PLAN_DECLARE.resultat], showLine: false, borderColor: T.ink, backgroundColor: T.surface, pointStyle: 'rectRot', pointRadius: 7, pointHoverRadius: 8, borderWidth: 2 }
+      { label: 'Scénario affiché', data: [], borderColor: T.s[0], backgroundColor: T.s[0], borderWidth: 2, pointRadius: 4, pointHoverRadius: 6, pointBackgroundColor: T.s[0], pointBorderColor: T.surface, pointBorderWidth: 2, tension: 0, endLabel: true },
+      { label: 'Plan', data: [], borderColor: T.muted, backgroundColor: T.muted, borderWidth: 2, pointRadius: 3, pointBackgroundColor: T.muted, pointBorderColor: T.surface, pointBorderWidth: 2, tension: 0, endLabel: true },
     ] }, options: oC, plugins: [endLabels] });
 
     var oD = baseOptions(T);
@@ -1006,10 +1023,10 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
   // ================================================================ DÉMARRAGE
   var local = loadLocal();
   if (local) donnees = M.normaliserDonnees(local);
-  buildLeviers(); buildCorrections(); renderGrid(); renderEditor(false);
+  buildLeviers(); buildCorrections(); renderEditor(false);
   if (!window.Chart) showChartFallback();
   explainSave();
-  setSave(local ? 'Enregistré dans ce navigateur' : 'Chiffres du brief', 'info');
+  setSave(local ? 'Enregistré dans ce navigateur' : 'Chiffres de départ', 'info');
   render();
   connectShared();
 })();

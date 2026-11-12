@@ -1,44 +1,43 @@
-# YEM'KAF : salle de pilotage
+# Yem'kaf : salle de pilotage
 
-Outils de direction de Yem'kaf, maison de café de spécialité yéménite au 24 rue du Renard (Paris 4e),
+Les outils de direction de Yem'kaf, maison de café de spécialité yéménite au 24 rue du Renard (Paris 4e),
 fondée par Yousif Al-Houmays, Amer Ibrahim et Khaled Almaweri.
 Période couverte : du soft opening du **20 novembre 2026** au bilan du **19 mai 2027**.
 
-## Ouvrir les outils
+## Comment l'ouvrir
 
-Double-cliquez sur `index.html` : c'est la feuille de route, qui mène à tous les modules.
-Aucun serveur n'est nécessaire. Une connexion internet charge les polices et les graphiques (Chart.js) ;
-hors connexion, les tableaux restent complets.
+- **En ligne (recommandé)** : ouvrez le lien de la « Salle de pilotage » partagé par Yousif. Le simulateur a son propre
+  lien ; c'est la seule version où les chiffres modifiés sont enregistrés pour toute l'équipe.
+- **Sur un ordinateur** : téléchargez le dossier et double-cliquez sur `index.html`. Aucun logiciel n'est nécessaire.
+  Une connexion internet charge les polices, les graphiques et les schémas ; sans connexion, les tableaux restent complets.
+  Dans cette version locale, les chiffres modifiés restent dans le navigateur de l'ordinateur.
 
-## Structure
+Chaque page commence par un **mode d'emploi** : à quoi elle sert, pour qui, comment l'utiliser.
 
-| Dossier | Contenu | Responsable |
-|---|---|---|
-| `index.html` | Feuille de route : changements, urgences, décisions, paliers d'objectifs, tâches par personne, rituels | Tous |
-| `00-marque/` | Plateforme de marque, corrections de charte et d'étiquetage, étude « 100 % Yémen ou autres cafés » | Yousif |
-| `01-dashboard-financier/` | Simulateur 6 mois. Charges, dépenses ponctuelles, prix, grille pro et paramètres (SumUp, Mollie, café vert, trésorerie) **modifiables et exportables** ; enregistrés pour l'équipe sur la page publiée | Yousif |
-| `01-dashboard-financier/modele.js` | Modèle de calcul, testable seul : `node -e "require('./01-dashboard-financier/modele.js')"` | — |
-| `02-onboarding-baristas/` | Manuel : bar d'après le plan, recettes, boissons yéménites, planning 3 baristas + associés, check-lists imprimables | Amer, chef barista |
-| `03-marketing-lancement/` | Rétroplanning, soirée VIP du jeudi 26 novembre, invitations par segment, coffrets, temps forts | Yousif |
-| `04-ecommerce/` | WordPress, WooCommerce, Mollie, Qonto, Brevo : tunnel QR, relances, textes des e-mails et SMS, conformité ; schémas Mermaid dans `architecture.md` | Yousif |
-| `05-b2b-juridique/` | Plaquette tarifaire, cupping du jeudi, EUDR, deux contrats-cadres en Markdown (à faire relire par un avocat) | Khaled |
-| `assets/` | Feuille de style commune et éléments de marque optimisés (logos, frises, photos) | — |
-| `docs/recherches-2026-11-06.md` | Recherches en ligne et sources | — |
-| `outils/construire-artifacts.py` | Prépare les fichiers des pages publiées sur claude.ai | — |
+## Les six modules
 
-## Les données modifiables du simulateur
+| N° | Module | Fichier | À quoi il sert | Responsable |
+|---|---|---|---|---|
+| — | Salle de pilotage | `index.html` | Point d'entrée : les modules, qui fait quoi, la feuille de route semaine par semaine, les objectifs mois par mois, les rituels d'équipe | Tous |
+| 1 | Simulateur financier | `01-dashboard-financier/` | Chiffre d'affaires, marges, résultat et trésorerie sur 6 mois ; charges, prix et paramètres modifiables ; export Excel | Yousif |
+| 2 | Manuel barista | `02-onboarding-baristas/` | Règles de la maison, postes du bar, recettes, planning, check-lists imprimables, hygiène | Amer, chef barista |
+| 3 | Charte de marque | `00-marque/` | Promesse, noms des cafés, couleurs officielles, étiquetage des sachets, choix du 100 % Yémen, ton | Yousif |
+| 4 | Lancement et coffrets | `03-marketing-lancement/` | Rétroplanning, soirée d'ouverture du samedi 12 décembre, invitations, coffrets, temps forts | Yousif |
+| 5 | Boutique en ligne | `04-ecommerce/` | WordPress, Mollie, Qonto, Brevo : parcours client, schémas, textes des e-mails et SMS, conformité | Yousif |
+| 6 | Professionnels et contrats | `05-b2b-juridique/` | Plaquette tarifaire, deux modèles de contrats, cupping du jeudi, traçabilité | Khaled |
 
-Onglet « Vos chiffres » en bas du simulateur : charges mensuelles (avec mois de début et de fin), dépenses ponctuelles,
-prix, coûts et parts de ventes de chaque produit. Sur la page publiée, chaque modification est enregistrée pour toute
-l'équipe et Claude peut la relire. En local, elle reste dans le navigateur ; « Sauvegarde » permet de copier les données
-d'une version à l'autre.
+Les numéros des dossiers ne suivent pas l'ordre des modules : seul l'ordre affiché sur la salle de pilotage compte.
 
-## Chiffres clés au 12 novembre 2026
+## Mettre à jour les chiffres
 
-3 baristas à 2 800 € (coût employeur), bureau de stockage à 630 €/mois, soirée VIP à 800 €, contrat SumUp (90 €/mois + 0,49 %),
-café vert à 55 €/kg, grille « Premium Yémen », grille pro relevée, 15 000 € sur Qonto, aucun crédit.
+Dans le simulateur, en bas de page, « Vos chiffres » regroupe : les charges mensuelles (avec mois de début et de fin),
+les dépenses ponctuelles, les prix et coûts de chaque produit, les prix pros et les paramètres (SumUp, Mollie, prix du
+café vert, solde Qonto de départ). L'onglet « Sauvegarde et export » télécharge les données (JSON) pour les recharger
+ailleurs, et le bouton « Exporter (Excel) » produit le compte de résultat mois par mois pour le comptable.
 
-| | Plan des associés | Avec les 5 corrections proposées |
+Repères avec les chiffres de départ (3 baristas à 2 800 €, café vert à 55 € le kilo, 15 000 € sur Qonto, aucun crédit) :
+
+| | Plan | Scénario prudent |
 |---|---|---|
 | Chiffre d'affaires HT sur 6 mois | 319 741 € | 233 342 € |
 | Marge brute | 186 601 € (58,4 %) | 138 118 € (59,2 %) |
@@ -46,5 +45,20 @@ café vert à 55 €/kg, grille « Premium Yémen », grille pro relevée, 15 00
 | Trésorerie : point bas / fin de période | 22 864 € (M1) / 90 003 € | 9 514 € (M2) / 37 858 € |
 | Point mort en régime | 70 tasses par jour | 70 tasses par jour |
 
-Avec un vert à 50 € puis 60 € le kilo, le résultat réaliste va de 28 249 € à 17 468 €. Tout est modifiable dans le simulateur
-(onglets « Vos chiffres » et « Paramètres ») et exportable en Excel (CSV) ou JSON. Les décisions sont consignées dans `docs/decisions.md`.
+« Plan » suppose les objectifs atteints dès l'ouverture ; « Scénario prudent » ajoute une montée en charge progressive,
+la saisonnalité, le rodage du site et des ventes pros, les frais de port et les invendus.
+
+## Contrats
+
+Le texte des contrats se modifie dans les fichiers `.md` de `05-b2b-juridique/`, puis la commande
+`python3 outils/contrats-en-html.py` régénère les pages lisibles et imprimables (`contrat-cafe-vert.html`,
+`contrat-cafe-torrefie.html`).
+
+## Autres dossiers
+
+| Dossier | Contenu |
+|---|---|
+| `assets/` | Feuille de style commune, logos, frises et photos |
+| `docs/veille-et-sources.md` | Prix des concurrents, tarifs des prestataires, réglementation, avec leurs sources |
+| `04-ecommerce/architecture.md` | Les schémas de la boutique en ligne, lisibles directement sur GitHub |
+| `outils/` | Scripts : pages des contrats, préparation des pages publiées en ligne |

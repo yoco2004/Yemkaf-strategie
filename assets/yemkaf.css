@@ -162,3 +162,14 @@ footer ul { margin: 0; padding-left: 18px; display: grid; gap: 3px; }
 /* Logo : crème à l'écran sur le bandeau vert, vert à l'impression */
 .logo-print { display: none; }
 @media print { .logo-screen { display: none !important; } .logo-print { display: block !important; height: 48px; width: auto; } }
+
+/* Mode d'emploi en tête de chaque module */
+.guide { display: grid; gap: 14px; padding: 18px; }
+.guide-head { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.guide-head h2 { font-size: 20px; font-weight: 800; color: var(--brand-ink); }
+.guide-cols { display: grid; gap: 16px; }
+@media (min-width: 860px) { .guide-cols { grid-template-columns: 1.1fr .9fr 1.4fr; } }
+.guide-col { display: grid; gap: 6px; align-content: start; }
+.guide-col h3 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+.guide-col p, .guide-col li { font-size: 14px; color: var(--ink-2); }
+.guide-col ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; }

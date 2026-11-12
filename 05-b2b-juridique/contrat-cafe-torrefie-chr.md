@@ -2,7 +2,7 @@
 
 **Coffee shops, hôtels et restaurants**
 
-> **Projet du 12 novembre 2026, à faire relire par un avocat avant toute signature.**
+> **Modèle de contrat, à faire relire par un avocat avant la première signature.**
 > Les passages entre crochets `[…]` sont à compléter. La clause d'exclusivité (article 8) doit être vérifiée au regard
 > du droit de la concurrence avant usage.
 
@@ -12,7 +12,7 @@
 
 **YEM'KAF**, société par actions simplifiée au capital de 2 000 €, immatriculée au RCS de Paris sous le numéro
 887 788 834, dont le siège est situé 24 rue du Renard, 75004 Paris, représentée par M. Khaled Al Maweri, en sa qualité
-de président, dûment habilité *(à vérifier sur le Kbis : le transfert du siège depuis Guyancourt doit y figurer)*,
+de président, dûment habilité,
 ci-après « **Yem'kaf** »,
 
 **ET**

@@ -1,4 +1,4 @@
-# E-shop Yem'kaf : schémas
+# Boutique en ligne Yem'kaf : schémas
 
 Schémas Mermaid de l'architecture (affichés automatiquement sur GitHub). La version illustrée, avec les textes des
 e-mails et SMS, est dans [`index.html`](index.html).

@@ -11,47 +11,36 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Kufi+Arabic:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="assets/yemkaf.css">
 <style>
-/* Mise en page : bandeau de marque, une colonne de lecture large : changements, urgences, modules, décisions,
-   paliers, feuille de route filtrable par personne, rituels. */
-.changes { display: grid; gap: 8px; }
-@media (min-width: 640px) { .changes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 980px) { .changes { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.change { padding: 12px 14px; font-size: 14px; display: grid; gap: 2px; }
-.change b { font-size: 14px; }
-.change span { color: var(--ink-2); }
-.prio { counter-reset: p; display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.prio li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; padding: 14px 16px; }
-.prio li::before { counter-increment: p; content: counter(p); font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--sand); line-height: 1.2; }
-.prio b { display: block; }
-.prio span { color: var(--ink-2); font-size: 14px; }
-.modules { display: grid; gap: 12px; grid-template-columns: 1fr; }
-@media (min-width: 700px) { .modules { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1040px) { .modules { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-.module { padding: 16px; display: grid; gap: 8px; align-content: start; }
-.module h3 { font-size: 17px; }
+/* Mise en page : bandeau de marque, mode d'emploi, les six modules en cartes, qui fait quoi,
+   feuille de route filtrable par personne avec la période en cours mise en avant, objectifs, rituels. */
+.modules { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .modules { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .modules { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.module { padding: 18px; display: grid; gap: 10px; align-content: start; }
+.module .num-mod { font-family: var(--font-display); font-weight: 800; font-size: 13px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.module h3 { font-size: 18px; color: var(--brand-ink); }
 .module p { font-size: 14px; color: var(--ink-2); }
-.module .need { font-size: 13px; color: var(--muted); }
-.module .btn { justify-self: start; }
-.decisions { display: grid; gap: 10px; }
-@media (min-width: 760px) { .decisions { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.dec { padding: 14px 16px; display: grid; gap: 6px; align-content: start; }
-.dec .q { font-weight: 700; }
-.dec .why { font-size: 14px; color: var(--ink-2); }
-.dec .reco { font-size: 14px; background: var(--accent-wash); border-radius: 8px; padding: 8px 10px; }
-.dec .reco b { color: var(--brand-ink); }
+.module dl { margin: 0; display: grid; gap: 6px; font-size: 14px; }
+.module dt { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.module dd { margin: 0; color: var(--ink-2); }
+.module .btn { justify-self: start; margin-top: 4px; }
+.roles { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.role { padding: 14px 16px; display: grid; gap: 4px; }
+.role b { font-family: var(--font-display); font-size: 15px; }
+.role span { font-size: 14px; color: var(--ink-2); }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip { font: inherit; font-size: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); border-radius: 999px; padding: 6px 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
 .chip[aria-pressed="true"] { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
 .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
 .phase { display: grid; gap: 8px; }
-.phase-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; padding-top: 8px; }
+.phase-head { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding-top: 8px; }
 .phase-head h3 { font-size: 19px; font-weight: 800; color: var(--brand-ink); }
-.phase-head span { color: var(--muted); font-size: 14px; }
+.phase-head span.d { color: var(--muted); font-size: 14px; }
 .task { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 14px; padding: 12px 16px; }
 .task .when { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
 .task .t { font-weight: 700; }
 .task .d { color: var(--ink-2); font-size: 14px; margin-top: 2px; }
-.task .who { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--ink-2); margin-top: 6px; }
+.task .who { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--ink-2); margin-top: 6px; flex-wrap: wrap; }
 .task .link { font-size: 13px; margin-left: 10px; }
 .empty { color: var(--muted); font-size: 14px; padding: 4px 2px; }
 @media (max-width: 560px) { .task { grid-template-columns: 1fr; gap: 2px; } }
@@ -69,8 +58,8 @@
       <img class="logo logo-screen" src="assets/marque/logo-creme.png" alt="Yem'kaf" width="139" height="58">
       <img class="logo-print" src="assets/marque/logo-vert.png" alt="Yem'kaf">
       <div class="band-title">
-        <h1>Feuille de route des six premiers mois</h1>
-        <div class="lede">Pour <b>Yousif, Amer, Khaled</b> et les trois baristas · du 6 novembre 2026 au bilan du 19 mai 2027</div>
+        <h1>Salle de pilotage</h1>
+        <div class="lede">Les outils de l’équipe Yem’kaf pour les six premiers mois · <b>20 novembre 2026 → 19 mai 2027</b></div>
       </div>
     </div>
     <div class="band-nav" id="cds"></div>
@@ -79,65 +68,58 @@
 </header>
 
 <main class="wrap">
-  <section aria-labelledby="h-chg">
-    <div class="sec-head"><h2 id="h-chg">Ce que vos réponses ont changé</h2><p>Intégré partout : simulateur, manuel, plan marketing, e-shop et contrats.</p></div>
-    <div class="changes">
-      <div class="panel change"><b>Les rôles</b><span>Yousif : web, marketing, publicité, finance et administratif. Khaled : café vert, torréfaction, B2B. Amer : opérations. Tous trois mandataires sociaux, tous en renfort au comptoir.</span></div>
-      <div class="panel change"><b>La soirée VIP</b><span>Samedi 12 décembre, 19 h–22 h, boutique fermée au public à 18 h. L’e-shop ouvre avant, le 27 novembre.</span></div>
-      <div class="panel change"><b>Les prix</b><span>Grille « Premium Yémen » : espresso 3,50 €, cappuccino 5,50 €, V60 8 € (micro-lot 12 €), boissons yéménites de 5,20 à 6,20 €. Sachet web de 250 g baissé à 27,90 €.</span></div>
-      <div class="panel change"><b>Les noms</b><span>Café vert vendu aux pros : nom du terroir (Harazi, Raymi). Sachets vendus aux clients : noms franco-yéménites, terroir en sous-titre.</span></div>
-      <div class="panel change"><b>La torréfaction et le mix</b><span>Machine pour les micro-lots, torréfacteur à façon pour les volumes. Le sachet « mix » devient un mélange épicé (café yéménite et épices).</span></div>
-      <div class="panel change"><b>Les charges</b><span>3 baristas, bureau de stockage à 630 € par mois, fermeture maintenue à 20 h. Le simulateur intègre tout, modifiable dans « Vos chiffres ».</span></div>
+  <section class="panel guide" aria-labelledby="h-guide">
+    <div class="guide-head"><h2 id="h-guide">Mode d’emploi</h2><span class="muted small">À lire en premier</span></div>
+    <div class="guide-cols">
+      <div class="guide-col"><h3>Ce que c’est</h3><p>Un petit site privé qui rassemble tout ce qu’il faut pour lancer et faire tourner Yem’kaf : les chiffres, la marque, le manuel des baristas, le lancement, la boutique en ligne et les ventes aux professionnels.</p></div>
+      <div class="guide-col"><h3>Pour qui</h3><p>Les trois associés et les trois baristas. Chacun n’utilise que les modules qui le concernent (voir « Qui utilise quoi » dans chaque carte).</p></div>
+      <div class="guide-col"><h3>Comment l’utiliser</h3><ol>
+        <li>Partez toujours de cette page : elle mène à tous les modules.</li>
+        <li>Ouvrez un module avec son bouton « Ouvrir ». Chaque module commence par son propre mode d’emploi.</li>
+        <li>Plus bas, la feuille de route liste les tâches de chacun. Choisissez votre prénom pour ne voir que les vôtres.</li>
+        <li>Le site marche sur ordinateur et sur téléphone. Il est privé : pour le montrer à quelqu’un, utilisez le bouton « Partager » en haut de la page.</li>
+      </ol></div>
     </div>
   </section>
 
-  <section aria-labelledby="h-prio">
-    <div class="sec-head"><h2 id="h-prio">Les cinq urgences de la semaine</h2><p>Du vendredi 6 au vendredi 13 novembre.</p></div>
-    <ol class="prio">
-      <li class="panel"><div><b>Sécuriser le café vert depuis la chute de Mokha · Khaled, mardi 10</b><span>Inventaire au kilo, route d’acheminement confirmée, commande de 8 semaines de stock (environ 280 kg, 14 000 € HT). Ce montant immobilise de la trésorerie : réglez-le dans le simulateur.</span></div></li>
-      <li class="panel"><div><b>Siège, Kbis et site · Yousif, vendredi 13</b><span>Vérifier sur le Kbis le transfert du siège au 24 rue du Renard (RCS Paris) et que l’objet social couvre la vente de boissons et la restauration. Corriger les mentions légales de yemkaf.fr, qui indiquent encore Guyancourt. Ouvrir Mollie comme nouveau client.</span></div></li>
-      <li class="panel"><div><b>Signer le torréfacteur à façon · Khaled, vendredi 13</b><span>Les volumes de Noël (coffrets, sachets, web) passeront par lui : délai garanti de 72 h, prix au kilo et profil validé par écrit. La machine maison reste pour les micro-lots.</span></div></li>
-      <li class="panel"><div><b>Hygiène, allergènes et loi AGEC · Amer, jeudi 12</b><span>Formation HACCP, déclaration à la DDPP, affichage des 14 allergènes (le sésame de la Qahwa Baydani compris), vaisselle pour 25 places, prix réduit pour la tasse du client.</span></div></li>
-      <li class="panel"><div><b>Sachets : noms, mentions et charte avant impression · Yousif, vendredi 13</b><span>Renommer les maquettes avec les noms franco-yéménites, ajouter dénomination, lot, date, adresse, Triman, et la liste d’ingrédients du mélange épicé. Faire corriger le nuancier (valeurs RVB à l’envers).</span></div></li>
-    </ol>
-  </section>
-
   <section aria-labelledby="h-mod">
-    <div class="sec-head"><h2 id="h-mod">Les modules</h2><p>Tous prêts à l’usage. Ce qui reste à me fournir est indiqué sous chacun.</p></div>
+    <div class="sec-head"><h2 id="h-mod">Les six modules</h2><p>Ce que fait chaque module, qui s’en sert, et comment.</p></div>
     <div class="modules" id="modules"></div>
   </section>
 
-  <section aria-labelledby="h-dec">
-    <div class="sec-head"><h2 id="h-dec">Vos décisions du 6 novembre</h2><p>Vos réponses des 6 et 12 novembre, déjà répercutées dans les modules. Le registre complet est dans <code>docs/decisions.md</code>.</p></div>
-    <div class="decisions" id="decisions"></div>
-    <div class="callout warn"><p><strong>Il me manque encore :</strong> le fichier source du plan à 278 383 €, les trois noms à compléter (Citadelle de…, Vallée de…, Comptoir de…), la valeur exacte du bordeaux des sachets et les fichiers de police de la charte, la liste VIP.</p></div>
-  </section>
-
-  <section aria-labelledby="h-pal">
-    <div class="sec-head"><h2 id="h-pal">Des paliers plutôt qu’un objectif dès le premier jour</h2><p>Moyennes par jour d’ouverture dans le scénario réaliste du simulateur (5 corrections appliquées, 3 baristas à 2 800 €, vert à 55 €, contrat SumUp, 15 000 € de départ). À afficher en back-office : atteignables, puis relevées chaque mois.</p></div>
-    <div class="table-scroll"><table class="plan-table" id="paliers"></table></div>
+  <section aria-labelledby="h-roles">
+    <div class="sec-head"><h2 id="h-roles">Qui fait quoi</h2></div>
+    <div class="roles">
+      <div class="panel role"><b>Yousif</b><span>Web, marketing et publicité. Finance et administratif : caisse, Qonto, SumUp, Mollie, comptabilité, TVA, bailleur, assurances.</span></div>
+      <div class="panel role"><b>Khaled</b><span>Café vert et sourcing au Yémen, torréfaction (machine et torréfacteur à façon), ventes aux professionnels et cupping du jeudi.</span></div>
+      <div class="panel role"><b>Amer</b><span>Opérations : boutique, équipe et planning, hygiène, fournisseurs, stock et expéditions.</span></div>
+      <div class="panel role"><b>Chef barista</b><span>Recettes et réglages, qualité au bar, ouverture, formation des nouveaux.</span></div>
+      <div class="panel role"><b>Barista senior</b><span>Fermeture, hygiène du soir, registre des invendus.</span></div>
+      <div class="panel role"><b>Barista vente et web</b><span>Midi et colis de la boutique en ligne, caisse SumUp, photos des produits.</span></div>
+    </div>
+    <p class="small muted">Les trois associés tiennent aussi des créneaux au comptoir (voir le planning dans le Manuel barista).</p>
   </section>
 
   <section aria-labelledby="h-road">
-    <div class="sec-head"><h2 id="h-road">Feuille de route, tâche par tâche</h2><p>Chaque tâche a un seul responsable. Choisissez une personne pour ne voir que ses tâches (celles de toute l’équipe restent affichées).</p></div>
+    <div class="sec-head"><h2 id="h-road">Feuille de route</h2><p>Les tâches des six mois, période par période. La période en cours est signalée. Chaque tâche a un seul responsable ; celles de toute l’équipe restent visibles quel que soit le filtre.</p></div>
     <div class="filters" role="group" aria-label="Filtrer par personne" id="filters"></div>
     <div id="road" style="display:grid;gap:18px"></div>
   </section>
 
+  <section aria-labelledby="h-pal">
+    <div class="sec-head"><h2 id="h-pal">Objectifs mois par mois</h2><p>Moyennes par jour d’ouverture, selon le scénario prudent du simulateur. À afficher en back-office et à comparer chaque lundi avec les ventes réelles (rapport SumUp). La dernière colonne donne l’objectif du plan en rythme de croisière.</p></div>
+    <div class="table-scroll"><table class="plan-table" id="paliers"></table></div>
+  </section>
+
   <section aria-labelledby="h-rit">
-    <div class="sec-head"><h2 id="h-rit">Les rituels qui tiennent la maison</h2></div>
+    <div class="sec-head"><h2 id="h-rit">Les rituels de la maison</h2><p>Courts, réguliers, toujours à la même heure.</p></div>
     <div class="rituals" id="rituals"></div>
   </section>
 </main>
 
 <footer class="wrap">
   <img class="frise" src="assets/marque/frise-verte.png" alt="" style="opacity:.5">
-  <div class="eyebrow">Sources consultées le 6 novembre 2026</div>
-  <ul>
-    <li>Prise de Mokha : <a href="https://www.aljazeera.com/amp/news/2026/9/10/houthis-capture-yemeni-town-of-mocha-why-it-matters" target="_blank" rel="noopener">Al Jazeera</a> · Centre Pompidou : <a href="https://sortiraparis.com/en/news/in-paris/articles/325118-center-pompidou-gradual-closure-before-construction-begins-timetable" target="_blank" rel="noopener">Sortir à Paris</a> · EUDR : <a href="https://www.coolset.com/academy/eudr-frequently-asked-questions" target="_blank" rel="noopener">Coolset</a></li>
-    <li>Mollie et Qonto : <a href="https://www.mollie.com/news/qonto-mollie-collaboration" target="_blank" rel="noopener">Mollie</a> · Mollie pour WooCommerce : <a href="https://woocommerce.com/products/mollie-payments-for-woocommerce" target="_blank" rel="noopener">WooCommerce</a> · SumUp : <a href="https://www.sumup.com/fr-fr/tarifs/" target="_blank" rel="noopener">tarifs</a></li>
-    <li>Loi AGEC : <a href="https://cdn.adelphe.fr/LOI_AGEC_2021/FICHE_REFLEXE_loi_AGEC" target="_blank" rel="noopener">Adelphe</a>, <a href="https://www.paris.fr/pages/commercants-parisiens-passez-aux-emballages-reemployables-23352" target="_blank" rel="noopener">Ville de Paris</a> · Ramadan 2027 : <a href="https://www.sortiraparis.com/actualites/a-paris/articles/274470-ramadan-2023-quand-aura-lieu-l-aid-el-fitr-en-france-la-fete-qui-marque-la-fin-du-jeune" target="_blank" rel="noopener">Sortir à Paris</a></li>
-  </ul>
+  <p>Yem’kaf · Berceau du café · 24 rue du Renard, 75004 Paris</p>
 </footer>
 
 <script>
@@ -148,52 +130,44 @@
     marque: '00-marque/index.html', simulateur: '01-dashboard-financier/index.html', barista: '02-onboarding-baristas/index.html',
     lancement: '03-marketing-lancement/index.html', eshop: '04-ecommerce/index.html', b2b: '05-b2b-juridique/index.html'
   };
-
   var today = new Date(); today.setHours(0, 0, 0, 0);
+
   document.getElementById('cds').innerHTML = [
     ['Soft opening', new Date(2026, 10, 20)], ['E-shop', new Date(2026, 10, 27)], ['Soirée VIP', new Date(2026, 11, 12)], ['Bilan', new Date(2027, 4, 19)]
   ].map(function (it) {
     var d = Math.round((it[1] - today) / 86400000);
-    return '<span class="chip-cd">' + esc(it[0]) + ' · <b>' + (d > 0 ? 'J-' + d : (d === 0 ? 'aujourd’hui' : 'passé')) + '</b></span>';
+    return '<span class="chip-cd">' + esc(it[0]) + ' · <b>' + (d > 0 ? 'J-' + d : (d === 0 ? 'aujourd’hui' : 'fait')) + '</b></span>';
   }).join('');
 
+  // [clé, titre, à quoi ça sert, qui, comment (étapes)]
   var MOD = [
-    ['marque', 'Plateforme de marque', 'Ce qui compte dans Yem’kaf, les incohérences à corriger avant impression, et l’étude « 100 % Yémen ou autres cafés ».', 'À me fournir : la valeur exacte du bordeaux des sachets, les fichiers de police de la charte.'],
-    ['simulateur', 'Simulateur financier', 'Leviers, 6 corrections proposées, compte de résultat, café vert, et désormais vos charges, dépenses et prix modifiables, enregistrés pour toute l’équipe.', 'À me fournir : le fichier du plan à 278 383 €, le solde Qonto, les emprunts, le coût du bureau de stockage.'],
-    ['barista', 'Manuel barista', 'Le bar poste par poste d’après votre plan, recettes, boissons yéménites en carafe, planning 3 baristas + associés, check-lists imprimables, phrases de comptoir.', 'À valider par le chef barista : rendements et temps d’extraction sur vos cafés.'],
-    ['lancement', 'Lancement et soirée VIP', 'Rétroplanning jusqu’à Noël, déroulé de la soirée du samedi 12 décembre, carton d’invitation, six textes d’invitation, fiches coffrets, temps forts jusqu’en mai.', 'À me fournir : la liste VIP et les photos du lieu terminé.'],
-    ['eshop', 'E-shop WordPress', 'Tunnel QR code, pile WooCommerce, Mollie, Brevo et expédition, réglages des relances, textes des e-mails et SMS, conformité, planning jusqu’au 27.', 'À me fournir : l’outil d’e-mailing choisi et l’adresse du site.'],
-    ['b2b', 'Professionnels et contrats', 'Plaquette tarifaire, contrat café vert, contrat café torréfié avec exclusivité de quartier, protocole du cupping du jeudi, préparation EUDR.', 'À compléter : forme sociale, SIREN, rayon d’exclusivité. Relecture par un avocat.']
+    ['simulateur', 'Simulateur financier', 'Prévoit le chiffre d’affaires, les marges, le résultat et la trésorerie des six premiers mois, et montre ce qui se passe si les ventes, les prix ou les charges changent.',
+      'Les associés ; Yousif tient les chiffres à jour.',
+      ['Lisez les cinq chiffres du haut : résultat, chiffre d’affaires, marge, point mort, trésorerie.', 'Bougez les curseurs de gauche pour tester une hypothèse (plus de tasses, moins de colis…).', 'Chaque lundi, mettez à jour les vraies charges et les prix en bas de page, dans « Vos chiffres ».', 'Exportez le compte de résultat en Excel pour le comptable.']],
+    ['barista', 'Manuel barista', 'Tout ce qu’un barista doit savoir : les règles de la maison, le bar, les recettes classiques et yéménites, le planning et les check-lists d’ouverture, de midi et de fermeture.',
+      'Les baristas, et les associés quand ils tiennent le comptoir.',
+      ['Le premier jour, lisez « La maison » et « Le bar ».', 'Imprimez et plastifiez les trois check-lists ; elles restent au bar.', 'Gardez les fiches recettes ouvertes sur la tablette ou le téléphone du bar.']],
+    ['marque', 'Charte de marque', 'La référence pour tout ce qui est écrit, imprimé ou publié : la promesse, les noms des cafés, les couleurs officielles, les mentions des sachets, la façon de parler de Yem’kaf.',
+      'Les associés, le graphiste, l’imprimeur, l’agence ou le développeur du site.',
+      ['Lisez-la avant d’écrire un texte, de publier ou de commander une impression.', 'Donnez la section « Couleurs et logo » au graphiste et à l’imprimeur.', 'Vérifiez chaque sachet avec la liste « Étiquetage ».']],
+    ['lancement', 'Lancement et coffrets', 'Le plan de communication jusqu’à la fête des mères : le calendrier, la soirée d’ouverture du samedi 12 décembre, les textes d’invitation, les coffrets cadeaux et les temps forts.',
+      'Yousif ; Khaled pour les invités professionnels.',
+      ['Suivez la frise du calendrier, ligne par ligne.', 'Copiez les textes d’invitation avec le bouton « Copier le texte ».', 'Utilisez les fiches coffrets pour vendre en boutique et aux entreprises.']],
+    ['eshop', 'Boutique en ligne', 'Le fonctionnement du site WordPress : paiements Mollie vers Qonto, e-mails et SMS automatiques, expéditions, règles légales, avec les textes prêts à copier.',
+      'Yousif, et la barista vente et web pour les colis.',
+      ['Installez les outils dans l’ordre de « La pile technique ».', 'Collez les textes des e-mails et SMS dans Brevo.', 'Cochez la liste « Conformité » avant la mise en ligne.']],
+    ['b2b', 'Professionnels et contrats', 'Tout pour vendre aux torréfacteurs, coffee shops, hôtels et restaurants : la plaquette tarifaire, les deux modèles de contrats, le déroulé du cupping du jeudi et les obligations de traçabilité.',
+      'Khaled.',
+      ['Imprimez la plaquette tarifaire pour chaque rendez-vous.', 'Ouvrez le bon modèle de contrat, complétez les crochets, faites-le relire par l’avocat avant la première signature.', 'Suivez le déroulé du cupping chaque jeudi à 15 h.']]
   ];
-  document.getElementById('modules').innerHTML = MOD.map(function (m) {
-    return '<div class="panel module"><span class="tag ok">Prêt</span><h3>' + esc(m[1]) + '</h3><p>' + esc(m[2]) + '</p><div class="need">' + esc(m[3]) + '</div><a class="btn primary" href="' + LIENS[m[0]] + '">Ouvrir</a></div>';
+  document.getElementById('modules').innerHTML = MOD.map(function (m, i) {
+    return '<div class="panel module"><span class="num-mod">Module ' + (i + 1) + '</span><h3>' + esc(m[1]) + '</h3><p>' + esc(m[2]) + '</p>' +
+      '<dl><dt>Qui l’utilise</dt><dd>' + esc(m[3]) + '</dd><dt>Comment</dt><dd><ol style="margin:0;padding-left:18px;display:grid;gap:3px">' +
+      m[4].map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol></dd></dl>' +
+      '<a class="btn primary" href="' + LIENS[m[0]] + '">Ouvrir</a></div>';
   }).join('');
 
-  var DEC = [
-    ['Finance et administratif', 'Yousif', 'Caisse, Qonto, SumUp, Mollie, Pennylane, TVA, bailleur et assurances passent sous sa responsabilité, avec le web et le marketing.'],
-    ['Torréfaction', 'Machine et torréfacteur à façon', 'Micro-lots torréfiés en interne, volumes de Noël et B2B chez le façonnier : contrat à signer avant le 13 novembre.'],
-    ['Noms des cafés', 'Terroir pour le vert, franco-yéménite pour les sachets', 'Les maquettes « Raymi Éclat » sont à renommer ; le terroir passe en sous-titre d’origine.'],
-    ['Sachet « mix »', 'Mélange épicé', 'Café yéménite moulu avec épices (environ 85 / 15), 200 g à 24 € proposé. Liste d’ingrédients obligatoire sur le sachet.'],
-    ['Statut des associés', 'Tous trois mandataires sociaux', 'Les créneaux au comptoir relèvent de leur mandat ; la tâche de vérification est retirée.'],
-    ['Bureau de stockage', '630 € par mois', 'Ajouté aux charges du simulateur (compté HT, à confirmer).'],
-    ['Soirée d’ouverture officielle', 'Samedi 12 décembre', 'Boutique fermée au public à 18 h, soirée de 19 h à 22 h. Save-the-date le 26 novembre.'],
-    ['Ouverture le soir', 'Non, fermeture à 20 h', 'Pendant le Ramadan : box ftour à emporter dès 17 h, sans changer les horaires.'],
-    ['Sachet web de 250 g', '27,90 €', 'Au lieu de 31 €, pour rester près des prix en ligne (17,50 à 25 €). Marge d’environ 33 %.'],
-    ['Grille des boissons', 'Premium Yémen', 'Espresso 3,50, cappuccino 5,50, flat white 6, latte 6,20, V60 8 (micro-lot 12), boissons yéménites 5,20 à 6,20. Environ +10 000 € sur 6 mois dans le scénario réaliste.'],
-    ['Salaires', '2 800 € par barista (coût employeur)', 'Trois lignes modifiables dans « Vos chiffres », exportables avec le compte de résultat.'],
-    ['Contrat SumUp', '90 € par mois et 0,49 % par paiement', 'Environ 1 500 € sur 6 mois dans le scénario réaliste, abonnement compris. Réglable dans « Paramètres ».'],
-    ['Trésorerie et crédit', 'Environ 15 000 € sur Qonto, aucun crédit', 'La trésorerie ne passe jamais sous zéro, même dans le scénario réaliste (point bas d’environ 9 500 € en M2).'],
-    ['Café vert', '50 à 60 € le kilo tout compris', '55 € retenus par défaut. Chaque 5 € par kilo coûte environ 5 400 € de résultat sur 6 mois.'],
-    ['Prix pros (B2B)', 'Grille relevée', 'Vert 80 / 75 / 70 €, torréfié 99 / 94 / 89 € le kilo : au moins 14 % de marge avec un vert à 60 €.'],
-    ['Soirée VIP', 'Budget à part, modifiable', '800 € en dépense ponctuelle (photographe, échantillons, impression), ajustable dans le simulateur.'],
-    ['Société', 'SAS, 24 rue du Renard, RCS Paris, Khaled président', 'Saisi dans les deux contrats. À vérifier sur le Kbis ; le site indique encore Guyancourt.'],
-    ['Noms des cafés', '17 noms « Élégance franco-yéménite »', '« Château d’Hamdan » devient « Château de Ghumdan ». Trois noms restent à compléter.']
-  ];
-  document.getElementById('decisions').innerHTML = DEC.map(function (d) {
-    return '<div class="panel dec"><div class="q">' + esc(d[0]) + '</div><div class="why"><b>' + esc(d[1]) + '</b></div><div class="reco"><b>Conséquence :</b> ' + esc(d[2]) + '</div></div>';
-  }).join('');
-
-  // Paliers : scénario réaliste du simulateur v2 (calculé le 6 novembre 2026)
+  // Objectifs du scénario prudent (simulateur)
   var PAL = {
     mois: [['M1', '20 nov–19 déc'], ['M2', '20 déc–19 janv'], ['M3', '20 janv–19 févr'], ['M4', '20 févr–19 mars'], ['M5', '20 mars–19 avr'], ['M6', '20 avr–19 mai']],
     lignes: [
@@ -211,104 +185,99 @@
   };
   var fEur = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
   var fInt = new Intl.NumberFormat('fr-FR');
-  document.getElementById('paliers').innerHTML = '<thead><tr><th>Cible réaliste</th>' + PAL.mois.map(function (m) { return '<th>' + m[0] + '<br><span style="font-weight:400">' + m[1] + '</span></th>'; }).join('') + '<th>Plan, par mois</th></tr></thead><tbody>' +
+  document.getElementById('paliers').innerHTML = '<thead><tr><th>Objectif</th>' + PAL.mois.map(function (m) { return '<th>' + m[0] + '<br><span style="font-weight:400">' + m[1] + '</span></th>'; }).join('') + '<th>Rythme de croisière</th></tr></thead><tbody>' +
     PAL.lignes.map(function (l) {
-      var money = l[0].indexOf('Résultat') === 0 || l[0].indexOf('Trésorerie') === 0;
+      var money = /^(Résultat|Trésorerie)/.test(l[0]);
       return '<tr><td>' + esc(l[0]) + '</td>' + l[1].map(function (v) { return '<td' + (v < 0 ? ' class="neg"' : '') + '>' + (money ? fEur.format(v) : fInt.format(v)) + '</td>'; }).join('') +
         '<td class="muted">' + (l[2] === null ? '—' : (money ? fEur.format(l[2]) : fInt.format(l[2]))) + '</td></tr>';
     }).join('') + '</tbody>';
 
   var WHO = {
-    yousif: ['Yousif · web, marketing, finance', 'var(--s5)'],
-    khaled: ['Khaled · café vert, torréfaction, B2B', 'var(--s3)'],
-    amer: ['Amer · opérations', 'var(--s1)'],
-    chef: ['Chef barista', 'var(--s2)'],
-    senior: ['Barista senior', 'var(--s2)'],
-    vente: ['Barista vente et web', 'var(--s2)'],
+    yousif: ['Yousif', 'var(--s5)'], khaled: ['Khaled', 'var(--s3)'], amer: ['Amer', 'var(--s1)'],
+    chef: ['Chef barista', 'var(--s2)'], senior: ['Barista senior', 'var(--s2)'], vente: ['Barista vente et web', 'var(--s2)'],
     equipe: ['Toute l’équipe', 'var(--ink-2)']
   };
 
   // [qui, quand, titre, détail, module lié]
   var PHASES = [
-    { t: 'Verrouiller', d: 'du 6 au 13 novembre', tasks: [
-      ['yousif', 'lun. 9 nov.', 'M’envoyer le fichier source du plan', 'Le tableur qui donnait 278 383 € de CA, pour caler le mix de ventes du simulateur.', 'simulateur'],
-      ['yousif', 'lun. 9 nov.', 'Ouvrir le compte Mollie', 'En nouveau client pour l’offre 0 % jusqu’au 31 décembre. Le relier à Qonto, installer l’extension WooCommerce.', 'eshop'],
-      ['yousif', 'ven. 13 nov.', 'Siège, Kbis et mentions légales', 'Vérifier le transfert du siège au 24 rue du Renard (RCS Paris) et l’objet social. Corriger les mentions légales de yemkaf.fr (encore Guyancourt).', 'eshop'],
-      ['yousif', 'ven. 13 nov.', 'Compléter les trois noms de cafés', 'Citadelle de…, Vallée de…, Comptoir de… ; recherche INPI sur les noms retenus avant impression.', 'marque'],
-      ['khaled', 'mar. 10 nov.', 'Sécuriser le café vert', 'Inventaire par terroir, route depuis la prise de Mokha, délais et prix. Stock de sécurité de 8 semaines, environ 280 kg.', 'b2b'],
-      ['vente', 'mer. 11 nov.', 'Construire le catalogue SumUp', 'Grille Premium Yémen. TVA à 10 % (boissons, pâtisseries), 5,5 % (sachets, mélange épicé, coffrets), 20 % (accessoires). Options lait végétal, micro-lot, tasse perso. Un code par personne.', 'barista'],
+    { t: 'Préparer l’ouverture', d: 'du 6 au 13 novembre', du: '2026-11-06', au: '2026-11-13', tasks: [
+      ['yousif', 'lun. 9 nov.', 'Ouvrir le compte Mollie', 'En nouveau client, pour bénéficier de l’offre 0 % jusqu’au 31 décembre. Le relier à Qonto et installer l’extension WooCommerce.', 'eshop'],
+      ['khaled', 'mar. 10 nov.', 'Sécuriser le café vert', 'Inventaire par terroir, route d’acheminement depuis le Yémen, délais et prix. Stock de sécurité de 8 semaines, environ 280 kg.', 'b2b'],
+      ['vente', 'mer. 11 nov.', 'Construire le catalogue SumUp', 'Tous les produits aux prix de la carte, avec la bonne TVA : 10 % (boissons, pâtisseries), 5,5 % (sachets, mélange épicé, coffrets), 20 % (accessoires). Options lait végétal, micro-lot, tasse perso. Un code par personne.', 'barista'],
       ['yousif', 'jeu. 12 nov.', 'Organiser Qonto en enveloppes', 'Sous-comptes « TVA » (9 % des encaissements, viré chaque lundi), « Salaires et loyers », « Café vert ». Cartes plafonnées. Justificatifs vers Pennylane.', ''],
-      ['amer', 'jeu. 12 nov.', 'Hygiène, allergènes et loi AGEC', 'HACCP 14 h, plan de maîtrise sanitaire, déclaration DDPP (Cerfa 13984), 14 allergènes affichés, vaisselle pour 25 places, prix réduit tasse perso.', 'barista'],
-      ['yousif', 'jeu. 12 nov.', 'Fiche Google et liste VIP', 'Fiche Google Business Profile avec photos et « Ouverture le 20 novembre ». Liste de 120 invités pour le samedi 12 décembre (Khaled fournit les pros).', 'lancement'],
-      ['chef', 'jeu. 12 nov.', 'Caler les recettes au gramme', 'Deux E80 (Signature et café invité), EK43 pour filtre et rituels. 16 fiches validées.', 'barista'],
+      ['amer', 'jeu. 12 nov.', 'Hygiène, allergènes et loi AGEC', 'Formation HACCP de 14 h, plan de maîtrise sanitaire, déclaration à la DDPP (Cerfa 13984), affichage des 14 allergènes, vaisselle pour 25 places, prix réduit quand le client apporte sa tasse.', 'barista'],
+      ['yousif', 'jeu. 12 nov.', 'Fiche Google et liste des invités', 'Fiche Google Business Profile avec photos et « Ouverture le 20 novembre ». Liste de 120 invités pour le samedi 12 décembre (Khaled fournit les professionnels).', 'lancement'],
+      ['chef', 'jeu. 12 nov.', 'Caler les recettes au gramme', 'Deux moulins E80 (café maison et café invité), EK43 pour le filtre et les boissons yéménites. Seize fiches validées.', 'barista'],
       ['senior', 'jeu. 12 nov.', 'Monter la routine d’hygiène', 'Plan de nettoyage, relevés de température, registre des pertes, rangement du sous-sol.', 'barista'],
-      ['khaled', 'ven. 13 nov.', 'Signer le torréfacteur à façon', 'Volumes de Noël et B2B : délai garanti de 72 h, prix au kilo, profil de torréfaction validé. Machine maison pour les micro-lots.', 'b2b'],
-      ['yousif', 'ven. 13 nov.', 'Dossier presse, sachets et charte', 'Coffret Prestige à 25 rédactions en ligne. Maquettes renommées en franco-yéménite, mentions légales et ingrédients du mélange épicé, nuancier corrigé.', 'marque'],
-      ['yousif', 'ven. 13 nov.', 'Relancer le bailleur', 'Demander par écrit 3 mois de franchise (18 000 €) ou un loyer progressif.', ''],
-      ['amer', 'ven. 13 nov.', 'Fournisseurs frais et four', 'Signer pâtissiers et lait, commander un four ou grill pour le snacking (absent du plan du bar). Recette du mélange épicé testée avec le chef barista.', ''],
-      ['chef', 'ven. 13 nov.', 'Tester les boissons yéménites en carafe', 'Carafes isothermes renouvelées toutes les 45 minutes, dégustation à l’aveugle contre préparation minute.', 'barista'],
-      ['vente', 'ven. 13 nov.', 'Photos des produits', 'Sachets, coffrets, rituel Qishr pour le site. Fond neutre, lumière du jour.', 'eshop']
+      ['khaled', 'ven. 13 nov.', 'Signer le torréfacteur à façon', 'Pour les volumes de Noël et les pros : délai garanti de 72 h, prix au kilo, profil de torréfaction validé. La machine maison reste pour les micro-lots.', 'b2b'],
+      ['yousif', 'ven. 13 nov.', 'Siège, Kbis et mentions légales', 'Vérifier sur le Kbis le siège au 24 rue du Renard (RCS Paris) et que l’objet social couvre la vente de boissons et la restauration. Mettre les mentions légales de yemkaf.fr à jour.', 'eshop'],
+      ['yousif', 'ven. 13 nov.', 'Sachets prêts pour l’imprimeur', 'Noms franco-yéménites, mentions obligatoires, ingrédients du mélange épicé, couleurs officielles. Choisir les trois derniers noms de cafés.', 'marque'],
+      ['yousif', 'ven. 13 nov.', 'Relancer le bailleur', 'Demander par écrit 3 mois de franchise de loyer ou un loyer progressif.', ''],
+      ['amer', 'ven. 13 nov.', 'Fournisseurs frais et four', 'Signer pâtissiers et lait. Commander un four ou un grill pour le snacking. Tester la recette du mélange épicé avec le chef barista.', ''],
+      ['chef', 'ven. 13 nov.', 'Tester le service en carafe', 'Qishr, Shai Adeni et Qahwa Baydani en carafes isothermes renouvelées toutes les 45 minutes. Dégustation à l’aveugle contre préparation minute.', 'barista'],
+      ['vente', 'ven. 13 nov.', 'Photos des produits', 'Sachets, coffrets, rituel du Qishr pour le site. Fond neutre, lumière du jour.', 'eshop']
     ]},
-    { t: 'Répéter', d: 'du 16 au 19 novembre', tasks: [
-      ['amer', 'lun. 16 nov.', 'Publier le planning des 4 premières semaines', 'Associés en renfort de 8 h à 10 h 30, midi tenu par un associé tant que la troisième barista n’est pas arrivée.', 'barista'],
-      ['yousif', 'lun. 16 nov.', 'Teasing et scénarios Brevo', 'Neuf publications Instagram, 500 flyers dans le quartier, cinq scénarios d’e-mails configurés et testés.', 'eshop'],
-      ['khaled', 'mer. 18 nov.', 'Fiches de lot et données EUDR', 'Une fiche par café vert en stock (nom du terroir) : village, altitude, procédé, score, géolocalisation des parcelles.', 'b2b'],
-      ['yousif', 'mer. 18 nov.', 'Caisse et administratif employeur', 'Procédure ticket Z et rapprochement Qonto. DPAE, registre unique, mutuelle, médecine du travail.', ''],
+    { t: 'Répéter', d: 'du 14 au 19 novembre', du: '2026-11-14', au: '2026-11-19', tasks: [
+      ['amer', 'lun. 16 nov.', 'Publier le planning des 4 premières semaines', 'Associés en renfort de 8 h à 10 h 30 ; créneau midi tenu par un associé tant que la troisième barista n’est pas arrivée.', 'barista'],
+      ['yousif', 'lun. 16 nov.', 'Teasing et e-mails automatiques', 'Neuf publications Instagram, 500 flyers dans le quartier, cinq scénarios d’e-mails configurés et testés dans Brevo.', 'eshop'],
+      ['khaled', 'mer. 18 nov.', 'Fiches de lot', 'Une fiche par café vert en stock : village, altitude, procédé, score, géolocalisation des parcelles.', 'b2b'],
+      ['yousif', 'mer. 18 nov.', 'Caisse et administratif employeur', 'Procédure du ticket Z et rapprochement Qonto. Déclarations d’embauche, registre du personnel, mutuelle, médecine du travail.', ''],
       ['amer', 'mer. 18 nov.', 'Expédition', 'Compte pro (point relais et Colissimo), grille de frais, colis test envoyé chez un associé.', 'eshop'],
-      ['equipe', 'mar. 17 → jeu. 19 nov.', 'Trois services à blanc', 'Voisins et commerçants, contre un avis Google. Chronométrer chaque boisson : lactée en moins de 3 minutes.', 'barista']
+      ['equipe', 'mar. 17 → jeu. 19 nov.', 'Trois services à blanc', 'Voisins et commerçants, en échange d’un avis Google. Chronométrer chaque boisson : une boisson lactée en moins de 3 minutes.', 'barista']
     ]},
-    { t: 'Soft opening et e-shop', d: 'du 20 novembre au 30 novembre', tasks: [
-      ['equipe', 'ven. 20 nov.', 'Soft opening', 'Sans presse. Objectif réaliste du premier mois : 72 tasses par jour. Tasse de Qishr offerte à chaque nouveau client.', 'barista'],
+    { t: 'Soft opening et boutique en ligne', d: 'du 20 au 30 novembre', du: '2026-11-20', au: '2026-11-30', tasks: [
+      ['equipe', 'ven. 20 nov.', 'Soft opening', 'Sans presse. Objectif du premier mois : 72 tasses par jour. Une tasse de Qishr offerte à chaque nouveau client.', 'barista'],
       ['equipe', 'chaque soir', 'Journal de bord', 'Ticket Z, tasses, invendus en photo, une remarque client. Cinq minutes à la fermeture.', ''],
       ['yousif', 'jeu. 26 nov.', 'Save-the-date de la soirée', '120 invitations personnalisées par segment pour le samedi 12 décembre, réponse avant le 7 décembre.', 'lancement'],
-      ['yousif', 'ven. 27 nov.', 'Mise en ligne de l’e-shop', 'Black Friday sans remise. Livraison offerte sur le premier coffret. QR codes des gobelets actifs.', 'eshop'],
-      ['chef', 'ven. 27 nov.', 'Accueillir la troisième barista', 'Recommandé dès le 27 pour les colis web et Noël ; au plus tard le lundi 14 décembre. Une journée en binôme avec le manuel.', 'barista'],
-      ['yousif', 'lun. 30 nov.', 'Premier point chiffres', 'Saisir les réels et les vraies charges dans « Vos chiffres » du simulateur, enregistrés pour l’équipe.', 'simulateur']
+      ['yousif', 'ven. 27 nov.', 'Mise en ligne de la boutique', 'Black Friday sans remise. Livraison offerte sur le premier coffret. QR codes des gobelets actifs.', 'eshop'],
+      ['chef', 'ven. 27 nov.', 'Accueillir la troisième barista', 'Une journée en binôme avec le manuel sur le créneau midi et colis.', 'barista'],
+      ['yousif', 'lun. 30 nov.', 'Premier point chiffres', 'Saisir les vraies charges dans le simulateur et comparer les ventes SumUp aux objectifs.', 'simulateur']
     ]},
-    { t: 'Noël et soirée officielle', d: 'du 1er au 24 décembre', tasks: [
-      ['khaled', 'mar. 1er déc.', 'Campagne cadeaux d’entreprise', '40 entreprises à moins de 500 m, grille −5 % / −10 %, commande avant le 10 décembre.', 'lancement'],
-      ['khaled', 'jeu. 3 déc.', 'Premier cupping pro du jeudi', '6 à 8 acheteurs, plaquette, échantillon de 250 g, relance trois jours après. Invitation à la soirée du 12.', 'b2b'],
-      ['yousif', 'lun. 7 déc.', 'Relancer les invités', 'Appel ou message personnel aux non-répondants, en particulier presse et F&B, moins disponibles le samedi.', 'lancement'],
-      ['amer', 'lun. 7 déc.', 'Stocker pour le pic de Noël', 'Coffrets, sacs kraft, cartons d’expédition, transfert depuis le bureau de stockage chaque lundi.', ''],
+    { t: 'Noël et soirée d’ouverture', d: 'décembre', du: '2026-12-01', au: '2026-12-31', tasks: [
+      ['khaled', 'mar. 1er déc.', 'Cadeaux d’entreprise', '40 entreprises à moins de 500 m, grille −5 % / −10 %, commande avant le 10 décembre.', 'lancement'],
+      ['khaled', 'jeu. 3 déc.', 'Premier cupping du jeudi', '6 à 8 acheteurs, plaquette, échantillon de 250 g, relance trois jours après. Invitation à la soirée du 12.', 'b2b'],
+      ['yousif', 'lun. 7 déc.', 'Relancer les invités', 'Appel ou message personnel aux non-répondants, en priorité la presse et les hôtels.', 'lancement'],
+      ['amer', 'lun. 7 déc.', 'Stocker pour le pic de Noël', 'Coffrets, sacs kraft, cartons d’expédition ; transfert depuis le bureau de stockage chaque lundi.', ''],
       ['khaled', 'ven. 11 déc.', 'Répéter la soirée', 'Après la fermeture : déroulé complet, cupping chronométré par groupes de 8, son et carafes.', 'lancement'],
-      ['equipe', 'sam. 12 déc.', 'Soirée d’ouverture officielle', 'Boutique fermée au public à 18 h, soirée de 19 h à 22 h, environ 60 invités, code « SOIRÉE » pour l’e-shop.', 'lancement'],
+      ['equipe', 'sam. 12 déc.', 'Soirée d’ouverture officielle', 'Boutique fermée au public à 18 h, soirée de 19 h à 22 h, environ 60 invités, code « SOIRÉE » pour la boutique en ligne.', 'lancement'],
       ['yousif', 'lun. 14 déc.', 'Remerciements et retombées', 'E-mail de merci avec trois photos à chaque invité, relance presse avec les meilleures images.', 'lancement'],
-      ['yousif', 'ven. 18 déc.', 'Clore les commandes web de Noël', 'Annoncé dès le 1er décembre ; retrait en boutique jusqu’au mercredi 23.', 'eshop'],
+      ['yousif', 'ven. 18 déc.', 'Dernières commandes web pour Noël', 'Annoncé dès le 1er décembre ; retrait en boutique jusqu’au mercredi 23.', 'eshop'],
       ['senior', 'chaque soir', 'Fermer en 30 minutes', 'Check-list chronométrée, invendus vers Too Good To Go.', 'barista'],
       ['amer', 'jeu. 24 déc.', 'Horaires des fêtes', 'Fermeture anticipée les 24 et 31, fermé les 25 et 1er janvier ; vitrine et Google à jour une semaine avant.', '']
     ]},
-    { t: 'Fidéliser dans le creux', d: 'janvier 2027', tasks: [
-      ['yousif', 'lun. 4 janv.', 'Bilan du premier mois', 'Réels contre plan. Décisions : rémunération des associés, quatrième poste, effet de la grille Premium sur les ventes.', 'simulateur'],
-      ['chef', 'mer. 6 janv.', 'Galette des rois maison', 'Frangipane au miel et à la cardamome, à valider avec le pâtissier.', 'lancement'],
+    { t: 'Fidéliser', d: 'janvier 2027', du: '2027-01-01', au: '2027-01-31', tasks: [
+      ['yousif', 'lun. 4 janv.', 'Bilan du premier mois', 'Ventes réelles contre objectifs. Décisions : rémunération des associés, quatrième poste, effet des prix.', 'simulateur'],
+      ['chef', 'mer. 6 janv.', 'Galette des rois maison', 'Frangipane au miel et à la cardamome, avec le pâtissier.', 'lancement'],
       ['yousif', 'lun. 11 janv.', 'Acheteurs de Noël vers l’abonnement', 'Relance de la deuxième commande, mesure des premiers taux de conversion du site.', 'eshop'],
-      ['amer', 'lun. 18 janv.', 'Planning sur les vraies heures de pointe', 'Export horaire SumUp, séquences décalées en conséquence.', 'barista'],
+      ['amer', 'lun. 18 janv.', 'Planning sur les vraies heures de pointe', 'Ventes par heure dans SumUp, séquences décalées en conséquence.', 'barista'],
       ['khaled', 'chaque jeudi', 'Quatre cuppings, trois commandes test', 'Objectif : 30 kg livrés aux pros en janvier.', 'b2b']
     ]},
-    { t: 'Saint-Valentin et Ramadan', d: 'février 2027', tasks: [
-      ['amer', 'lun. 1er févr.', 'Box ftour du Ramadan (vers le 7-8 février)', 'Dattes, Sabaya, Qishr à emporter dès 17 h, horaires inchangés (fermeture à 20 h).', 'lancement'],
+    { t: 'Saint-Valentin et Ramadan', d: 'février 2027', du: '2027-02-01', au: '2027-02-28', tasks: [
+      ['amer', 'lun. 1er févr.', 'Box ftour du Ramadan (vers le 7-8 février)', 'Dattes, Sabaya et Qishr à emporter dès 17 h, horaires inchangés.', 'lancement'],
       ['yousif', 'lun. 1er févr.', 'Coffret de la Saint-Valentin', 'Coffret Duo en édition « Toits de Sanaa », précommande jusqu’au 12.', 'lancement'],
-      ['khaled', 'lun. 15 févr.', 'Candidater au Paris Café Festival', 'Édition annoncée du 24 au 26 avril 2027, à confirmer. Stand partagé ou masterclass Qishr.', 'b2b'],
+      ['khaled', 'lun. 15 févr.', 'Candidater au Paris Café Festival', 'Édition annoncée du 24 au 26 avril 2027. Stand partagé ou masterclass Qishr.', 'b2b'],
       ['yousif', 'lun. 22 févr.', 'Précommandes de l’Aïd', 'Coffrets Prestige, livraison avant le 9 mars.', 'lancement']
     ]},
-    { t: 'Aïd el-Fitr et contrats B2B', d: 'mars 2027', tasks: [
+    { t: 'Aïd el-Fitr et contrats pros', d: 'mars 2027', du: '2027-03-01', au: '2027-03-31', tasks: [
       ['equipe', 'mer. 10 mars', 'Aïd el-Fitr (date estimée)', 'Vitrine de fête, coffrets, pâtisseries yéménites.', 'lancement'],
-      ['khaled', 'lun. 15 mars', 'Signer deux ou trois contrats pros', 'Un contrat torréfié (hôtel ou restaurant), un contrat vert (torréfacteur), relus par l’avocat.', 'b2b'],
-      ['khaled', 'mer. 31 mars', 'Dossier EUDR complet', 'Géolocalisation, preuves et procédure de déclaration prêtes avant l’échéance du 30 juin 2027 (petites entreprises).', 'b2b'],
+      ['khaled', 'lun. 15 mars', 'Signer deux ou trois contrats pros', 'Un contrat torréfié (hôtel ou restaurant), un contrat vert (torréfacteur).', 'b2b'],
+      ['khaled', 'mer. 31 mars', 'Dossier de traçabilité (EUDR) complet', 'Géolocalisation, preuves et procédure de déclaration prêtes avant le 30 juin 2027.', 'b2b'],
       ['chef', 'dim. 28 mars', 'Pâtisserie de Pâques', 'Une pièce franco-yéménite, testée deux semaines avant.', '']
     ]},
-    { t: 'Accélérer, puis faire le bilan', d: 'du 1er avril au 19 mai 2027', tasks: [
-      ['chef', 'mar. 6 avr.', 'Carte de printemps', 'Qishr glacé et cold brew d’un lot du Haraz, chiffrés avant lancement.', ''],
-      ['khaled', 'sam. 24 avr.', 'Paris Café Festival (si retenu)', 'Cupping public, coffrets, collecte d’adresses pour l’e-shop.', 'b2b'],
+    { t: 'Accélérer et faire le bilan', d: 'du 1er avril au 19 mai 2027', du: '2027-04-01', au: '2027-05-19', tasks: [
+      ['chef', 'mar. 6 avr.', 'Carte de printemps', 'Qishr glacé et cold brew d’un café du Haraz, chiffrés avant lancement.', ''],
+      ['khaled', 'sam. 24 avr.', 'Paris Café Festival', 'Cupping public, coffrets, collecte d’adresses pour la boutique en ligne.', 'b2b'],
       ['yousif', 'lun. 10 mai', 'Fête des mères (30 mai)', 'Précommandes en boutique et en ligne.', 'lancement'],
-      ['equipe', 'mer. 19 mai', 'Bilan des six mois', 'Résultat réel, trésorerie, avis. Décisions : recrutement, horaires, développement B2B.', 'simulateur']
+      ['equipe', 'mer. 19 mai', 'Bilan des six mois', 'Résultat réel, trésorerie, avis clients. Décisions : recrutement, horaires, développement des ventes aux pros.', 'simulateur']
     ]}
   ];
+  function enCours(ph) { var du = new Date(ph.du + 'T00:00:00'), au = new Date(ph.au + 'T23:59:59'); return today >= du && today <= au; }
 
   var filter = 'tous';
   function renderFilters() {
     var keys = ['tous'].concat(Object.keys(WHO));
     document.getElementById('filters').innerHTML = keys.map(function (k) {
-      var label = k === 'tous' ? 'Tout le monde' : WHO[k][0].split(' · ')[0];
+      var label = k === 'tous' ? 'Tout le monde' : WHO[k][0];
       var dot = k === 'tous' ? '' : '<span class="dot" style="background:' + WHO[k][1] + '"></span>';
       return '<button type="button" class="chip" data-k="' + k + '" aria-pressed="' + (filter === k) + '">' + dot + esc(label) + '</button>';
     }).join('');
@@ -316,7 +285,8 @@
   function renderRoad() {
     document.getElementById('road').innerHTML = PHASES.map(function (ph) {
       var tasks = ph.tasks.filter(function (t) { return filter === 'tous' || t[0] === filter || t[0] === 'equipe'; });
-      return '<div class="phase"><div class="phase-head"><h3>' + esc(ph.t) + '</h3><span>' + esc(ph.d) + '</span></div>' +
+      return '<div class="phase"' + (enCours(ph) ? ' id="en-cours"' : '') + '><div class="phase-head"><h3>' + esc(ph.t) + '</h3><span class="d">' + esc(ph.d) + '</span>' +
+        (enCours(ph) ? '<span class="pill ok">En cours</span>' : '') + '</div>' +
         (tasks.length ? tasks.map(function (t) {
           return '<div class="panel task"><div class="when">' + esc(t[1]) + '</div><div><div class="t">' + esc(t[2]) + '</div><div class="d">' + esc(t[3]) + '</div>' +
             '<div class="who"><span class="dot" style="background:' + WHO[t[0]][1] + '"></span>' + esc(WHO[t[0]][0]) +
@@ -334,12 +304,12 @@
   renderFilters(); renderRoad();
 
   var RIT = [
-    ['Chaque jour · 7 h 50', 'Briefing de 2 minutes', 'Le produit du jour, la phrase de vente additionnelle, l’objectif de tasses du palier en cours.'],
+    ['Chaque jour · 7 h 50', 'Briefing de 2 minutes', 'Le produit du jour, la phrase de vente additionnelle, l’objectif de tasses du mois.'],
     ['Chaque soir · fermeture', 'Ticket Z et journal de bord', 'Encaissements, invendus, une remarque client. Le responsable de fermeture signe.'],
-    ['Chaque lundi · 15 h', 'Point associés de 30 minutes', 'Animé par Yousif : chiffres SumUp et Mollie, solde Qonto, vraies charges saisies dans le simulateur, trois priorités.'],
+    ['Chaque lundi · 15 h', 'Point associés de 30 minutes', 'Animé par Yousif : ventes SumUp et Mollie, solde Qonto, vraies charges saisies dans le simulateur, trois priorités.'],
     ['Chaque lundi', 'TVA et stock', '9 % des encaissements vers le sous-compte TVA. Transfert du bureau de stockage vers la boutique, inventaire croisé SumUp et WooCommerce.'],
     ['Chaque jeudi · 15 h–16 h 30', 'Cupping pro', 'À partir du 3 décembre. 6 à 8 acheteurs, relance trois jours après.'],
-    ['Chaque mois', 'Clôture et inventaire', 'Pennylane, déclaration de TVA, inventaire du vert, du torréfié et des emballages, entretien de 15 minutes avec chaque barista.']
+    ['Chaque mois', 'Clôture et inventaire', 'Comptabilité et déclaration de TVA, inventaire du vert, du torréfié et des emballages, entretien de 15 minutes avec chaque barista.']
   ];
   document.getElementById('rituals').innerHTML = RIT.map(function (r) {
     return '<div class="panel ritual"><div class="w">' + esc(r[0]) + '</div><b>' + esc(r[1]) + '</b><span>' + esc(r[2]) + '</span></div>';
