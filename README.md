@@ -16,7 +16,7 @@ hors connexion, les tableaux restent complets.
 |---|---|---|
 | `index.html` | Feuille de route : changements, urgences, décisions, paliers d'objectifs, tâches par personne, rituels | Tous |
 | `00-marque/` | Plateforme de marque, corrections de charte et d'étiquetage, étude « 100 % Yémen ou autres cafés » | Yousif |
-| `01-dashboard-financier/` | Simulateur 6 mois. Charges, dépenses ponctuelles et prix **modifiables** ; enregistrés pour l'équipe sur la page publiée, dans le navigateur en local | Amer |
+| `01-dashboard-financier/` | Simulateur 6 mois. Charges, dépenses ponctuelles, prix, grille pro et paramètres (SumUp, Mollie, café vert, trésorerie) **modifiables et exportables** ; enregistrés pour l'équipe sur la page publiée | Yousif |
 | `01-dashboard-financier/modele.js` | Modèle de calcul, testable seul : `node -e "require('./01-dashboard-financier/modele.js')"` | — |
 | `02-onboarding-baristas/` | Manuel : bar d'après le plan, recettes, boissons yéménites, planning 3 baristas + associés, check-lists imprimables | Amer, chef barista |
 | `03-marketing-lancement/` | Rétroplanning, soirée VIP du jeudi 26 novembre, invitations par segment, coffrets, temps forts | Yousif |
@@ -33,17 +33,18 @@ prix, coûts et parts de ventes de chaque produit. Sur la page publiée, chaque 
 l'équipe et Claude peut la relire. En local, elle reste dans le navigateur ; « Sauvegarde » permet de copier les données
 d'une version à l'autre.
 
-## Chiffres clés au 6 novembre 2026 (après vos décisions)
+## Chiffres clés au 12 novembre 2026
 
-3 baristas, bureau de stockage à 630 €/mois, grille « Premium Yémen », sachet web de 250 g à 27,90 €.
+3 baristas à 2 800 € (coût employeur), bureau de stockage à 630 €/mois, soirée VIP à 800 €, contrat SumUp (90 €/mois + 0,49 %),
+café vert à 55 €/kg, grille « Premium Yémen », grille pro relevée, 15 000 € sur Qonto, aucun crédit.
 
-| | Plan des associés | Avec les 6 corrections proposées |
+| | Plan des associés | Avec les 5 corrections proposées |
 |---|---|---|
-| Chiffre d'affaires HT sur 6 mois | 316 852 € | 231 657 € |
-| Marge brute | 191 483 € (60,4 %) | 141 824 € (61,2 %) |
-| Charges fixes sur 6 mois | 103 980 € | 103 980 € |
-| Résultat d'exploitation | 87 503 € | 29 939 € |
-| Point bas de trésorerie (hors solde de départ) | +10 649 € en M1 | −2 836 € en M1 |
-| Point mort en régime | 62 tasses par jour | 69 tasses par jour |
+| Chiffre d'affaires HT sur 6 mois | 319 741 € | 233 342 € |
+| Marge brute | 186 601 € (58,4 %) | 138 118 € (59,2 %) |
+| Résultat d'exploitation | 75 003 € | 22 858 € |
+| Trésorerie : point bas / fin de période | 22 864 € (M1) / 90 003 € | 9 514 € (M2) / 37 858 € |
+| Point mort en régime | 70 tasses par jour | 70 tasses par jour |
 
-Les décisions du 6 novembre sont consignées dans `docs/decisions.md`.
+Avec un vert à 50 € puis 60 € le kilo, le résultat réaliste va de 28 249 € à 17 468 €. Tout est modifiable dans le simulateur
+(onglets « Vos chiffres » et « Paramètres ») et exportable en Excel (CSV) ou JSON. Les décisions sont consignées dans `docs/decisions.md`.

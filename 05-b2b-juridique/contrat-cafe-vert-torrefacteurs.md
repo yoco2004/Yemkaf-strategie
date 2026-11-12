@@ -1,6 +1,6 @@
 # Contrat-cadre d'approvisionnement en café vert du Yémen
 
-> **Projet du 6 novembre 2026, à faire relire par un avocat avant toute signature.**
+> **Projet du 12 novembre 2026, à faire relire par un avocat avant toute signature.**
 > Les passages entre crochets `[…]` sont à compléter. Les clauses tiennent compte de la prise du port de Mokha
 > (septembre 2026) et du règlement européen sur la déforestation (EUDR).
 
@@ -8,8 +8,9 @@
 
 **ENTRE LES SOUSSIGNÉS**
 
-**YEM'KAF**, [forme sociale] au capital de [montant] €, immatriculée au RCS de [ville] sous le numéro [SIREN],
-dont le siège est situé [adresse], représentée par [prénom, nom, qualité], dûment habilité,
+**YEM'KAF**, société par actions simplifiée au capital de 2 000 €, immatriculée au RCS de Paris sous le numéro
+887 788 834, dont le siège est situé 24 rue du Renard, 75004 Paris, représentée par M. Khaled Al Maweri, en sa qualité
+de président, dûment habilité *(à vérifier sur le Kbis : le transfert du siège depuis Guyancourt doit y figurer)*,
 ci-après « **le Fournisseur** »,
 
 **ET**
@@ -108,9 +109,9 @@ plus de [15] jours.
 
 | Formule | Condition | Prix HT / kg |
 |---|---|---|
-| Vert Micro-Lot | par sac de 5 kg | 72,00 € |
-| Vert Signature | à partir de 15 kg par Commande | 66,00 € |
-| Vert Contrat | à partir de 30 kg par Commande, ou engagement annuel d'au moins [300] kg | 61,50 € |
+| Vert Micro-Lot | par sac de 5 kg | 80,00 € |
+| Vert Signature | à partir de 15 kg par Commande | 75,00 € |
+| Vert Contrat | à partir de 30 kg par Commande, ou engagement annuel d'au moins [300] kg | 70,00 € |
 
 7.2. Les prix sont valables pour la récolte en cours. Les prix de la récolte suivante sont communiqués au moins
 **60 jours** avant leur application.
@@ -229,7 +230,7 @@ Fait à Paris, le [date], en deux exemplaires originaux.
 
 | Pour le Fournisseur | Pour l'Acheteur |
 |---|---|
-| [Nom, qualité] | [Nom, qualité] |
+| Khaled Al Maweri, président | [Nom, qualité] |
 | Signature : | Signature : |
 
 ---

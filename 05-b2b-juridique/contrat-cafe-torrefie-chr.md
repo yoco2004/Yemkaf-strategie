@@ -2,7 +2,7 @@
 
 **Coffee shops, hôtels et restaurants**
 
-> **Projet du 6 novembre 2026, à faire relire par un avocat avant toute signature.**
+> **Projet du 12 novembre 2026, à faire relire par un avocat avant toute signature.**
 > Les passages entre crochets `[…]` sont à compléter. La clause d'exclusivité (article 8) doit être vérifiée au regard
 > du droit de la concurrence avant usage.
 
@@ -10,8 +10,9 @@
 
 **ENTRE LES SOUSSIGNÉS**
 
-**YEM'KAF**, [forme sociale] au capital de [montant] €, immatriculée au RCS de [ville] sous le numéro [SIREN],
-dont le siège est situé [adresse], représentée par [prénom, nom, qualité],
+**YEM'KAF**, société par actions simplifiée au capital de 2 000 €, immatriculée au RCS de Paris sous le numéro
+887 788 834, dont le siège est situé 24 rue du Renard, 75004 Paris, représentée par M. Khaled Al Maweri, en sa qualité
+de président, dûment habilité *(à vérifier sur le Kbis : le transfert du siège depuis Guyancourt doit y figurer)*,
 ci-après « **Yem'kaf** »,
 
 **ET**
@@ -53,9 +54,9 @@ sur ses volumes de commande pour respecter cette fenêtre.
 
 | Formule | Volume mensuel | Prix HT / kg |
 |---|---|---|
-| Torréfié Invité | de 3 à 9 kg | 92,00 € |
-| Torréfié Palace | de 10 à 24 kg | 86,50 € |
-| Torréfié Résident | à partir de 25 kg | 81,00 € |
+| Torréfié Invité | de 3 à 9 kg | 99,00 € |
+| Torréfié Palace | de 10 à 24 kg | 94,00 € |
+| Torréfié Résident | à partir de 25 kg | 89,00 € |
 
 4.2. Les prix s'entendent hors taxes, livraison comprise dans Paris intra-muros à partir de 3 kg par livraison ;
 au-delà de Paris, les frais de transport réels sont refacturés.
@@ -184,7 +185,7 @@ Fait à Paris, le [date], en deux exemplaires originaux.
 
 | Pour Yem'kaf | Pour le Partenaire |
 |---|---|
-| [Nom, qualité] | [Nom, qualité] |
+| Khaled Al Maweri, président | [Nom, qualité] |
 | Signature : | Signature : |
 
 ---

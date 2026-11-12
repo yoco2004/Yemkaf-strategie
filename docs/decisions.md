@@ -35,3 +35,16 @@ Réponses aux questions en cours, recueillies une par une. Elles seront répercu
 
 Contrat SumUp, fichier source du plan à 278 383 €, solde Qonto et mensualités d'emprunt, valeur exacte du bordeaux des sachets
 et polices de la charte, liste VIP.
+
+## Décisions du 12 novembre 2026
+
+| # | Sujet | Réponse | Effet |
+|---|---|---|---|
+| 12 | Salaires | **2 800 € par barista** (coût employeur), modifiable et exportable | Charges fixes : 18 170 € par mois en régime |
+| 13 | « Loi vip » | **Soirée VIP configurable** | Dépense ponctuelle de 800 € en M1, modifiable |
+| 14 | Contrat SumUp | **90 € par mois + 0,49 % du montant** | Environ 1 500 € sur 6 mois (scénario réaliste) |
+| 15 | Trésorerie | **Environ 15 000 € sur Qonto, aucun crédit** | Paramètres « Solde Qonto » et « Mensualités » |
+| 16 | Café vert | **50 à 60 € le kilo tout compris** (55 € par défaut) | Chaque produit recalculé : coût hors café + grammes × prix du vert |
+| 17 | Grille B2B | **Grille ajustée** : vert 80 / 75 / 70 €, torréfié 99 / 94 / 89 € | Au moins 14 % de marge avec un vert à 60 € ; contrats et plaquette mis à jour |
+| 18 | Société | **SAS au capital de 2 000 €, RCS Paris 887 788 834, 24 rue du Renard, Khaled Al Maweri président** | Saisi dans les contrats ; Kbis et mentions légales du site à vérifier (Guyancourt) |
+| 19 | Noms | **17 noms « Élégance franco-yéménite »** ; « Château d'Hamdan » devient **« Château de Ghumdan »** | Citadelle de…, Vallée de…, Comptoir de… à compléter plus tard |

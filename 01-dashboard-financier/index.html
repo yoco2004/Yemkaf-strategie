@@ -117,6 +117,16 @@ tr.minor td:first-child { padding-left: 22px; }
 .confirm { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background: var(--warn-wash); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
 textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, Consolas, monospace; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
 .readonly .ed-table input, .readonly .ed-table select { background: var(--surface-2); }
+.editor .tabs { flex-wrap: wrap; overflow-x: visible; }
+.editor .tabs button { flex: 1 1 auto; }
+.param-list { display: grid; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.param-group { padding: 8px 14px; font-weight: 700; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.param-row { display: grid; grid-template-columns: minmax(0, 1.2fr) auto minmax(0, 1.5fr); gap: 6px 16px; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.param-row:last-child { border-bottom: 0; }
+.param-row input[type="number"] { font: inherit; font-size: 14px; width: 130px; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
+.param-row input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--brand); }
+.param-row .note { font-size: 13px; color: var(--muted); }
+@media (max-width: 700px) { .param-row { grid-template-columns: 1fr; } }
 @media (max-width: 520px) { .tile .value { font-size: 24px; } .chart-box { height: 280px; } .seg button { padding: 6px 10px; font-size: 13px; } }
 </style>
 </head>
@@ -206,7 +216,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
         </section>
       </div>
       <section class="panel chart-card" aria-labelledby="h-pl">
-        <div class="card-head"><h2 id="h-pl">Compte de résultat mensuel</h2><span class="hint">Montants HT, arrondis à l’euro.</span></div>
+        <div class="card-head"><h2 id="h-pl">Compte de résultat mensuel</h2><span class="hint">Montants HT, arrondis à l’euro. <button type="button" class="btn" id="pl-export" style="margin-left:8px;padding:4px 10px;font-size:13px">Exporter (Excel)</button> <span id="pl-export-msg"></span></span></div>
         <div class="table-scroll"><table id="t-pl"></table></div>
       </section>
       <section class="panel chart-card" aria-labelledby="h-risk">
@@ -215,7 +225,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
           <div class="risk"><b>Mokha aux mains des Houthis</b><span>Port pris le 10 septembre 2026. Sécurisez 8 à 12 semaines de vert et des clauses de force majeure dans vos contrats B2B.</span></div>
           <div class="risk"><b>Règlement européen anti-déforestation</b><span>Le café y est soumis : 30 décembre 2026 pour les moyennes et grandes entreprises, 30 juin 2027 pour les petites. Il faut la géolocalisation des parcelles au Yémen.</span></div>
           <div class="risk"><b>Centre Pompidou fermé jusqu’en 2030</b><span>Moins de touristes rue du Renard. Misez sur les bureaux voisins, les riverains et les 25 places assises.</span></div>
-          <div class="risk"><b>Tarifs SumUp et Mollie à vérifier</b><span>Le contrat SumUp n’est pas arrivé avec les pièces jointes. Les taux affichés viennent de sources publiques.</span></div>
+          <div class="risk"><b>Prix du café vert : 50 à 60 € le kilo</b><span>Chaque 5 € par kilo coûte environ 5 400 € de résultat sur 6 mois. Réglage dans « Vos chiffres › Paramètres ». La grille pro a été relevée pour garder au moins 14 % de marge à 60 €.</span></div>
         </div>
       </section>
       <section class="panel chart-card" aria-labelledby="h-grid">
@@ -234,12 +244,16 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     <div class="tabs" role="tablist" id="ed-tabs">
       <button type="button" role="tab" aria-selected="true" data-pane="ed-fixes" id="edt-fixes">Charges mensuelles</button>
       <button type="button" role="tab" aria-selected="false" data-pane="ed-ponct" id="edt-ponct">Dépenses ponctuelles</button>
-      <button type="button" role="tab" aria-selected="false" data-pane="ed-prix" id="edt-prix">Prix, coûts et ventes</button>
-      <button type="button" role="tab" aria-selected="false" data-pane="ed-save" id="edt-save">Sauvegarde</button>
+      <button type="button" role="tab" aria-selected="false" data-pane="ed-prix" id="edt-prix">Prix et ventes</button>
+      <button type="button" role="tab" aria-selected="false" data-pane="ed-b2b" id="edt-b2b">Prix pros (B2B)</button>
+      <button type="button" role="tab" aria-selected="false" data-pane="ed-param" id="edt-param">Paramètres</button>
+      <button type="button" role="tab" aria-selected="false" data-pane="ed-save" id="edt-save">Sauvegarde et export</button>
     </div>
     <div class="tabpanel" id="ed-fixes" role="tabpanel"></div>
     <div class="tabpanel" id="ed-ponct" role="tabpanel" hidden></div>
     <div class="tabpanel" id="ed-prix" role="tabpanel" hidden></div>
+    <div class="tabpanel" id="ed-b2b" role="tabpanel" hidden></div>
+    <div class="tabpanel" id="ed-param" role="tabpanel" hidden></div>
     <div class="tabpanel" id="ed-save" role="tabpanel" hidden></div>
   </section>
 </main>
@@ -415,13 +429,8 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     { g: 'Pros (B2B)' },
     { cle: 'kgB2BMois', label: 'Café livré aux pros par mois', min: 0, max: 300, step: 5, fmt: function (v) { return fInt.format(v) + ' kg'; }, foot: 'Brief : 60 kg' },
     { cle: 'partVertB2B', label: 'Part de café vert dans le B2B', min: 0, max: 1, step: 0.05, fmt: function (v) { return fInt.format(v * 100) + ' %'; }, foot: 'Hypothèse : 50 %' },
-    { g: 'Paiements' },
-    { cle: 'formuleSumUp', label: 'Formule SumUp en boutique', type: 'seg', options: [['standard', '1,75 %'], ['plus', 'Paiements Plus']], foot: 'Compte avec la correction « Commissions SumUp et Mollie »' },
-    { cle: 'offreMollie', label: 'Mollie sur le site WordPress', type: 'seg', options: [['lancement', 'Offre 0 % jusqu’au 31/12'], ['standard', 'Tarif standard']], foot: 'Offre réservée aux nouveaux comptes, à confirmer' },
-    { g: 'Loyer et trésorerie' },
+    { g: 'Loyer et stock' },
     { cle: 'moisFranchise', label: 'Franchise de loyer obtenue', min: 0, max: 3, step: 1, fmt: function (v) { return v + ' mois'; }, foot: 'S’applique à la ligne « Loyer » de vos charges' },
-    { cle: 'tresorerieDepart', label: 'Solde Qonto au 20 novembre', min: 0, max: 150000, step: 1000, fmt: function (v) { return eur(v); }, foot: 'À renseigner' },
-    { cle: 'mensualitesEmprunt', label: 'Mensualités d’emprunt ou de leasing', min: 0, max: 6000, step: 50, fmt: function (v) { return eur(v); }, foot: 'Machine, travaux, prêt bancaire' },
     { cle: 'semainesStock', label: 'Stock de sécurité en café vert', min: 0, max: 16, step: 1, fmt: function (v) { return v + ' sem.'; }, foot: '', footId: 'foot-stock' }
   ];
 
@@ -536,26 +545,78 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
         sugg.map(function (s) { return '<button type="button" data-act="sugg-p" data-nom="' + esc(s.nom) + '" title="' + esc(s.note) + '">+ ' + esc(s.nom) + ' · ' + eur(s.montant) + ' en M' + s.mois + '</button>'; }).join('') + '</div></div>' : '');
   }
 
+  function pv() { return donnees.parametres.prixVertKg; }
+  function margeTxt(ht, cout) { var m = ht - cout; return fEur2.format(m) + ' · ' + (ht > 0 ? fDec1.format(m / ht * 100) : '0') + ' %'; }
   function renderPrix() {
     document.getElementById('ed-prix').innerHTML =
-      '<p class="hint">Prix de vente TTC, coût de revient HT (matière et emballage) et part des ventes de chaque produit dans son canal. Si les parts ne font pas 100 %, le simulateur les ramène à 100 %. Les grammes servent au calcul du café vert à acheter.</p>' +
+      '<p class="hint">Prix de vente TTC et part des ventes de chaque produit dans son canal (ramenées à 100 % si besoin). Pour les produits à base de café, le coût se compose du <b>coût hors café</b> (gobelet, lait, épices, emballage) et des <b>grammes de café</b>, valorisés au prix du vert réglé dans « Paramètres » (' + eur(pv()) + ' le kilo).</p>' +
       CANAUX_PRIX.map(function (ch) {
         var rows = donnees.catalogue[ch.cle].map(function (l, i) {
-          var ht = l.ttc / (1 + ch.tva), m = ht - l.cout;
+          var ht = l.ttc / (1 + ch.tva), ct = M.coutTotal(l, pv());
           return '<tr data-i="' + i + '"><td><input class="name" id="px-' + ch.cle + '-nom-' + l.id + '" data-k="nom" value="' + esc(l.nom) + '" aria-label="Produit"></td>' +
             '<td><input type="number" id="px-' + ch.cle + '-ttc-' + l.id + '" data-k="ttc" min="0" step="0.1" value="' + l.ttc + '" aria-label="Prix TTC"></td>' +
-            '<td><input type="number" id="px-' + ch.cle + '-cout-' + l.id + '" data-k="cout" min="0" step="0.01" value="' + l.cout + '" aria-label="Coût HT"></td>' +
+            '<td><input type="number" id="px-' + ch.cle + '-cout-' + l.id + '" data-k="cout" min="0" step="0.01" value="' + l.cout + '" aria-label="' + (ch.gram ? 'Coût hors café HT' : 'Coût HT') + '"></td>' +
+            (ch.gram ? '<td><input type="number" id="px-' + ch.cle + '-g-' + l.id + '" data-k="g" min="0" step="1" value="' + (l.g || 0) + '" aria-label="Grammes de café"></td>' +
+              '<td class="calc num" id="px-' + ch.cle + '-ct-' + l.id + '">' + fEur2.format(ct) + '</td>' : '') +
             '<td>' + (l.parBoisson ? '<span class="muted small">par boisson</span>' : '<input type="number" id="px-' + ch.cle + '-mix-' + l.id + '" data-k="mix" min="0" step="1" value="' + l.mix + '" aria-label="Part des ventes en %">') + '</td>' +
-            (ch.gram ? '<td><input type="number" id="px-' + ch.cle + '-g-' + l.id + '" data-k="g" min="0" step="1" value="' + (l.g || 0) + '" aria-label="Grammes de café"></td>' : '') +
-            '<td class="calc num" id="px-' + ch.cle + '-m-' + l.id + '">' + fEur2.format(m) + ' · ' + (ht > 0 ? fDec1.format(m / ht * 100) : '0') + ' %</td>' +
+            '<td class="calc num" id="px-' + ch.cle + '-m-' + l.id + '">' + margeTxt(ht, ct) + '</td>' +
             '<td><button type="button" class="del" data-act="del-prix" aria-label="Supprimer ' + esc(l.nom) + '">×</button></td></tr>';
         }).join('');
         return '<div class="channel" data-canal="' + ch.cle + '"><h3>' + esc(ch.nom) + ' <span class="mixsum" id="mix-' + ch.cle + '"></span></h3>' +
-          '<div class="table-scroll"><table class="ed-table"><thead><tr><th>Produit</th><th>Prix TTC</th><th>Coût HT</th><th>Part %</th>' + (ch.gram ? '<th>Café (g)</th>' : '') + '<th>Marge HT</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+          '<div class="table-scroll"><table class="ed-table"><thead><tr><th>Produit</th><th>Prix TTC</th><th>' + (ch.gram ? 'Coût hors café' : 'Coût HT') + '</th>' + (ch.gram ? '<th>Café (g)</th><th>Coût total</th>' : '') + '<th>Part %</th><th>Marge HT</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
           '<div class="row-actions"><button type="button" class="btn" data-act="add-prix">Ajouter un produit</button></div></div>';
       }).join('');
     updateMixSums();
   }
+
+  var B2B_UI = [['vert', 'Café vert pour torréfacteurs', 1], ['torrefie', 'Café torréfié pour coffee shops, hôtels et restaurants', 1 / M.RENDEMENT]];
+  function renderB2B() {
+    document.getElementById('ed-b2b').innerHTML =
+      '<p class="hint">Prix HT par kilo. Le coût du kilo vendu vaut le prix du vert (' + eur(pv()) + ') pour le café vert, et le prix du vert ÷ 0,8 pour le torréfié (freinte), plus les frais hors café (sacs, transport, torréfaction à façon). Grille relevée le 12 novembre pour garder au moins 14 % de marge avec un vert à 60 €.</p>' +
+      B2B_UI.map(function (b) {
+        var rows = donnees.b2b[b[0]].map(function (l, i) {
+          var cout = pv() * b[2] + l.extra;
+          return '<tr data-i="' + i + '"><td><input class="name" id="b2-' + b[0] + '-nom-' + l.id + '" data-k="nom" value="' + esc(l.nom) + '" aria-label="Formule"></td>' +
+            '<td><input type="number" id="b2-' + b[0] + '-prix-' + l.id + '" data-k="prix" min="0" step="0.5" value="' + l.prix + '" aria-label="Prix HT par kilo"></td>' +
+            '<td><input type="number" id="b2-' + b[0] + '-extra-' + l.id + '" data-k="extra" min="0" step="0.1" value="' + l.extra + '" aria-label="Frais hors café par kilo"></td>' +
+            '<td><input type="number" id="b2-' + b[0] + '-mix-' + l.id + '" data-k="mix" min="0" step="1" value="' + l.mix + '" aria-label="Part des volumes en %"></td>' +
+            '<td class="calc num" id="b2-' + b[0] + '-c-' + l.id + '">' + fEur2.format(cout) + '</td>' +
+            '<td class="calc num" id="b2-' + b[0] + '-m-' + l.id + '">' + margeTxt(l.prix, cout) + '</td>' +
+            '<td><button type="button" class="del" data-act="del-b2b" aria-label="Supprimer ' + esc(l.nom) + '">×</button></td></tr>';
+        }).join('');
+        return '<div class="channel" data-b2b="' + b[0] + '"><h3>' + esc(b[1]) + '</h3><div class="table-scroll"><table class="ed-table"><thead><tr><th>Formule</th><th>Prix HT/kg</th><th>Frais hors café/kg</th><th>Part %</th><th>Coût/kg</th><th>Marge</th><th></th></tr></thead><tbody>' + rows +
+          '</tbody></table></div><div class="row-actions"><button type="button" class="btn" data-act="add-b2b">Ajouter une formule</button></div></div>';
+      }).join('');
+  }
+
+  var PARAMS_UI = [
+    { g: 'Café vert' },
+    { k: 'prixVertKg', label: 'Prix du café vert, tout compris', unite: '€ HT/kg', step: 0.5, note: 'Entre 50 et 60 € annoncés. Chaque 5 € par kilo coûte environ 5 400 € de résultat sur 6 mois.' },
+    { g: 'Paiements' },
+    { k: 'sumupAbonnement', label: 'SumUp : abonnement mensuel', unite: '€ HT', step: 1, note: 'Votre contrat : 90 € par mois.' },
+    { k: 'sumupTaux', label: 'SumUp : commission par paiement', unite: '%', step: 0.01, pct: true, note: 'Votre contrat : 0,49 %.' },
+    { k: 'partCarte', label: 'Part des ventes boutique payées par carte', unite: '%', step: 1, pct: true, note: 'Le reste en espèces.' },
+    { k: 'mollieTaux', label: 'Mollie : commission par paiement en ligne', unite: '%', step: 0.01, pct: true, note: 'Environ 1,4 % pour une carte française, à vérifier.' },
+    { k: 'mollieFixe', label: 'Mollie : frais fixes par paiement', unite: '€', step: 0.01, note: 'Environ 0,25 €.' },
+    { k: 'mollieOffre', label: 'Mollie : offre 0 % jusqu’au 31 décembre', type: 'check', note: 'Pour les nouveaux comptes, dans la limite de 50 000 €.' },
+    { g: 'Trésorerie' },
+    { k: 'tresorerieDepart', label: 'Solde Qonto au 20 novembre', unite: '€', step: 500, note: 'Environ 15 000 € annoncés.' },
+    { k: 'mensualitesEmprunt', label: 'Mensualités d’emprunt ou de leasing', unite: '€ / mois', step: 50, note: 'Aucun crédit en cours.' }
+  ];
+  function renderParam() {
+    var pa = donnees.parametres;
+    document.getElementById('ed-param').innerHTML =
+      '<p class="hint">Vos conditions réelles. Elles s’appliquent à tous les scénarios et sont enregistrées avec le reste de vos chiffres.</p>' +
+      '<div class="param-list">' + PARAMS_UI.map(function (x) {
+        if (x.g) return '<div class="param-group">' + esc(x.g) + '</div>';
+        var champ = x.type === 'check'
+          ? '<input type="checkbox" id="pa-' + x.k + '" data-p="' + x.k + '"' + (pa[x.k] ? ' checked' : '') + '>'
+          : '<input type="number" id="pa-' + x.k + '" data-p="' + x.k + '"' + (x.pct ? ' data-pct="1"' : '') + ' step="' + x.step + '" value="' + (x.pct ? Math.round(pa[x.k] * 10000) / 100 : pa[x.k]) + '">';
+        return '<div class="param-row"><label for="pa-' + x.k + '">' + esc(x.label) + '</label><div>' + champ + (x.unite ? ' <span class="small muted">' + esc(x.unite) + '</span>' : '') + '</div><div class="note">' + esc(x.note) + '</div></div>';
+      }).join('') + '</div>';
+  }
+
+
   function updateMixSums() {
     CANAUX_PRIX.forEach(function (ch) {
       var s = donnees.catalogue[ch.cle].filter(function (l) { return !l.parBoisson; }).reduce(function (a, l) { return a + l.mix; }, 0);
@@ -570,11 +631,14 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
       '<p class="hint">' + (store.mode === 'db'
         ? 'Les données de cette page sont partagées entre toutes les personnes qui ont accès au simulateur. Claude peut aussi les relire pour mettre à jour les autres modules.'
         : 'Les données sont gardées dans ce navigateur. Pour les transférer vers la page partagée, copiez-les ici puis importez-les là-bas.') + '</p>' +
+      '<div class="row-actions"><button type="button" class="btn primary" data-act="export-csv">Exporter le compte de résultat (Excel)</button>' +
+      '<button type="button" class="btn" data-act="export-json">Exporter toutes les données (JSON)</button><span id="export-msg" class="small"></span></div>' +
+      '<p class="hint">Le fichier Excel (CSV) reprend le scénario affiché : compte de résultat mois par mois, chaque charge, les volumes et le café vert. Le fichier JSON contient toutes vos données et se réimporte ci-dessous.</p>' +
       '<div class="row-actions"><button type="button" class="btn" data-act="copy-json">Copier les données</button>' +
       '<button type="button" class="btn" data-act="ask-reset">Revenir aux chiffres du brief</button></div>' +
       '<div id="reset-confirm"></div>' +
       '<label for="json-in" class="small muted">Coller des données copiées depuis une autre version (fichier local ou page publiée), puis importer :</label>' +
-      '<textarea id="json-in" spellcheck="false" placeholder="{ &quot;version&quot;: 2, … }"></textarea>' +
+      '<textarea id="json-in" spellcheck="false" placeholder="{ &quot;version&quot;: 3, … }"></textarea>' +
       '<div class="row-actions"><button type="button" class="btn primary" data-act="import-json">Importer</button><span id="import-msg" class="small"></span></div>';
     applyReadOnly();
   }
@@ -582,7 +646,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
   function renderEditor(restoreFocus) {
     var active = document.activeElement, focusId = active && active.id, selStart = null;
     try { selStart = active && typeof active.selectionStart === 'number' ? active.selectionStart : null; } catch (e) { selStart = null; }
-    renderFixes(); renderPonct(); renderPrix(); renderSave();
+    renderFixes(); renderPonct(); renderPrix(); renderB2B(); renderParam(); renderSave();
     if (restoreFocus && focusId) {
       var el = document.getElementById(focusId);
       if (el) { el.focus(); try { if (selStart !== null) el.setSelectionRange(selStart, selStart); } catch (e) { /* champ numérique */ } }
@@ -591,7 +655,15 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
 
   // Saisie : met à jour les données sans redessiner l'éditeur (le curseur reste en place)
   function onEdit(e) {
-    var t = e.target, k = t.dataset && t.dataset.k; if (!k) return;
+    var t = e.target;
+    if (t.dataset && t.dataset.p) {
+      var key = t.dataset.p, val = t.type === 'checkbox' ? t.checked : (t.value === '' ? 0 : Number(t.value));
+      if (t.dataset.pct) val = val / 100;
+      donnees.parametres[key] = val;
+      if (key === 'prixVertKg') { renderPrix(); renderB2B(); }
+      scheduleSave(); schedule(); return;
+    }
+    var k = t.dataset && t.dataset.k; if (!k) return;
     var tr = t.closest('tr'); if (!tr) return;
     var i = Number(tr.dataset.i), v = t.type === 'number' ? (t.value === '' ? 0 : Number(t.value)) : t.value;
     if (k === 'debut' || k === 'fin' || k === 'mois') v = Number(v);
@@ -607,15 +679,48 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     } else if (pane === 'ed-prix') {
       var canal = t.closest('.channel').dataset.canal, ch = CANAUX_PRIX.filter(function (x) { return x.cle === canal; })[0];
       var l = donnees.catalogue[canal][i]; l[k] = v;
-      var ht = l.ttc / (1 + ch.tva), m = ht - l.cout, cell = document.getElementById('px-' + canal + '-m-' + l.id);
-      if (cell) cell.textContent = fEur2.format(m) + ' · ' + (ht > 0 ? fDec1.format(m / ht * 100) : '0') + ' %';
+      var ht = l.ttc / (1 + ch.tva), ct = M.coutTotal(l, pv());
+      var cell = document.getElementById('px-' + canal + '-m-' + l.id); if (cell) cell.textContent = margeTxt(ht, ct);
+      var cc = document.getElementById('px-' + canal + '-ct-' + l.id); if (cc) cc.textContent = fEur2.format(ct);
       updateMixSums();
+    } else if (pane === 'ed-b2b') {
+      var bk = t.closest('.channel').dataset.b2b, lb = donnees.b2b[bk][i]; lb[k] = v;
+      var coutKg = pv() * (bk === 'vert' ? 1 : 1 / M.RENDEMENT) + lb.extra;
+      var c1 = document.getElementById('b2-' + bk + '-c-' + lb.id); if (c1) c1.textContent = fEur2.format(coutKg);
+      var c2 = document.getElementById('b2-' + bk + '-m-' + lb.id); if (c2) c2.textContent = margeTxt(lb.prix, coutKg);
     } else return;
     scheduleSave(); schedule();
   }
   var ed = document.getElementById('donnees');
-  ed.addEventListener('input', function (e) { if (e.target.tagName !== 'SELECT') onEdit(e); });
-  ed.addEventListener('change', function (e) { if (e.target.tagName === 'SELECT') onEdit(e); });
+  ed.addEventListener('input', function (e) { if (e.target.tagName !== 'SELECT' && e.target.type !== 'checkbox') onEdit(e); });
+  ed.addEventListener('change', function (e) { if (e.target.tagName === 'SELECT' || e.target.type === 'checkbox') onEdit(e); });
+
+  // Export : capacité « downloads » sur la page publiée, lien de téléchargement en local
+  function dateJour() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function saveFile(filename, text, msgEl) {
+    function dire(ok, t) { if (msgEl) { msgEl.textContent = t; msgEl.style.color = ok ? 'var(--good)' : 'var(--bad)'; } }
+    function viaLien() {
+      try {
+        var blob = new Blob([text], { type: /\.csv$/.test(filename) ? 'text/csv;charset=utf-8' : 'application/json' });
+        var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename;
+        document.body.appendChild(a); a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+        dire(true, 'Fichier ' + filename + ' téléchargé.');
+      } catch (err) { dire(false, 'Téléchargement impossible ici : utilisez « Copier les données ».'); }
+    }
+    if (!window.claude || typeof window.claude.use !== 'function') { viaLien(); return; }
+    window.claude.use('downloads').then(function (dl) {
+      if (!dl) { dire(false, 'Téléchargement indisponible dans cette vue : utilisez « Copier les données ».'); return; }
+      dl.save({ filename: filename, data: text }).then(function () { dire(true, 'Fichier ' + filename + ' enregistré.'); }, function (err) {
+        var code = err && err.code;
+        if (code === 'declined') dire(false, 'Téléchargement annulé.');
+        else if (code === 'rate_limited') dire(false, 'Une fenêtre de téléchargement est déjà ouverte.');
+        else dire(false, 'Téléchargement indisponible : utilisez « Copier les données ».');
+      });
+    }, function () { dire(false, 'Téléchargement indisponible : utilisez « Copier les données ».'); });
+  }
+  function exporterCSV(msgEl) { if (lastR) saveFile('yemkaf-compte-de-resultat-' + dateJour() + '.csv', M.exportCSV(lastR), msgEl); }
+  document.getElementById('pl-export').addEventListener('click', function () { exporterCSV(document.getElementById('pl-export-msg')); });
 
   ed.addEventListener('click', function (e) {
     var b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
@@ -628,6 +733,10 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     else if (act === 'sugg-p') { var sp = M.SUGGESTIONS.filter(function (x) { return x.nom === b.dataset.nom; })[0]; donnees.depensesPonctuelles.push({ id: uid('ponct'), nom: sp.nom, montant: sp.montant, mois: sp.mois }); }
     else if (act === 'del-prix') donnees.catalogue[b.closest('.channel').dataset.canal].splice(i, 1);
     else if (act === 'add-prix') donnees.catalogue[b.closest('.channel').dataset.canal].push({ id: uid('produit'), nom: 'Nouveau produit', ttc: 0, cout: 0, mix: 0, g: 0 });
+    else if (act === 'del-b2b') donnees.b2b[b.closest('.channel').dataset.b2b].splice(i, 1);
+    else if (act === 'add-b2b') donnees.b2b[b.closest('.channel').dataset.b2b].push({ id: uid('formule'), nom: 'Nouvelle formule', prix: 0, extra: 0, mix: 0 });
+    else if (act === 'export-csv') { exporterCSV(document.getElementById('export-msg')); return; }
+    else if (act === 'export-json') { saveFile('yemkaf-donnees-' + dateJour() + '.json', JSON.stringify(payload(), null, 2), document.getElementById('export-msg')); return; }
     else if (act === 'copy-json') {
       var txt = JSON.stringify(payload(), null, 2), ta = document.getElementById('json-in'), msg = document.getElementById('import-msg');
       var fallback = function () { ta.value = txt; ta.focus(); ta.select(); msg.textContent = 'Texte sélectionné : copiez-le avec Ctrl+C ou Cmd+C.'; };
@@ -654,7 +763,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
   document.getElementById('ed-tabs').addEventListener('click', function (e) {
     var b = e.target.closest('button[data-pane]'); if (!b) return;
     document.querySelectorAll('#ed-tabs button').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
-    ['ed-fixes', 'ed-ponct', 'ed-prix', 'ed-save'].forEach(function (id) { document.getElementById(id).hidden = id !== b.dataset.pane; });
+    ['ed-fixes', 'ed-ponct', 'ed-prix', 'ed-b2b', 'ed-param', 'ed-save'].forEach(function (id) { document.getElementById(id).hidden = id !== b.dataset.pane; });
   });
 
   // ================================================================ RENDU
@@ -679,7 +788,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
     document.getElementById('tab-corr-count').textContent = n + '/' + NB_CORR;
 
     var pm = r.pointMort.tassesJour, marge = leviers.tassesJour > 0 ? 1 - pm / leviers.tassesJour : 0;
-    var drawdown = Math.max(0, leviers.tresorerieDepart - r.tresorerieMin);
+    var drawdown = Math.max(0, r.parametres.tresorerieDepart - r.tresorerieMin);
     var coussin = drawdown + r.pointMort.chargesFixesMois;
     document.getElementById('kpis').innerHTML =
       tile('Résultat d’exploitation · 6 mois', '<span class="' + (t.resultat < 0 ? 'neg' : '') + '">' + eur(t.resultat) + '</span>', deltaSpan(t.resultat - plan.totaux.resultat, true) + ' · brief : ' + eur(M.PLAN_DECLARE.resultat)) +
@@ -690,8 +799,8 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
 
     var caBrief = M.simuler(M.LEVIERS_DEFAUT, {}, donnees).totaux.caTotal;
     document.getElementById('callout').innerHTML =
-      '<p><strong>Votre plan, mis à jour le 6 novembre.</strong> Avec 3 baristas, la grille « Premium Yémen » et vos charges actuelles (' + eur(r.pointMort.chargesFixesMois) + ' par mois en régime, bureau de stockage compris), vos objectifs quotidiens donnent ' + eur(plan.totaux.resultat) + ' de résultat sur 6 mois, pour ' + eur(caBrief) + ' de CA. Le brief annonçait 49 123 € avec 4 salariés et l’ancienne grille ; son fichier source reste utile pour caler le mix de ventes.</p>' +
-      '<p><strong>Coussin de trésorerie.</strong> Point le plus bas en ' + r.moisTresorerieMin + ' (' + eur(r.tresorerieMin) + '). Gardez sur Qonto au moins ce creux plus un mois de charges, soit <b>' + eur(coussin) + '</b>' + (leviers.tresorerieDepart === 0 ? ' (indiquez votre solde réel dans « Loyer et trésorerie »).' : '.') + '</p>';
+      '<p><strong>Votre plan avec vos chiffres actuels.</strong> Avec vos charges (' + eur(r.pointMort.chargesFixesMois) + ' par mois en régime, abonnement SumUp compris), la grille « Premium Yémen » et un café vert à ' + eur(r.parametres.prixVertKg) + ' le kilo, vos objectifs quotidiens donnent ' + eur(plan.totaux.resultat) + ' de résultat sur 6 mois, pour ' + eur(caBrief) + ' de CA. Le brief annonçait 49 123 € avec 4 salariés et l’ancienne grille ; son fichier source reste utile pour caler le mix de ventes.</p>' +
+      '<p><strong>Trésorerie.</strong> En partant de ' + eur(r.parametres.tresorerieDepart) + ' sur Qonto, le point le plus bas est atteint en ' + r.moisTresorerieMin + ' (' + eur(r.tresorerieMin) + ') et vous terminez à ' + eur(r.tresorerieFin) + '. Coussin conseillé : le creux plus un mois de charges, soit <b>' + eur(coussin) + '</b>' + (r.tresorerieMin < r.pointMort.chargesFixesMois ? ' : <b>au point bas, vous avez moins d’un mois de charges devant vous</b>.' : '.') + '</p>';
 
     document.getElementById('hint-ca').textContent = 'Total ' + eur(t.caTotal) + ' HT · ' + fInt.format(t.quantites.tasses) + ' tasses';
     var fs = document.getElementById('foot-stock');
@@ -736,7 +845,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
       row('', 'Coût matière et emballages', get(function (m) { return -(m.caTotal - m.margeBrute); })) +
       row('key', 'Marge brute', get(function (m) { return m.margeBrute; })) +
       row('minor', 'Taux de marge brute', ms.map(function (m) { return m.margeBrute / m.caTotal; }).concat([r.totaux.margeBrute / r.totaux.caTotal]), { fmt: pct }) +
-      row('', 'Commissions SumUp', get(function (m) { return -m.fraisSumUp; })) +
+      row('', 'Commissions SumUp (abonnement compris)', get(function (m) { return -m.fraisSumUp; })) +
       row('', 'Commissions Mollie', get(function (m) { return -m.fraisMollie; })) +
       row('', 'Frais de port e-commerce', get(function (m) { return -m.fraisPort; })) +
       row('', 'Invendus de vitrine', get(function (m) { return -m.pertes; })) +
@@ -756,7 +865,7 @@ textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, C
       row('', 'Coffrets cadeaux', q('coffrets'), { fmt: n0 }) + row('', 'Colis web', q('colis'), { fmt: n0 }) +
       row('', 'Café B2B (kg)', q('kgB2B'), { fmt: n0 }) +
       row('sum', 'Café vert à acheter (kg)', get(function (m) { return m.cafeVertKg; }), { fmt: n0 }) +
-      row('minor', 'Budget café vert à 50 €/kg', get(function (m) { return m.cafeVertKg * M.PRIX_VERT_KG; })) + '</tbody>';
+      row('minor', 'Budget café vert à ' + eur(r.parametres.prixVertKg) + '/kg', get(function (m) { return m.cafeVertKg * r.parametres.prixVertKg; })) + '</tbody>';
   }
 
   function renderGrid() {
