@@ -18,7 +18,8 @@ ASSETS = ['assets/yemkaf.css', 'assets/marque/logo-creme.png', 'assets/marque/lo
 ASSETS_SALLE = ASSETS + ['assets/marque/devanture.jpg', 'assets/marque/sachet-vert.jpg', 'assets/marque/sachet-bordeaux.jpg']
 SOUS_PAGES = ['00-marque/index.html', '02-onboarding-baristas/index.html', '03-marketing-lancement/index.html',
               '04-ecommerce/index.html', '05-b2b-juridique/index.html',
-              '05-b2b-juridique/contrat-cafe-vert.html', '05-b2b-juridique/contrat-cafe-torrefie.html']
+              '05-b2b-juridique/contrat-cafe-vert.html', '05-b2b-juridique/contrat-cafe-torrefie.html',
+              '06-regles-maison/index.html', '06-regles-maison/reglement-interieur.html', '06-regles-maison/charte-associes.html']
 
 
 def corps(html):
@@ -38,7 +39,7 @@ def copier(rel, dest):
 def main(sortie, url_salle, url_simu):
     sortie = pathlib.Path(sortie)
     shutil.rmtree(sortie, ignore_errors=True)
-    runpy.run_path(str(RACINE / 'outils/contrats-en-html.py'), run_name='__main__')  # contrats .md → pages HTML
+    runpy.run_path(str(RACINE / 'outils/documents-en-html.py'), run_name='__main__')  # documents .md → pages HTML
 
     # Simulateur
     simu = sortie / 'simulateur'

@@ -14,7 +14,7 @@ Période couverte : du soft opening du **20 novembre 2026** au bilan du **19 mai
 
 Chaque page commence par un **mode d'emploi** : à quoi elle sert, pour qui, comment l'utiliser.
 
-## Les six modules
+## Les sept modules
 
 | N° | Module | Fichier | À quoi il sert | Responsable |
 |---|---|---|---|---|
@@ -25,6 +25,7 @@ Chaque page commence par un **mode d'emploi** : à quoi elle sert, pour qui, com
 | 4 | Lancement et coffrets | `03-marketing-lancement/` | Rétroplanning, soirée d'ouverture du samedi 12 décembre, invitations, coffrets, temps forts | Yousif |
 | 5 | Boutique en ligne | `04-ecommerce/` | WordPress, Mollie, Qonto, Brevo : parcours client, schémas, textes des e-mails et SMS, conformité | Yousif |
 | 6 | Professionnels et contrats | `05-b2b-juridique/` | Plaquette tarifaire, deux modèles de contrats, cupping du jeudi, traçabilité | Khaled |
+| 7 | Règles de la maison | `06-regles-maison/` | Règles pour tous, tâche par tâche ; règlement intérieur des salariés ; charte des associés | Amer, Yousif |
 
 Les numéros des dossiers ne suivent pas l'ordre des modules : seul l'ordre affiché sur la salle de pilotage compte.
 
@@ -48,11 +49,11 @@ Repères avec les chiffres de départ (3 baristas à 2 800 €, café vert à 55
 « Plan » suppose les objectifs atteints dès l'ouverture ; « Scénario prudent » ajoute une montée en charge progressive,
 la saisonnalité, le rodage du site et des ventes pros, les frais de port et les invendus.
 
-## Contrats
+## Contrats, règlement intérieur, charte
 
-Le texte des contrats se modifie dans les fichiers `.md` de `05-b2b-juridique/`, puis la commande
-`python3 outils/contrats-en-html.py` régénère les pages lisibles et imprimables (`contrat-cafe-vert.html`,
-`contrat-cafe-torrefie.html`).
+Le texte de ces documents se modifie dans les fichiers `.md` (`05-b2b-juridique/` pour les contrats,
+`06-regles-maison/` pour le règlement intérieur et la charte des associés), puis la commande
+`python3 outils/documents-en-html.py` régénère les pages lisibles et imprimables.
 
 ## Autres dossiers
 
@@ -61,4 +62,4 @@ Le texte des contrats se modifie dans les fichiers `.md` de `05-b2b-juridique/`,
 | `assets/` | Feuille de style commune, logos, frises et photos |
 | `docs/veille-et-sources.md` | Prix des concurrents, tarifs des prestataires, réglementation, avec leurs sources |
 | `04-ecommerce/architecture.md` | Les schémas de la boutique en ligne, lisibles directement sur GitHub |
-| `outils/` | Scripts : pages des contrats, préparation des pages publiées en ligne |
+| `outils/` | Scripts : pages des documents (contrats, règlement, charte), préparation des pages publiées en ligne |

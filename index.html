@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Kufi+Arabic:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="assets/yemkaf.css">
 <style>
-/* Mise en page : bandeau de marque, mode d'emploi, les six modules en cartes, qui fait quoi,
+/* Mise en page : bandeau de marque, mode d'emploi, les sept modules en cartes, qui fait quoi,
    feuille de route filtrable par personne avec la période en cours mise en avant, objectifs, rituels. */
 .modules { display: grid; gap: 14px; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .modules { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -91,7 +91,7 @@
   </section>
 
   <section aria-labelledby="h-mod">
-    <div class="sec-head"><h2 id="h-mod">Les six modules</h2><p>Ce que fait chaque module, qui s’en sert, et comment.</p></div>
+    <div class="sec-head"><h2 id="h-mod">Les sept modules</h2><p>Ce que fait chaque module, qui s’en sert, et comment.</p></div>
     <div class="modules" id="modules"></div>
   </section>
 
@@ -144,7 +144,8 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   var LIENS = {
     marque: '00-marque/index.html', simulateur: '01-dashboard-financier/index.html', barista: '02-onboarding-baristas/index.html',
-    lancement: '03-marketing-lancement/index.html', eshop: '04-ecommerce/index.html', b2b: '05-b2b-juridique/index.html'
+    lancement: '03-marketing-lancement/index.html', eshop: '04-ecommerce/index.html', b2b: '05-b2b-juridique/index.html',
+    regles: '06-regles-maison/index.html'
   };
   var today = new Date(); today.setHours(0, 0, 0, 0);
 
@@ -174,7 +175,10 @@
       ['Installez les outils dans l’ordre de « La pile technique ».', 'Collez les textes des e-mails et SMS dans Brevo.', 'Cochez la liste « Conformité » avant la mise en ligne.']],
     ['b2b', 'Professionnels et contrats', 'Tout pour vendre aux torréfacteurs, coffee shops, hôtels et restaurants : la plaquette tarifaire, les deux modèles de contrats, le déroulé du cupping du jeudi et les obligations de traçabilité.',
       'Khaled.',
-      ['Imprimez la plaquette tarifaire pour chaque rendez-vous.', 'Ouvrez le bon modèle de contrat, complétez les crochets, faites-le relire par l’avocat avant la première signature.', 'Suivez le déroulé du cupping chaque jeudi à 15 h.']]
+      ['Imprimez la plaquette tarifaire pour chaque rendez-vous.', 'Ouvrez le bon modèle de contrat, complétez les crochets, faites-le relire par l’avocat avant la première signature.', 'Suivez le déroulé du cupping chaque jeudi à 15 h.']],
+    ['regles', 'Règles de la maison', 'Les règles de vie et de travail de tout le monde, tâche par tâche (horaires, tenue, caisse, boissons et repas, pourboires, sécurité, respect), le règlement intérieur officiel des salariés et la charte des associés.',
+      'Toute l’équipe et les trois associés ; Amer les fait vivre, Yousif conduit l’adoption du règlement intérieur.',
+      ['À chaque arrivée, lisez la page avec Amer et signez l’accusé de lecture.', 'Affichez le règlement intérieur dans la réserve une fois déposé.', 'Les associés signent la charte au point du lundi.']]
   ];
   document.getElementById('modules').innerHTML = MOD.map(function (m, i) {
     return '<div class="panel module"><span class="num-mod">Module ' + (i + 1) + '</span><h3>' + esc(m[1]) + '</h3><p>' + esc(m[2]) + '</p>' +
@@ -257,12 +261,15 @@
       ['equipe', 'ven. 20 nov.', 'Soft opening', 'Sans presse. Objectif du premier mois : 72 tasses par jour. Une tasse de Qishr offerte à chaque nouveau client.', 'barista'],
       ['equipe', 'chaque soir', 'Journal de bord', 'Ticket Z, tasses, invendus en photo, une remarque client. Cinq minutes à la fermeture.', ''],
       ['yousif', 'ven. 20 nov.', 'Conformité du site', 'CGV, médiateur de la consommation, mentions, cookies ; commande réelle de bout en bout avec Amer, remboursement compris.', 'eshop'],
+      ['amer', 'lun. 23 nov.', 'Faire signer les Règles de la maison', 'Lecture avec chaque barista et accusé de lecture signé ; la troisième barista signe à son arrivée le 27. Tabliers, codes SumUp et clés remis contre signature.', 'regles'],
+      ['associes', 'lun. 23 nov.', 'Signer la charte des associés', 'Fixer ensemble les plafonds de dépense et les délais, puis signer en trois exemplaires au point du lundi.', 'regles'],
       ['khaled', 'lun. 23 nov.', 'Planifier la torréfaction de Noël', 'Volumes de sachets et de coffrets jusqu’au 23 décembre, commandes au torréfacteur à façon, date de torréfaction sur chaque sachet.', 'b2b'],
       ['amer', 'mer. 25 nov.', 'Première paie', 'Heures, absences et arrivées de novembre envoyées à l’expert-comptable ; fiches de paie vérifiées avant le virement.', ''],
       ['associes', 'jeu. 26 nov.', 'Envoyer les invitations', 'Chacun écrit à ses invités depuis sa propre boîte, avec les textes du module Lancement : Yousif la presse et les créateurs, Khaled les pros, Amer les voisins et commerçants. Réponse avant le 7 décembre.', 'lancement'],
       ['yousif', 'ven. 27 nov.', 'Mise en ligne de la boutique', 'Black Friday sans remise. Livraison offerte sur le premier coffret, code « SOIRÉE » pour les invités, QR codes des gobelets actifs. Dernière date de commande pour Noël (18 décembre) affichée dès le 1er décembre.', 'eshop'],
-      ['chef', 'ven. 27 nov.', 'Accueillir la troisième barista', 'Une journée en binôme avec le manuel sur le créneau midi et colis.', 'barista'],
+      ['chef', 'ven. 27 nov.', 'Accueillir la troisième barista', 'Une journée en binôme avec le manuel sur le créneau midi et colis ; Règles de la maison lues et signées avec Amer.', 'barista'],
       ['khaled', 'lun. 30 nov.', 'Tableau de suivi des acheteurs', 'Une ligne par acheteur pro : établissement, contact, volume possible, café préféré, prochaine étape et date. Partagé avec les associés.', 'b2b'],
+      ['yousif', 'lun. 30 nov.', 'Adopter le règlement intérieur', 'Relu par l’expert-comptable, signé par Khaled, envoyé à l’inspection du travail, déposé au greffe du conseil de prud’hommes de Paris, affiché dans la réserve. En vigueur un mois après.', 'regles'],
       ['yousif', 'lun. 30 nov.', 'Premier point chiffres', 'Saisir les vraies charges dans le simulateur et comparer les ventes SumUp aux objectifs.', 'simulateur']
     ]},
     { t: 'Noël et soirée d’ouverture', d: 'décembre', du: '2026-12-01', au: '2026-12-31', tasks: [

@@ -1,8 +1,8 @@
-"""Transforme les deux modèles de contrat (Markdown) en pages lisibles et imprimables.
+"""Transforme les documents écrits en Markdown (contrats, règlement intérieur, charte) en pages lisibles et imprimables.
 
-Usage : python3 outils/contrats-en-html.py
+Usage : python3 outils/documents-en-html.py
 
-Les fichiers .md restent la source : on modifie le texte du contrat dans le .md, puis on relance ce script.
+Les fichiers .md restent la source : on modifie le texte dans le .md, puis on relance ce script.
 Les zones entre crochets [ … ] sont surlignées dans la page pour repérer ce qui reste à compléter.
 """
 import html
@@ -10,10 +10,18 @@ import pathlib
 import re
 
 RACINE = pathlib.Path(__file__).resolve().parent.parent
-DOSSIER = RACINE / '05-b2b-juridique'
 
-CONTRATS = [
+ETAPES_CONTRAT = [
+    'Les zones <mark class="blank">[surlignées]</mark> sont à compléter pour chaque client (raison sociale, adresse, volumes, dates).',
+    'Cliquez sur « Copier le texte » et collez-le dans Word ou Google Docs pour préparer la version du client.',
+    'Ou cliquez sur « Imprimer ou enregistrer en PDF » : la page s’imprime sans ce mode d’emploi.',
+    'Faites relire le modèle par un avocat avant la première signature, puis signez en deux exemplaires et classez le scan dans le dossier du client.',
+]
+
+DOCUMENTS = [
     {
+        'dossier': '05-b2b-juridique', 'retour': 'Professionnels', 'genre': 'Modèle de contrat',
+        'lede': 'Modèle de contrat · module Professionnels et contrats', 'etapes': ETAPES_CONTRAT,
         'source': 'contrat-cafe-vert-torrefacteurs.md',
         'sortie': 'contrat-cafe-vert.html',
         'titre': 'Contrat café vert · torréfacteurs',
@@ -23,6 +31,8 @@ CONTRATS = [
         'qui': 'Khaled prépare et négocie le contrat ; Khaled Al Maweri le signe en tant que président.',
     },
     {
+        'dossier': '05-b2b-juridique', 'retour': 'Professionnels', 'genre': 'Modèle de contrat',
+        'lede': 'Modèle de contrat · module Professionnels et contrats', 'etapes': ETAPES_CONTRAT,
         'source': 'contrat-cafe-torrefie-chr.md',
         'sortie': 'contrat-cafe-torrefie.html',
         'titre': 'Contrat café torréfié · cafés, hôtels, restaurants',
@@ -30,6 +40,41 @@ CONTRATS = [
                 'fraîcheur, paliers de volume, formation des équipes, usage de la marque, exclusivité de quartier, prix, '
                 'paiement.',
         'qui': 'Khaled prépare et négocie le contrat ; Khaled Al Maweri le signe en tant que président.',
+    },
+    {
+        'dossier': '06-regles-maison', 'retour': 'Règles de la maison', 'genre': 'Document officiel',
+        'lede': 'Document officiel pour les salariés · module Règles de la maison',
+        'source': 'reglement-interieur.md',
+        'sortie': 'reglement-interieur.html',
+        'titre': 'Règlement intérieur',
+        'sert': 'Le règlement officiel des salariés de Yem’kaf : hygiène et sécurité, discipline, sanctions et droits de la '
+                'défense, harcèlement, protection des lanceurs d’alerte. Les Règles de la maison en expliquent '
+                'l’application, tâche par tâche.',
+        'qui': 'Tous les salariés. Yousif conduit son adoption (partie juridique) ; Khaled Al Maweri le signe en tant que '
+               'président ; Amer le remet à chaque nouvel arrivant.',
+        'etapes': [
+            'Complétez les zones <mark class="blank">[surlignées]</mark> (durée maximale de mise à pied, personne référente, dates).',
+            'Faites-le relire par l’expert-comptable ou un avocat, puis signer par le président.',
+            'Envoyez-le à l’inspection du travail et déposez-le au greffe du conseil de prud’hommes de Paris (« Imprimer ou enregistrer en PDF »).',
+            'Affichez-le dans la réserve et remettez-en une copie à chaque salarié. Il entre en vigueur un mois après ces formalités.',
+            'Toute modification suit la même procédure.',
+        ],
+    },
+    {
+        'dossier': '06-regles-maison', 'retour': 'Règles de la maison', 'genre': 'Charte à signer',
+        'lede': 'Engagement entre les trois associés · module Règles de la maison',
+        'source': 'charte-associes.md',
+        'sortie': 'charte-associes.html',
+        'titre': 'Charte des associés',
+        'sert': 'Les règles de fonctionnement entre Yousif, Khaled et Amer : domaines de chacun, plafonds de dépense, '
+                'décisions seul, à deux ou à trois, temps, argent, relation avec l’équipe, désaccords.',
+        'qui': 'Les trois associés. Elle complète les statuts sans les remplacer.',
+        'etapes': [
+            'Lisez-la ensemble au point du lundi et fixez les montants et délais <mark class="blank">[surlignés]</mark>.',
+            'Corrigez le texte si besoin (dans le fichier charte-associes.md), puis imprimez-le en trois exemplaires.',
+            'Signez, gardez chacun un exemplaire, notez la date dans le journal des décisions.',
+            'Relisez-la au bilan des six mois.',
+        ],
     },
 ]
 
@@ -106,7 +151,7 @@ PAGE = """<!doctype html>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="../assets/yemkaf.css">
 <style>
-/* Page générée par outils/contrats-en-html.py à partir de {source} : modifier le .md, pas cette page. */
+/* Page générée par outils/documents-en-html.py à partir de {source} : modifier le .md, pas cette page. */
 .contrat {{ padding: 22px clamp(16px, 4vw, 44px) 30px; display: grid; gap: 12px; max-width: 900px; width: 100%; margin: 0 auto; }}
 .contrat h2 {{ font-size: clamp(22px, 3vw, 28px); font-weight: 800; color: var(--brand-ink); }}
 .contrat h3 {{ font-size: 17px; font-weight: 700; color: var(--brand-ink); margin-top: 12px; }}
@@ -133,24 +178,21 @@ mark.blank {{ background: var(--warn-wash); color: var(--warn); border-radius: 4
     <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;min-width:0">
       <img class="logo logo-screen" src="../assets/marque/logo-creme.png" alt="Yem'kaf" width="139" height="58">
       <img class="logo-print" src="../assets/marque/logo-vert.png" alt="Yem'kaf">
-      <div class="band-title"><h1>{titre}</h1><div class="lede">Modèle de contrat · module Professionnels et contrats</div></div>
+      <div class="band-title"><h1>{titre}</h1><div class="lede">{lede}</div></div>
     </div>
-    <nav class="band-nav no-print" aria-label="Pages"><a href="../index.html">Feuille de route</a><a href="index.html">Professionnels</a></nav>
+    <nav class="band-nav no-print" aria-label="Pages"><a href="../index.html">Feuille de route</a><a href="index.html">{retour}</a></nav>
   </div>
   <img class="frise" src="../assets/marque/frise-sable.png" alt="">
 </header>
 
 <main class="wrap">
   <section class="panel guide" aria-labelledby="h-guide">
-    <div class="guide-head"><h2 id="h-guide">Mode d’emploi</h2><span class="muted small">Modèle de contrat</span></div>
+    <div class="guide-head"><h2 id="h-guide">Mode d’emploi</h2><span class="muted small">{genre}</span></div>
     <div class="guide-cols">
       <div class="guide-col"><h3>À quoi il sert</h3><p>{sert}</p></div>
       <div class="guide-col"><h3>Pour qui</h3><p>{qui}</p></div>
       <div class="guide-col"><h3>Comment l’utiliser</h3><ol>
-        <li>Les zones <mark class="blank">[surlignées]</mark> sont à compléter pour chaque client (raison sociale, adresse, volumes, dates).</li>
-        <li>Cliquez sur « Copier le texte » et collez-le dans Word ou Google Docs pour préparer la version du client.</li>
-        <li>Ou cliquez sur « Imprimer ou enregistrer en PDF » : la page s’imprime sans ce mode d’emploi.</li>
-        <li>Faites relire le modèle par un avocat avant la première signature, puis signez en deux exemplaires et classez le scan dans le dossier du client.</li>
+{etapes}
       </ol></div>
     </div>
   </section>
@@ -190,13 +232,16 @@ mark.blank {{ background: var(--warn-wash); color: var(--warn); border-radius: 4
 
 
 def main():
-    for c in CONTRATS:
-        md = (DOSSIER / c['source']).read_text(encoding='utf-8')
+    for c in DOCUMENTS:
+        dossier = RACINE / c['dossier']
+        md = (dossier / c['source']).read_text(encoding='utf-8')
         page = PAGE.format(titre=html.escape(c['titre']), titre_court=html.escape(c['titre'].replace(' · ', ' : ')),
                            source=c['source'], sert=html.escape(c['sert']), qui=html.escape(c['qui']),
+                           genre=html.escape(c['genre']), lede=html.escape(c['lede']), retour=html.escape(c['retour']),
+                           etapes='\n'.join('        <li>%s</li>' % e for e in c['etapes']),
                            contenu=convertir(md))
-        (DOSSIER / c['sortie']).write_text(page, encoding='utf-8')
-        print('ok :', c['sortie'])
+        (dossier / c['sortie']).write_text(page, encoding='utf-8')
+        print('ok :', c['dossier'] + '/' + c['sortie'])
 
 
 if __name__ == '__main__':
