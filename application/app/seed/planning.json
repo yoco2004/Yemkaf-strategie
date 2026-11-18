@@ -1,0 +1,45 @@
+{
+ "lundi": {
+  "ouverture": "chef",
+  "midi": "vente",
+  "fermeture": "khaled",
+  "renfort": "amer"
+ },
+ "mardi": {
+  "ouverture": "chef",
+  "midi": "vente",
+  "fermeture": "khaled",
+  "renfort": "amer"
+ },
+ "mercredi": {
+  "ouverture": "amer",
+  "midi": "vente",
+  "fermeture": "senior",
+  "renfort": "yousif"
+ },
+ "jeudi": {
+  "ouverture": "amer",
+  "midi": "vente",
+  "fermeture": "senior",
+  "renfort": "yousif"
+ },
+ "vendredi": {
+  "ouverture": "chef",
+  "midi": "vente",
+  "fermeture": "senior",
+  "renfort": "khaled"
+ },
+ "samedi": {
+  "ouverture": "chef",
+  "midi": "yousif",
+  "fermeture": "senior",
+  "renfort": ""
+ },
+ "dimanche": {
+  "ouverture": "chef",
+  "midi": "yousif",
+  "fermeture": "senior",
+  "renfort": ""
+ },
+ "note": "Planning de départ du Manuel barista : renforts de 8 h à 10 h 30 pendant les quatre premières semaines."
+}

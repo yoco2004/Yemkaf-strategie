@@ -1,0 +1,713 @@
+[
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-09",
+  "libelle": "",
+  "titre": "Ouvrir le compte Mollie",
+  "detail": "En nouveau client, pour bénéficier de l’offre 0 % jusqu’au 31 décembre. Le relier à Qonto et installer l’extension WooCommerce.",
+  "module": "eshop",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2026-11-10",
+  "libelle": "",
+  "titre": "Sécuriser le café vert",
+  "detail": "Inventaire par terroir, lots importés en direct et lots achetés à un importateur, délais et prix. Stock de sécurité de 8 semaines, environ 280 kg.",
+  "module": "b2b",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "vente",
+  "echeance": "2026-11-11",
+  "libelle": "",
+  "titre": "Construire le catalogue SumUp",
+  "detail": "Tous les produits aux prix de la carte, avec la bonne TVA : 10 % (boissons, pâtisseries), 5,5 % (sachets, mélange épicé, coffrets), 20 % (accessoires). Options lait végétal, micro-lot, tasse perso. Un code par personne.",
+  "module": "manuel",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-12",
+  "libelle": "",
+  "titre": "Organiser Qonto en enveloppes",
+  "detail": "Sous-comptes « TVA » (9 % des encaissements, viré chaque lundi), « Salaires et loyers », « Café vert ». Cartes plafonnées. Justificatifs transmis à l’expert-comptable.",
+  "module": "",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-12",
+  "libelle": "",
+  "titre": "Hygiène, allergènes et loi AGEC",
+  "detail": "Formation HACCP de 14 h, plan de maîtrise sanitaire, déclaration à la DDPP (Cerfa 13984), affichage des 14 allergènes, vaisselle pour 25 places, prix réduit quand le client apporte sa tasse.",
+  "module": "manuel",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-12",
+  "libelle": "",
+  "titre": "Liste des 120 invités",
+  "detail": "Chacun apporte ses invités pour le samedi 12 décembre : Yousif la presse et les créateurs, Khaled les pros, hôtels et torréfacteurs, Amer les voisins, commerçants et associations. Yousif rassemble la liste.",
+  "module": "lancement",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-12",
+  "libelle": "",
+  "titre": "Fiche Google de la boutique",
+  "detail": "Fiche Google Business Profile : photos du lieu, horaires, « Ouverture le 20 novembre ». Ensuite, réponse à chaque avis sous 48 h.",
+  "module": "",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2026-11-12",
+  "libelle": "",
+  "titre": "Contenu des sachets et des pages terroir",
+  "detail": "Pour chaque café : origine réelle, notes de dégustation issues d’un cupping, texte de la page terroir. Recette du mélange épicé avec le chef barista. Proposition des trois derniers noms de cafés aux associés.",
+  "module": "marque",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "chef",
+  "echeance": "2026-11-12",
+  "libelle": "",
+  "titre": "Caler les recettes au gramme",
+  "detail": "Deux moulins E80 (café maison et café invité), EK43 pour le filtre et les boissons yéménites. Seize fiches validées.",
+  "module": "manuel",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "senior",
+  "echeance": "2026-11-12",
+  "libelle": "",
+  "titre": "Monter la routine d’hygiène",
+  "detail": "Plan de nettoyage, relevés de température, registre des pertes, rangement du sous-sol.",
+  "module": "manuel",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2026-11-13",
+  "libelle": "",
+  "titre": "Signer le torréfacteur à façon",
+  "detail": "Pour les volumes de Noël et les pros : délai garanti de 72 h, prix au kilo, profil de torréfaction validé. La machine maison reste pour les micro-lots.",
+  "module": "b2b",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-13",
+  "libelle": "",
+  "titre": "Siège, Kbis et mentions légales",
+  "detail": "Vérifier sur le Kbis le siège au 24 rue du Renard (RCS Paris) et que l’objet social couvre la vente de boissons et la restauration. Mettre les mentions légales de yemkaf.fr à jour.",
+  "module": "eshop",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-13",
+  "libelle": "",
+  "titre": "Sachets prêts pour l’imprimeur",
+  "detail": "Fichiers avec le contenu fourni par Khaled, les mentions obligatoires et les couleurs officielles, vérifiés avec la liste « Étiquetage » de la charte.",
+  "module": "marque",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-13",
+  "libelle": "",
+  "titre": "Pages terroir et QR codes",
+  "detail": "Pages Haraz et Raymah avec les textes de Khaled, QR codes des gobelets et des sachets.",
+  "module": "eshop",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-13",
+  "libelle": "",
+  "titre": "Dossier presse des cadeaux de Noël",
+  "detail": "25 rédactions en ligne : photo du Coffret Prestige, prix, histoire, proposition d’échantillon.",
+  "module": "lancement",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-13",
+  "libelle": "",
+  "titre": "Relancer le bailleur",
+  "detail": "Demander par écrit 3 mois de franchise de loyer ou un loyer progressif.",
+  "module": "",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-13",
+  "libelle": "",
+  "titre": "Fournisseurs frais et four",
+  "detail": "Signer pâtissiers et lait. Commander un four ou un grill pour le snacking.",
+  "module": "",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "chef",
+  "echeance": "2026-11-13",
+  "libelle": "",
+  "titre": "Tester le service en carafe",
+  "detail": "Qishr, Shai Adeni et Qahwa Baydani en carafes isothermes renouvelées toutes les 45 minutes. Dégustation à l’aveugle contre préparation minute.",
+  "module": "manuel",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "vente",
+  "echeance": "2026-11-13",
+  "libelle": "",
+  "titre": "Photos des produits",
+  "detail": "Sachets, coffrets, rituel du Qishr pour le site. Fond neutre, lumière du jour.",
+  "module": "eshop",
+  "periode": "Préparer l’ouverture · du 6 au 13 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-16",
+  "libelle": "",
+  "titre": "Publier le planning des 4 premières semaines",
+  "detail": "Associés en renfort de 8 h à 10 h 30 ; créneau midi tenu par un associé tant que la troisième barista n’est pas arrivée.",
+  "module": "manuel",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-16",
+  "libelle": "",
+  "titre": "Photographe et logistique de la soirée",
+  "detail": "Réserver le photographe (samedi 12 décembre, 19 h–21 h, 300 à 500 €), commander les échantillons de 30 g, prévoir verres, son et plan des tables.",
+  "module": "lancement",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-16",
+  "libelle": "",
+  "titre": "Instagram et e-mails automatiques",
+  "detail": "Neuf publications Instagram en grille, cinq scénarios d’e-mails configurés et testés dans Brevo.",
+  "module": "eshop",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "vente",
+  "echeance": "2026-11-17",
+  "libelle": "",
+  "titre": "Fiches produits du site",
+  "detail": "Sachets 150, 200 et 250 g, mélange épicé, coffrets, abonnement : photos, prix, poids, origine. Yousif relit avant la mise en ligne.",
+  "module": "eshop",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-17",
+  "libelle": "",
+  "titre": "Flyers et voisins",
+  "detail": "500 flyers rue du Renard, rue de la Verrerie, rue Saint-Merri. Visite des commerçants voisins, invités aux services à blanc.",
+  "module": "lancement",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2026-11-18",
+  "libelle": "",
+  "titre": "Fiches de lot",
+  "detail": "Une fiche par café vert en stock : village, altitude, procédé, score, géolocalisation des parcelles.",
+  "module": "b2b",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-18",
+  "libelle": "",
+  "titre": "Expédition",
+  "detail": "Compte pro (point relais et Colissimo), grille de frais, colis test envoyé chez un associé.",
+  "module": "eshop",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-19",
+  "libelle": "",
+  "titre": "Administratif employeur",
+  "detail": "Avec l’expert-comptable : contrat et déclaration d’embauche de la troisième barista (arrivée le 27 novembre), registre du personnel, mutuelle, médecine du travail, document unique d’évaluation des risques, affichages obligatoires.",
+  "module": "manuel",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-19",
+  "libelle": "",
+  "titre": "Sécurité et obligations du local",
+  "detail": "Extincteurs et consignes, registre public d’accessibilité, déclaration SACEM pour la musique, tri des biodéchets (marc de café, invendus), compte Too Good To Go.",
+  "module": "",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2026-11-19",
+  "libelle": "",
+  "titre": "Import direct : EORI et transitaire",
+  "detail": "Lots importés en direct : numéro EORI de Yem’kaf, transitaire choisi, liste des documents d’import. Lots achetés à un importateur : demander les preuves de traçabilité de chaque lot.",
+  "module": "b2b",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "senior",
+  "echeance": "2026-11-19",
+  "libelle": "",
+  "titre": "Ticket Z et caisse du soir",
+  "detail": "Chaque soir, le barista de fermeture édite le ticket Z SumUp, compte les espèces et note tout dans le journal de bord. Yousif contrôle chaque lundi les versements sur Qonto.",
+  "module": "manuel",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "equipe",
+  "echeance": "2026-11-19",
+  "libelle": "mar. 17 → jeu. 19 nov.",
+  "titre": "Trois services à blanc",
+  "detail": "Voisins et commerçants, en échange d’un avis Google. Chronométrer chaque boisson : une boisson lactée en moins de 3 minutes.",
+  "module": "manuel",
+  "periode": "Répéter · du 14 au 19 novembre"
+ },
+ {
+  "cle": "equipe",
+  "echeance": "2026-11-20",
+  "libelle": "",
+  "titre": "Soft opening",
+  "detail": "Sans presse. Objectif du premier mois : 72 tasses par jour. Une tasse de Qishr offerte à chaque nouveau client.",
+  "module": "manuel",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "equipe",
+  "echeance": null,
+  "libelle": "chaque soir",
+  "titre": "Journal de bord",
+  "detail": "Ticket Z, tasses, invendus en photo, une remarque client. Cinq minutes à la fermeture.",
+  "module": "",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-20",
+  "libelle": "",
+  "titre": "Conformité du site",
+  "detail": "CGV, médiateur de la consommation, mentions, cookies ; commande réelle de bout en bout avec Amer, remboursement compris.",
+  "module": "eshop",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-23",
+  "libelle": "",
+  "titre": "Faire signer les Règles de la maison",
+  "detail": "Lecture avec chaque barista et accusé de lecture signé ; la troisième barista signe à son arrivée le 27. Tabliers, codes SumUp et clés remis contre signature.",
+  "module": "regles",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "associes",
+  "echeance": "2026-11-23",
+  "libelle": "",
+  "titre": "Signer la charte des associés",
+  "detail": "Fixer ensemble les plafonds de dépense et les délais, puis signer en trois exemplaires au point du lundi.",
+  "module": "regles",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2026-11-23",
+  "libelle": "",
+  "titre": "Planifier la torréfaction de Noël",
+  "detail": "Volumes de sachets et de coffrets jusqu’au 23 décembre, commandes au torréfacteur à façon, date de torréfaction sur chaque sachet.",
+  "module": "b2b",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-11-25",
+  "libelle": "",
+  "titre": "Première paie",
+  "detail": "Heures, absences et arrivées de novembre envoyées à l’expert-comptable ; fiches de paie vérifiées avant le virement.",
+  "module": "",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "associes",
+  "echeance": "2026-11-26",
+  "libelle": "",
+  "titre": "Envoyer les invitations",
+  "detail": "Chacun écrit à ses invités depuis sa propre boîte, avec les textes du module Lancement : Yousif la presse et les créateurs, Khaled les pros, Amer les voisins et commerçants. Réponse avant le 7 décembre.",
+  "module": "lancement",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-27",
+  "libelle": "",
+  "titre": "Mise en ligne de la boutique",
+  "detail": "Black Friday sans remise. Livraison offerte sur le premier coffret, code « SOIRÉE » pour les invités, QR codes des gobelets actifs. Dernière date de commande pour Noël (18 décembre) affichée dès le 1er décembre.",
+  "module": "eshop",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "chef",
+  "echeance": "2026-11-27",
+  "libelle": "",
+  "titre": "Accueillir la troisième barista",
+  "detail": "Une journée en binôme avec le manuel sur le créneau midi et colis ; Règles de la maison lues et signées avec Amer.",
+  "module": "manuel",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2026-11-30",
+  "libelle": "",
+  "titre": "Tableau de suivi des acheteurs",
+  "detail": "Une ligne par acheteur pro : établissement, contact, volume possible, café préféré, prochaine étape et date. Partagé avec les associés.",
+  "module": "b2b",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-30",
+  "libelle": "",
+  "titre": "Adopter le règlement intérieur",
+  "detail": "Relu par l’expert-comptable, signé par Khaled, envoyé à l’inspection du travail, déposé au greffe du conseil de prud’hommes de Paris, affiché dans la réserve. En vigueur un mois après.",
+  "module": "regles",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-11-30",
+  "libelle": "",
+  "titre": "Premier point chiffres",
+  "detail": "Saisir les vraies charges dans le simulateur et comparer les ventes SumUp aux objectifs.",
+  "module": "simulateur",
+  "periode": "Soft opening et boutique en ligne · du 20 au 30 novembre"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2026-12-01",
+  "libelle": "",
+  "titre": "Cadeaux d’entreprise",
+  "detail": "40 entreprises à moins de 500 m, grille −5 % / −10 %, commande avant le 10 décembre. Amer dépose la plaquette lors de sa tournée du quartier.",
+  "module": "lancement",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2026-12-03",
+  "libelle": "",
+  "titre": "Premier cupping du jeudi",
+  "detail": "6 à 8 acheteurs, plaquette, échantillon de 250 g, relance trois jours après. Invitation à la soirée du 12.",
+  "module": "b2b",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "associes",
+  "echeance": "2026-12-07",
+  "libelle": "",
+  "titre": "Relancer ses invités",
+  "detail": "Appel ou message personnel aux non-répondants, chacun pour ses invités ; en priorité la presse et les hôtels.",
+  "module": "lancement",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-12-07",
+  "libelle": "",
+  "titre": "Stocker pour le pic de Noël",
+  "detail": "Coffrets, sacs kraft, cartons d’expédition ; transfert depuis le bureau de stockage chaque lundi.",
+  "module": "",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-12-10",
+  "libelle": "",
+  "titre": "Vérifier les assurances",
+  "detail": "Responsabilité civile et multirisque : couverture de la soirée du 12 décembre et des produits vendus aux pros.",
+  "module": "",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2026-12-11",
+  "libelle": "",
+  "titre": "Répéter la soirée",
+  "detail": "Après la fermeture : déroulé complet, cupping chronométré par groupes de 8, son et carafes.",
+  "module": "lancement",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "equipe",
+  "echeance": "2026-12-12",
+  "libelle": "",
+  "titre": "Soirée d’ouverture officielle",
+  "detail": "Boutique fermée au public à 18 h, soirée de 19 h à 22 h, environ 60 invités, code « SOIRÉE » pour la boutique en ligne.",
+  "module": "lancement",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "associes",
+  "echeance": "2026-12-14",
+  "libelle": "",
+  "titre": "Remerciements et retombées",
+  "detail": "Chacun remercie ses invités avec trois photos ; Yousif relance la presse avec les meilleures images.",
+  "module": "lancement",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2026-12-15",
+  "libelle": "",
+  "titre": "Protéger la marque",
+  "detail": "Recherche d’antériorité des noms de cafés, dépôt de la marque Yem’kaf à l’INPI si ce n’est pas fait.",
+  "module": "marque",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "vente",
+  "echeance": "2026-12-18",
+  "libelle": "",
+  "titre": "Dernières expéditions avant Noël",
+  "detail": "Toutes les commandes passées jusqu’au 18 expédiées le jour même ; retrait en boutique jusqu’au mercredi 23.",
+  "module": "eshop",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "senior",
+  "echeance": null,
+  "libelle": "chaque soir",
+  "titre": "Fermer en 30 minutes",
+  "detail": "Check-list chronométrée, invendus vers Too Good To Go.",
+  "module": "manuel",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2026-12-24",
+  "libelle": "",
+  "titre": "Horaires des fêtes",
+  "detail": "Fermeture anticipée les 24 et 31, fermé les 25 et 1er janvier ; vitrine et Google à jour une semaine avant.",
+  "module": "",
+  "periode": "Noël et soirée d’ouverture · décembre"
+ },
+ {
+  "cle": "associes",
+  "echeance": "2027-01-04",
+  "libelle": "",
+  "titre": "Bilan du premier mois",
+  "detail": "Chiffres préparés par Yousif. Ventes réelles contre objectifs, temps passé par chacun. Décisions : rémunération des associés, quatrième poste, effet des prix.",
+  "module": "simulateur",
+  "periode": "Fidéliser · janvier 2027"
+ },
+ {
+  "cle": "chef",
+  "echeance": "2027-01-06",
+  "libelle": "",
+  "titre": "Galette des rois maison",
+  "detail": "Frangipane au miel et à la cardamome, avec le pâtissier.",
+  "module": "lancement",
+  "periode": "Fidéliser · janvier 2027"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2027-01-08",
+  "libelle": "",
+  "titre": "Fin des périodes d’essai",
+  "detail": "Entretien individuel avec chaque barista avant la fin de sa période d’essai (date dans chaque contrat), avec le chef barista.",
+  "module": "manuel",
+  "periode": "Fidéliser · janvier 2027"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2027-01-11",
+  "libelle": "",
+  "titre": "Acheteurs de Noël vers l’abonnement",
+  "detail": "Relance de la deuxième commande, mesure des premiers taux de conversion du site.",
+  "module": "eshop",
+  "periode": "Fidéliser · janvier 2027"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2027-01-11",
+  "libelle": "",
+  "titre": "Organiser les livraisons aux pros",
+  "detail": "Tournée du mercredi, bons de livraison, sacs de 1 kg datés : prêt pour les premières commandes test.",
+  "module": "b2b",
+  "periode": "Fidéliser · janvier 2027"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2027-01-18",
+  "libelle": "",
+  "titre": "Planning sur les vraies heures de pointe",
+  "detail": "Ventes par heure dans SumUp, séquences décalées en conséquence.",
+  "module": "manuel",
+  "periode": "Fidéliser · janvier 2027"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2027-01-25",
+  "libelle": "",
+  "titre": "Commander le café vert du printemps",
+  "detail": "D’après les ventes réelles de décembre et janvier ; garder 8 semaines de stock de sécurité.",
+  "module": "b2b",
+  "periode": "Fidéliser · janvier 2027"
+ },
+ {
+  "cle": "khaled",
+  "echeance": null,
+  "libelle": "chaque jeudi",
+  "titre": "Quatre cuppings, trois commandes test",
+  "detail": "Objectif : 30 kg livrés aux pros en janvier.",
+  "module": "b2b",
+  "periode": "Fidéliser · janvier 2027"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2027-02-01",
+  "libelle": "",
+  "titre": "Box ftour du Ramadan (vers le 7-8 février)",
+  "detail": "Dattes, Sabaya et Qishr à emporter dès 17 h, horaires inchangés.",
+  "module": "lancement",
+  "periode": "Saint-Valentin et Ramadan · février 2027"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2027-02-01",
+  "libelle": "",
+  "titre": "Coffret de la Saint-Valentin",
+  "detail": "Coffret Duo en édition « Toits de Sanaa », précommande jusqu’au 12.",
+  "module": "lancement",
+  "periode": "Saint-Valentin et Ramadan · février 2027"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2027-02-15",
+  "libelle": "",
+  "titre": "Candidater au Paris Café Festival",
+  "detail": "Édition annoncée du 24 au 26 avril 2027. Stand partagé ou masterclass Qishr.",
+  "module": "b2b",
+  "periode": "Saint-Valentin et Ramadan · février 2027"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2027-02-22",
+  "libelle": "",
+  "titre": "Précommandes de l’Aïd",
+  "detail": "Coffrets Prestige en boutique, livraison avant le 9 mars.",
+  "module": "lancement",
+  "periode": "Saint-Valentin et Ramadan · février 2027"
+ },
+ {
+  "cle": "equipe",
+  "echeance": "2027-03-10",
+  "libelle": "",
+  "titre": "Aïd el-Fitr (date estimée)",
+  "detail": "Vitrine de fête, coffrets, pâtisseries yéménites.",
+  "module": "lancement",
+  "periode": "Aïd el-Fitr et contrats pros · mars 2027"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2027-03-15",
+  "libelle": "",
+  "titre": "Signer deux ou trois contrats pros",
+  "detail": "Un contrat torréfié (hôtel ou restaurant), un contrat vert (torréfacteur).",
+  "module": "b2b",
+  "periode": "Aïd el-Fitr et contrats pros · mars 2027"
+ },
+ {
+  "cle": "associes",
+  "echeance": "2027-03-22",
+  "libelle": "",
+  "titre": "Point trimestriel avec l’expert-comptable",
+  "detail": "Résultat du trimestre, TVA, prévision d’impôt, rémunération des associés.",
+  "module": "simulateur",
+  "periode": "Aïd el-Fitr et contrats pros · mars 2027"
+ },
+ {
+  "cle": "chef",
+  "echeance": "2027-03-28",
+  "libelle": "",
+  "titre": "Pâtisserie de Pâques",
+  "detail": "Une pièce franco-yéménite, testée deux semaines avant.",
+  "module": "",
+  "periode": "Aïd el-Fitr et contrats pros · mars 2027"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2027-03-29",
+  "libelle": "",
+  "titre": "Former les équipes des premiers clients",
+  "detail": "Formation initiale de 3 h prévue au contrat, avec le chef barista : réglage du moulin, recettes, présentation des terroirs.",
+  "module": "b2b",
+  "periode": "Aïd el-Fitr et contrats pros · mars 2027"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2027-03-31",
+  "libelle": "",
+  "titre": "Dossier de traçabilité (EUDR) complet",
+  "detail": "Lots importés en direct : déclarations de diligence prêtes. Lots achetés à un importateur : références obtenues. Avant le 30 juin 2027.",
+  "module": "b2b",
+  "periode": "Aïd el-Fitr et contrats pros · mars 2027"
+ },
+ {
+  "cle": "chef",
+  "echeance": "2027-04-06",
+  "libelle": "",
+  "titre": "Carte de printemps",
+  "detail": "Qishr glacé et cold brew d’un café du Haraz, chiffrés avant lancement.",
+  "module": "",
+  "periode": "Accélérer et faire le bilan · du 1er avril au 19 mai 2027"
+ },
+ {
+  "cle": "amer",
+  "echeance": "2027-04-19",
+  "libelle": "",
+  "titre": "Préparer l’été",
+  "detail": "Congés d’été des baristas fixés avant le 1er mai, horaires d’été, capacité de glaçons pour les boissons froides.",
+  "module": "manuel",
+  "periode": "Accélérer et faire le bilan · du 1er avril au 19 mai 2027"
+ },
+ {
+  "cle": "khaled",
+  "echeance": "2027-04-24",
+  "libelle": "",
+  "titre": "Paris Café Festival",
+  "detail": "Cupping public, coffrets, collecte d’adresses pour la boutique en ligne.",
+  "module": "b2b",
+  "periode": "Accélérer et faire le bilan · du 1er avril au 19 mai 2027"
+ },
+ {
+  "cle": "yousif",
+  "echeance": "2027-05-10",
+  "libelle": "",
+  "titre": "Fête des mères (30 mai)",
+  "detail": "Précommandes en boutique et en ligne.",
+  "module": "lancement",
+  "periode": "Accélérer et faire le bilan · du 1er avril au 19 mai 2027"
+ },
+ {
+  "cle": "equipe",
+  "echeance": "2027-05-19",
+  "libelle": "",
+  "titre": "Bilan des six mois",
+  "detail": "Résultat réel, trésorerie, avis clients. Décisions : recrutement, horaires, développement des ventes aux pros.",
+  "module": "simulateur",
+  "periode": "Accélérer et faire le bilan · du 1er avril au 19 mai 2027"
+ }
+]

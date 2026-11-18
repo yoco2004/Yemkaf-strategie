@@ -1,0 +1,6 @@
+# Jamais dans GitHub : la configuration (mots de passe) et les fichiers déposés par l'équipe.
+app/config.php
+storage/*
+!storage/.htaccess
+.DS_Store
+tests/captures/

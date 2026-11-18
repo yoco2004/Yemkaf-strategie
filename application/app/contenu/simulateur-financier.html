@@ -1,0 +1,1503 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- @artifact-start -->
+<title>Simulateur YEM'KAF</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Kufi+Arabic:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="%%BASE%%/assets/yemkaf.css">
+<style>
+/* Mise en page : bandeau vert de marque, barre de scénario collante, indicateurs, puis leviers à gauche
+   et graphiques à droite, enfin l'éditeur « Vos chiffres » en pleine largeur. */
+.wrap { max-width: 1440px; }
+.scenario { position: relative; z-index: 20; background: var(--surface); border-bottom: 1px solid var(--line); }
+@media (min-width: 720px) { .scenario { position: sticky; top: env(safe-area-inset-top, 0px); } }
+.scenario .wrap { padding-block: 10px; display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; justify-content: space-between; }
+.seg { display: inline-flex; flex-wrap: wrap; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
+.seg button { font: inherit; font-size: 14px; border: 0; background: transparent; color: var(--ink-2); padding: 6px 14px; border-radius: 999px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--brand); color: var(--on-brand); font-weight: 600; }
+.seg button:hover:not([aria-pressed="true"]) { color: var(--ink); background: rgba(48, 86, 64, .1); }
+.state { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; font-size: 14px; }
+.btn-link { font: inherit; font-size: 14px; background: none; border: 0; color: var(--brand-ink); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; padding: 4px 2px; }
+
+.kpis { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.kpis .tile:first-child { grid-column: 1 / -1; }
+@media (min-width: 640px) { .kpis { grid-template-columns: repeat(6, minmax(0, 1fr)); } .kpis .tile { grid-column: span 2; } .kpis .tile:nth-child(-n+2) { grid-column: span 3; } }
+@media (min-width: 1140px) { .kpis { grid-template-columns: repeat(5, minmax(0, 1fr)); } .kpis .tile, .kpis .tile:nth-child(-n+2), .kpis .tile:first-child { grid-column: auto; } }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px 15px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.tile .label { font-size: 13px; color: var(--muted); font-weight: 600; }
+.tile .value { font-size: 28px; font-weight: 700; letter-spacing: -.01em; line-height: 1.15; }
+.tile .sub { font-size: 13px; color: var(--ink-2); }
+.delta { font-weight: 700; }
+.delta.up { color: var(--good); }
+.delta.down { color: var(--bad); }
+
+.workspace { display: grid; gap: 22px; align-items: start; }
+@media (min-width: 1080px) { .workspace { grid-template-columns: 340px minmax(0, 1fr); } }
+.side { overflow: hidden; }
+@media (min-width: 1080px) {
+  .side { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 66px); max-height: calc(100vh - 86px); display: flex; flex-direction: column; }
+  .side .tabpanel { overflow-y: auto; }
+}
+.tabs { display: flex; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.tabs button { flex: 1; font: inherit; font-size: 14px; font-weight: 700; color: var(--muted); background: none; border: 0; padding: 12px 12px 10px; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
+.tabs button[aria-selected="true"] { color: var(--brand-ink); border-bottom-color: var(--brand-ink); }
+.tabpanel { padding: 6px 16px 18px; }
+.group-title { font-family: var(--font-display); font-size: 15px; font-weight: 700; margin: 16px 0 6px; color: var(--brand-ink); }
+.lever { padding: 9px 0 10px; border-bottom: 1px solid var(--line); display: grid; gap: 4px; }
+.lever:last-child { border-bottom: 0; }
+.lever-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.lever-head label, .lever-head .lbl { font-size: 14px; }
+.lever-head output { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lever-foot { font-size: 12px; color: var(--muted); }
+input[type="range"] { width: 100%; accent-color: var(--brand); margin: 2px 0; height: 24px; }
+.lever .seg { justify-self: start; }
+.lever .seg button { font-size: 13px; padding: 5px 10px; }
+
+.corr { padding: 12px 0; border-bottom: 1px solid var(--line); display: grid; gap: 6px; }
+.corr-head { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: start; }
+.corr-head input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--brand); }
+.corr-head label { font-size: 14px; font-weight: 600; cursor: pointer; }
+.corr-impact { font-size: 13px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.corr details { font-size: 13px; color: var(--ink-2); margin-left: 28px; }
+.corr summary { cursor: pointer; color: var(--brand-ink); width: fit-content; }
+.corr details p { margin: 6px 0 0; }
+.corr-actions { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 0 2px; }
+
+.board { display: grid; gap: 22px; min-width: 0; }
+.chart-card { padding: 18px 18px 16px; display: grid; gap: 10px; min-width: 0; }
+.card-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; align-items: baseline; }
+.card-head h2 { font-size: 18px; font-weight: 700; color: var(--ink); }
+.hint { font-size: 13px; color: var(--muted); max-width: 72ch; }
+.chart-box { position: relative; height: 320px; }
+.chart-box.short { height: 280px; }
+.chart-fallback { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; font-size: 14px; color: var(--muted); padding: 20px; }
+.charts-2 { display: grid; gap: 22px; }
+@media (min-width: 1200px) { .charts-2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+tr.sum td { font-weight: 700; background: var(--surface-2); }
+tr.key td { font-weight: 700; }
+tr.minor td { color: var(--ink-2); font-size: 13px; }
+tr.minor td:first-child { padding-left: 22px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; }
+.risks { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.risk { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 4px; font-size: 14px; background: var(--surface-2); }
+.risk span { color: var(--ink-2); font-size: 13px; }
+
+/* Éditeur « Vos chiffres » */
+.editor { padding: 0; }
+.editor-head { padding: 18px 18px 0; display: grid; gap: 8px; }
+.editor-head h2 { font-size: 22px; font-weight: 800; color: var(--brand-ink); }
+.editor .tabs { margin-top: 6px; padding: 0 6px; }
+.editor .tabpanel { padding: 16px 18px 20px; display: grid; gap: 14px; }
+.ed-table { width: 100%; }
+.ed-table td, .ed-table th { padding: 5px 6px; vertical-align: middle; }
+.ed-table th { white-space: nowrap; }
+.ed-table input, .ed-table select {
+  font: inherit; font-size: 14px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; width: 100%;
+}
+.ed-table input:focus, .ed-table select:focus { border-color: var(--brand-ink); outline: none; box-shadow: 0 0 0 2px rgba(48, 86, 64, .2); }
+.ed-table input[type="number"] { text-align: right; font-variant-numeric: tabular-nums; min-width: 84px; }
+.ed-table input.name { min-width: 230px; }
+.ed-table select { min-width: 76px; }
+.ed-table td.calc { color: var(--ink-2); font-size: 13px; }
+.ed-table tfoot td { font-weight: 700; background: var(--surface-2); }
+.del { font: inherit; border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 18px; line-height: 1; padding: 4px 8px; border-radius: 6px; }
+.del:hover { color: var(--bad); background: var(--bad-wash); }
+.row-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.suggest { display: flex; flex-wrap: wrap; gap: 8px; }
+.suggest button { font: inherit; font-size: 13px; border: 1px dashed var(--axis); background: transparent; color: var(--ink-2); border-radius: 999px; padding: 5px 12px; cursor: pointer; text-align: left; }
+.suggest button:hover { border-style: solid; color: var(--ink); }
+.channel { display: grid; gap: 8px; }
+.channel h3 { font-size: 15px; font-weight: 700; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.mixsum { font-size: 12px; font-weight: 700; }
+.confirm { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background: var(--warn-wash); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+textarea { width: 100%; min-height: 120px; font: 13px/1.4 ui-monospace, Menlo, Consolas, monospace; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
+.readonly .ed-table input, .readonly .ed-table select { background: var(--surface-2); }
+.editor .tabs { flex-wrap: wrap; overflow-x: visible; }
+.editor .tabs button { flex: 1 1 auto; }
+.param-list { display: grid; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.param-group { padding: 8px 14px; font-weight: 700; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.param-row { display: grid; grid-template-columns: minmax(0, 1.2fr) auto minmax(0, 1.5fr); gap: 6px 16px; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--line); }
+.param-row:last-child { border-bottom: 0; }
+.param-row input[type="number"] { font: inherit; font-size: 14px; width: 130px; text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
+.param-row input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--brand); }
+.param-row .note { font-size: 13px; color: var(--muted); }
+@media (max-width: 700px) { .param-row { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .tile .value { font-size: 24px; } .chart-box { height: 280px; } .seg button { padding: 6px 10px; font-size: 13px; } }
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="wrap">
+    <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;min-width:0">
+      <img class="logo logo-screen" src="%%BASE%%/assets/marque/logo-creme.png" alt="Yem'kaf" width="139" height="58">
+      <img class="logo-print" src="%%BASE%%/assets/marque/logo-vert.png" alt="Yem'kaf">
+      <div class="band-title">
+        <h1>Simulateur des 6 premiers mois</h1>
+        <div class="lede">24 rue du Renard, Paris 4e · <b>20 nov. 2026 → 19 mai 2027</b></div>
+      </div>
+    </div>
+    <nav class="band-nav" aria-label="Pages">
+      <a href="%%BASE%%/" data-nav="hub">Feuille de route</a>
+      <a href="%%BASE%%/prix">Simulateur de prix</a>
+      <span class="chip-cd" id="cd-open"></span>
+      <span class="chip-cd" id="cd-vip"></span>
+    </nav>
+  </div>
+  <img class="frise" src="%%BASE%%/assets/marque/frise-sable.png" alt="">
+</header>
+
+<div class="scenario">
+  <div class="wrap">
+    <div class="seg" role="group" aria-label="Scénario">
+      <button type="button" id="sc-plan" aria-pressed="true">Plan</button>
+      <button type="button" id="sc-real" aria-pressed="false">Scénario prudent</button>
+    </div>
+    <div class="state">
+      <span id="state-pill" class="pill warn"></span>
+      <span id="save-pill" class="pill info">Enregistrement local</span>
+      <a class="btn-link" href="#donnees">Modifier vos chiffres</a>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <section class="panel guide" aria-labelledby="h-guide">
+    <div class="guide-head"><h2 id="h-guide">Mode d’emploi</h2><span class="muted small">Module 1 · Simulateur financier</span></div>
+    <div class="guide-cols">
+      <div class="guide-col"><h3>À quoi il sert</h3><p>Prévoir le chiffre d’affaires, la marge, le résultat et la trésorerie des six premiers mois (20 novembre 2026 → 19 mai 2027), et voir l’effet d’un changement de ventes, de prix ou de charges.</p></div>
+      <div class="guide-col"><h3>Pour qui</h3><p>Les trois associés. Yousif tient les chiffres à jour.</p></div>
+      <div class="guide-col"><h3>Comment l’utiliser</h3><ol>
+        <li><b>Lire</b> : les cinq chiffres juste en dessous résument les six mois.</li>
+        <li><b>Choisir un scénario</b> : « Plan » suppose les objectifs atteints dès l’ouverture ; « Scénario prudent » ajoute un démarrage progressif, la saisonnalité, les frais de port et les invendus.</li>
+        <li><b>Tester</b> : les curseurs de l’onglet « Leviers » changent les volumes (tasses, colis, kilos vendus aux pros…). Ils ne sont pas enregistrés.</li>
+        <li><b>Mettre à jour</b> : en bas de page, « Vos chiffres » contient les vraies charges, les prix, les tarifs pros et les paramètres (SumUp, café vert, solde Qonto). Ces chiffres sont enregistrés pour toute l’équipe.</li>
+        <li><b>Exporter</b> : bouton « Exporter (Excel) » à côté du titre « Compte de résultat mensuel », pour le comptable ou la banque.</li>
+      </ol></div>
+    </div>
+  </section>
+
+  <section class="kpis" id="kpis" aria-label="Indicateurs clés sur 6 mois"></section>
+  <div class="callout" id="callout"></div>
+
+  <div class="workspace">
+    <aside class="panel side" aria-label="Réglages">
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" id="tab-leviers" aria-controls="pane-leviers" aria-selected="true">Leviers</button>
+        <button type="button" role="tab" id="tab-corr" aria-controls="pane-corr" aria-selected="false">Hypothèses prudentes <span id="tab-corr-count"></span></button>
+      </div>
+      <div class="tabpanel" role="tabpanel" id="pane-leviers" aria-labelledby="tab-leviers"></div>
+      <div class="tabpanel" role="tabpanel" id="pane-corr" aria-labelledby="tab-corr" hidden>
+        <p class="hint" style="margin:12px 0 4px">Chaque case ajoute une hypothèse prudente au plan. Le montant à droite indique son effet sur le résultat des six mois. Toutes cochées, c’est le « Scénario prudent ».</p>
+        <div id="corr-list"></div>
+        <div class="corr-actions">
+          <button type="button" class="btn primary" id="corr-all">Tout appliquer</button>
+          <button type="button" class="btn" id="corr-none">Tout retirer</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="board">
+      <section class="panel chart-card" aria-labelledby="h-ca">
+        <div class="card-head"><h2 id="h-ca">Chiffre d’affaires HT par canal</h2><span class="hint" id="hint-ca"></span></div>
+        <div class="chart-box"><canvas id="ch-ca" aria-label="Chiffre d’affaires mensuel par canal"></canvas></div>
+      </section>
+      <div class="charts-2">
+        <section class="panel chart-card" aria-labelledby="h-res">
+          <div class="card-head"><h2 id="h-res">Résultat du mois et trésorerie</h2></div>
+          <span class="hint">Résultat d’exploitation avant amortissements et impôt. La trésorerie ajoute le solde de départ et retire mensualités et stock de sécurité.</span>
+          <div class="chart-box"><canvas id="ch-res" aria-label="Résultat mensuel et trésorerie cumulée"></canvas></div>
+        </section>
+        <section class="panel chart-card" aria-labelledby="h-cmp">
+          <div class="card-head"><h2 id="h-cmp">Résultat cumulé : plan et scénario affiché</h2></div>
+          <span class="hint">La courbe grise suit le plan (objectifs atteints dès l’ouverture), la courbe verte le scénario affiché.</span>
+          <div class="chart-box"><canvas id="ch-cmp" aria-label="Comparaison du résultat cumulé"></canvas></div>
+        </section>
+      </div>
+      <div class="charts-2">
+        <section class="panel chart-card" aria-labelledby="h-mix">
+          <div class="card-head"><h2 id="h-mix">D’où vient la marge brute</h2></div>
+          <span class="hint">Marge brute cumulée sur 6 mois, par canal.</span>
+          <div class="chart-box short"><canvas id="ch-mix" aria-label="Marge brute par canal"></canvas></div>
+        </section>
+        <section class="panel chart-card" aria-labelledby="h-vol">
+          <div class="card-head"><h2 id="h-vol">Volumes et café vert à acheter</h2></div>
+          <span class="hint">1 kg de vert donne 800 g vendables. Le vert revendu aux torréfacteurs part tel quel.</span>
+          <div class="table-scroll"><table id="t-vol"></table></div>
+        </section>
+      </div>
+      <section class="panel chart-card" aria-labelledby="h-pl">
+        <div class="card-head"><h2 id="h-pl">Compte de résultat mensuel</h2><span class="hint">Montants HT, arrondis à l’euro. <button type="button" class="btn" id="pl-export" style="margin-left:8px;padding:4px 10px;font-size:13px">Exporter (Excel)</button> <span id="pl-export-msg"></span></span></div>
+        <div class="table-scroll"><table id="t-pl"></table></div>
+      </section>
+      <section class="panel chart-card" aria-labelledby="h-risk">
+        <div class="card-head"><h2 id="h-risk">Ce qui peut faire bouger ces chiffres</h2></div>
+        <div class="risks">
+          <div class="risk"><b>Mokha aux mains des Houthis</b><span>Port pris le 10 septembre 2026. Sécurisez 8 à 12 semaines de vert et des clauses de force majeure dans vos contrats B2B.</span></div>
+          <div class="risk"><b>Règlement européen anti-déforestation</b><span>Le café y est soumis : 30 décembre 2026 pour les moyennes et grandes entreprises, 30 juin 2027 pour les petites. Il faut la géolocalisation des parcelles au Yémen.</span></div>
+          <div class="risk"><b>Centre Pompidou fermé jusqu’en 2030</b><span>Moins de touristes rue du Renard. Misez sur les bureaux voisins, les riverains et les 25 places assises.</span></div>
+          <div class="risk"><b>Prix du café vert : 50 à 60 € le kilo</b><span>Chaque 5 € par kilo coûte environ 5 400 € de résultat sur 6 mois. Réglage dans « Vos chiffres › Paramètres ». La grille pro garde au moins 14 % de marge à 60 €.</span></div>
+        </div>
+      </section>
+      <section class="panel chart-card" aria-labelledby="h-grid">
+        <div class="card-head"><h2 id="h-grid">Marge de chaque produit</h2><span class="hint">Prix et coûts de « Vos chiffres », café vert au prix des paramètres. HT = TTC ÷ (1 + TVA).</span></div>
+        <div class="table-scroll"><table id="t-grid"></table></div>
+      </section>
+    </div>
+  </div>
+
+  <section class="panel editor" id="donnees" aria-labelledby="h-donnees">
+    <div class="editor-head">
+      <div class="eyebrow">Vos chiffres</div>
+      <h2 id="h-donnees">Mettre à jour charges, dépenses et prix</h2>
+      <p class="hint" id="save-explain">Chaque modification recalcule tout le simulateur.</p>
+    </div>
+    <div class="tabs" role="tablist" id="ed-tabs">
+      <button type="button" role="tab" aria-selected="true" data-pane="ed-fixes" id="edt-fixes">Charges mensuelles</button>
+      <button type="button" role="tab" aria-selected="false" data-pane="ed-ponct" id="edt-ponct">Dépenses ponctuelles</button>
+      <button type="button" role="tab" aria-selected="false" data-pane="ed-prix" id="edt-prix">Prix et ventes</button>
+      <button type="button" role="tab" aria-selected="false" data-pane="ed-b2b" id="edt-b2b">Prix pros (B2B)</button>
+      <button type="button" role="tab" aria-selected="false" data-pane="ed-param" id="edt-param">Paramètres</button>
+      <button type="button" role="tab" aria-selected="false" data-pane="ed-save" id="edt-save">Sauvegarde et export</button>
+    </div>
+    <div class="tabpanel" id="ed-fixes" role="tabpanel"></div>
+    <div class="tabpanel" id="ed-ponct" role="tabpanel" hidden></div>
+    <div class="tabpanel" id="ed-prix" role="tabpanel" hidden></div>
+    <div class="tabpanel" id="ed-b2b" role="tabpanel" hidden></div>
+    <div class="tabpanel" id="ed-param" role="tabpanel" hidden></div>
+    <div class="tabpanel" id="ed-save" role="tabpanel" hidden></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <img class="frise" src="%%BASE%%/assets/marque/frise-verte.png" alt="" style="opacity:.5">
+  <div class="eyebrow">Sources</div>
+  <ul>
+    <li>Prise de Mokha : <a href="https://www.aljazeera.com/amp/news/2026/9/10/houthis-capture-yemeni-town-of-mocha-why-it-matters" target="_blank" rel="noopener">Al Jazeera</a> · EUDR : <a href="https://www.coolset.com/academy/eudr-frequently-asked-questions" target="_blank" rel="noopener">Coolset</a>, <a href="https://sustainablefutures.linklaters.com/post/102ly55/eu-changes-to-deforestation-regulation-reach-the-finish-line" target="_blank" rel="noopener">Linklaters</a></li>
+    <li>SumUp : <a href="https://www.sumup.com/fr-fr/tarifs/" target="_blank" rel="noopener">tarifs</a> · Mollie et Qonto : <a href="https://www.mollie.com/news/qonto-mollie-collaboration" target="_blank" rel="noopener">annonce Mollie</a>, <a href="https://www.moneyvox.fr/banque-pro/actualites/103161/compte-pro-cette-banque-en-ligne-devoile-une-nouvelle-solution-de-paiement" target="_blank" rel="noopener">Moneyvox</a>, <a href="https://woocommerce.com/products/mollie-payments-for-woocommerce" target="_blank" rel="noopener">Mollie pour WooCommerce</a></li>
+    <li>Expédition : <a href="https://www.laposte.fr/professionnel/tarif-colissimo" target="_blank" rel="noopener">Colissimo 2026</a> · Centre Pompidou : <a href="https://sortiraparis.com/en/news/in-paris/articles/325118-center-pompidou-gradual-closure-before-construction-begins-timetable" target="_blank" rel="noopener">Sortir à Paris</a></li>
+  </ul>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+<script>
+/*
+ * YEM'KAF : modèle financier des 6 premiers mois (version 3 : tout est paramétrable)
+ * Période : soft opening le 20/11/2026, puis 6 mois glissants (du 20 au 19) jusqu'au 19/05/2027.
+ *
+ * Trois couches :
+ *  1. DONNEES (modifiables, enregistrées, exportables) : charges fixes, dépenses ponctuelles, catalogue
+ *     (prix, coût hors café, grammes de café, part des ventes), grille B2B, paramètres (SumUp, Mollie,
+ *     prix du café vert, trésorerie).
+ *  2. LEVIERS (curseurs d'exploration, non enregistrés) : volumes, panier web, B2B, franchise, stock.
+ *  3. HYPOTHÈSES PRUDENTES (désactivées dans le « Plan », toutes actives dans le « Scénario prudent ») :
+ *     montée en charge, saisonnalité, rodage web/B2B, frais de port, invendus.
+ *
+ * Coût d'un produit = coût hors café (gobelet, lait, épices, emballage…) + grammes de café × prix du vert ÷ rendement.
+ * Montants HT sauf champs *Ttc ; TVA 10 % (boissons, pâtisseries, snacking), 5,5 % (café, coffrets, web).
+ * Fichier autonome : navigateur (window.YemkafModele) et Node (require).
+ */
+(function (root) {
+  'use strict';
+
+  var TVA_10 = 0.10, TVA_55 = 0.055;
+  var RENDEMENT = 0.80;          // 1 kg de vert → 800 g vendables (freinte, rétention, purges)
+  var VERT_REFERENCE = 50;       // prix du vert inclus dans les anciens coûts (conversion des données enregistrées en v2)
+
+  // ---------------------------------------------------------------- calendrier
+  var MOIS = [
+    { id: 'M1', periode: '20 nov – 19 déc', joursOuverts: 30,
+      reperes: ['Soft opening 20/11', 'E-shop ~27/11 (Black Friday)', 'Soirée VIP samedi 12/12', 'Achats de Noël'] },
+    { id: 'M2', periode: '20 déc – 19 janv', joursOuverts: 29,
+      reperes: ['Noël : fermé le 25/12', 'Fermé le 1/01', 'Soldes d’hiver mi-janvier', 'Galette des rois'] },
+    { id: 'M3', periode: '20 janv – 19 févr', joursOuverts: 31,
+      reperes: ['Creux de janvier', 'Début du Ramadan ~7-8/02', 'Saint-Valentin 14/02'] },
+    { id: 'M4', periode: '20 févr – 19 mars', joursOuverts: 28,
+      reperes: ['Ramadan (box ftour à emporter)', 'Aïd el-Fitr ~10/03 (coffrets)'] },
+    { id: 'M5', periode: '20 mars – 19 avr', joursOuverts: 31,
+      reperes: ['Pâques 28/03', 'Retour des touristes'] },
+    { id: 'M6', periode: '20 avr – 19 mai', joursOuverts: 29,
+      reperes: ['Paris Café Festival 24-26/04 (à confirmer)', '1er mai : fermé', 'Aïd al-Adha ~16/05'] }
+  ];
+
+  // ------------------------------------------------- données modifiables par défaut
+  // cout = coût HT hors café ; g = grammes de café net par unité
+  var DONNEES_DEFAUT = {
+    version: 3,
+    chargesFixes: [
+      { id: 'barista-chef', nom: 'Chef barista (coût employeur)', categorie: 'Équipe', montant: 2800, debut: 1, fin: 6 },
+      { id: 'barista-senior', nom: 'Barista senior (coût employeur)', categorie: 'Équipe', montant: 2800, debut: 1, fin: 6 },
+      { id: 'barista-web', nom: 'Barista vente et web (coût employeur)', categorie: 'Équipe', montant: 2800, debut: 1, fin: 6 },
+      { id: 'associes', nom: 'Rémunération des associés', categorie: 'Équipe', montant: 0, debut: 1, fin: 6 },
+      { id: 'loyer', nom: 'Loyer et charges, rue du Renard', categorie: 'Local', montant: 6000, debut: 1, fin: 6 },
+      { id: 'stockage', nom: 'Loyer du bureau de stockage', categorie: 'Local', montant: 630, debut: 1, fin: 6 },
+      { id: 'energie', nom: 'Électricité triphasée, eau filtrée, fibre', categorie: 'Local', montant: 720, debut: 1, fin: 6 },
+      { id: 'compta', nom: 'Pennylane, Qonto, frais bancaires', categorie: 'Gestion', montant: 540, debut: 1, fin: 6 },
+      { id: 'mkt-b2b', nom: 'Marketing B2B et échantillons', categorie: 'Commercial', montant: 510, debut: 1, fin: 6 },
+      { id: 'rp', nom: 'RP, presse et équipement snacking', categorie: 'Commercial', montant: 490, debut: 1, fin: 6 },
+      { id: 'assurances', nom: 'Assurances, SACEM, hygiène, maintenance', categorie: 'Gestion', montant: 430, debut: 1, fin: 6 },
+      { id: 'web', nom: 'Hébergement WordPress et logistique e-commerce', categorie: 'Commercial', montant: 360, debut: 1, fin: 6 }
+    ],
+    depensesPonctuelles: [
+      { id: 'soiree-vip', nom: 'Soirée VIP du samedi 12 décembre (photographe, échantillons, impression)', montant: 800, mois: 1 }
+    ],
+    catalogue: {
+      boissons: [
+        { id: 'espresso', nom: 'Espresso', ttc: 3.50, cout: 0.135, mix: 14, g: 10 },
+        { id: 'double', nom: 'Double Espresso', ttc: 4.80, cout: 0.135, mix: 6, g: 18 },
+        { id: 'cappuccino', nom: 'Cappuccino', ttc: 5.50, cout: 0.405, mix: 14, g: 18 },
+        { id: 'flat-white', nom: 'Flat White', ttc: 6.00, cout: 0.425, mix: 12, g: 18 },
+        { id: 'latte', nom: 'Latte ou Iced Latte', ttc: 6.20, cout: 0.535, mix: 16, g: 18 },
+        { id: 'v60', nom: 'V60 Grand Cru', ttc: 8.00, cout: 0.2825, mix: 6, g: 15 },
+        { id: 'radai', nom: 'Rada’i Gingembre', ttc: 5.20, cout: 0.3975, mix: 4, g: 13 },
+        { id: 'qishr', nom: 'Qishr Cascara Épicé', ttc: 5.50, cout: 0.64, mix: 8, g: 0 },
+        { id: 'shai', nom: 'Shai Adeni Karak', ttc: 5.80, cout: 0.74, mix: 8, g: 0 },
+        { id: 'mufawar', nom: 'Mufawar Cardamome', ttc: 6.00, cout: 0.4125, mix: 6, g: 15 },
+        { id: 'baydani', nom: 'Qahwa Baydani', ttc: 6.20, cout: 0.455, mix: 6, g: 14 },
+        { id: 'supplements', nom: 'Suppléments (lait végétal, micro-lot), par boisson', ttc: 0.10, cout: 0.03, mix: 0, g: 0, parBoisson: true }
+      ],
+      patisseries: [
+        { id: 'pat-paris', nom: 'Pâtisserie Parisienne', ttc: 4.50, cout: 1.48, mix: 50 },
+        { id: 'pat-yemen', nom: 'Pâtisserie Yéménite (Sabaya, Maamoul)', ttc: 5.50, cout: 1.54, mix: 50 }
+      ],
+      snacking: [
+        { id: 'snack', nom: 'Snacking Salé Yéménite (Kubaneh, focaccia)', ttc: 9.50, cout: 2.74, mix: 60 },
+        { id: 'formule', nom: 'Formule Midi Marais', ttc: 16.50, cout: 5.45, mix: 40 }
+      ],
+      sachets: [
+        { id: 'sachet-150', nom: 'Sachet 150 g', ttc: 19.00, cout: 0.625, mix: 40, g: 150 },
+        { id: 'sachet-200', nom: 'Sachet 200 g', ttc: 25.00, cout: 0.65, mix: 0, g: 200 },
+        { id: 'sachet-250', nom: 'Sachet 250 g', ttc: 30.00, cout: 0.695, mix: 45, g: 250 },
+        { id: 'sachet-melange', nom: 'Mélange épicé 200 g (≈ 85 % café, 15 % épices)', ttc: 24.00, cout: 1.735, mix: 15, g: 170 }
+      ],
+      coffrets: [
+        { id: 'duo', nom: 'Coffret Duo Boutique', ttc: 52.00, cout: 3.10, mix: 45, g: 400 },
+        { id: 'prestige', nom: 'Coffret Prestige Écrin', ttc: 79.00, cout: 13.25, mix: 35, g: 500 },
+        { id: 'trois-terroirs', nom: 'Coffret Trois Terroirs', ttc: 69.00, cout: 4.70, mix: 20, g: 600 }
+      ],
+      // Web : le mix est une part du chiffre d'affaires du panier
+      web: [
+        { id: 'web-coffret', nom: 'Coffret Web Trois Terroirs', ttc: 69.00, cout: 4.70, mix: 30, g: 600 },
+        { id: 'web-abo', nom: 'Abonnement Web Mensuel (500 g)', ttc: 54.00, cout: 3.40, mix: 25, g: 500 },
+        { id: 'web-sachet', nom: 'Sachet Web 250 g', ttc: 27.90, cout: 2.075, mix: 35, g: 250 },
+        { id: 'web-qishr', nom: 'Pack Rituel Qishr Web', ttc: 22.00, cout: 6.70, mix: 10, g: 0 }
+      ]
+    },
+    // Grille professionnelle ajustée le 12/11/2026 ; extra = frais hors café par kg
+    b2b: {
+      vert: [
+        { id: 'vert-micro', nom: 'Vert Micro-Lot (sac de 5 kg)', prix: 80.00, extra: 0.40, mix: 20 },
+        { id: 'vert-signature', nom: 'Vert Signature (dès 15 kg)', prix: 75.00, extra: 0.20, mix: 50 },
+        { id: 'vert-contrat', nom: 'Vert Contrat (dès 30 kg)', prix: 70.00, extra: 0.00, mix: 30 }
+      ],
+      torrefie: [
+        { id: 'torr-invite', nom: 'Torréfié Invité (3 à 9 kg/mois)', prix: 99.00, extra: 1.10, mix: 40 },
+        { id: 'torr-palace', nom: 'Torréfié Palace (10 à 24 kg/mois)', prix: 94.00, extra: 0.90, mix: 40 },
+        { id: 'torr-resident', nom: 'Torréfié Résident (dès 25 kg/mois)', prix: 89.00, extra: 0.60, mix: 20 }
+      ]
+    },
+    parametres: {
+      prixVertKg: 55,            // café vert tout compris, 50 à 60 € selon les lots
+      sumupAbonnement: 90,       // contrat SumUp : 90 € par mois
+      sumupTaux: 0.0049,         // et 0,49 % par paiement
+      partCarte: 0.92,           // part des ventes boutique payées par carte
+      mollieTaux: 0.014,         // Mollie CB : 1,4 % + 0,25 € (à vérifier)
+      mollieFixe: 0.25,
+      mollieOffre: true,         // 0 % pour les nouveaux comptes jusqu'au 31/12/2026
+      tresorerieDepart: 15000,   // solde Qonto au début de la période
+      mensualitesEmprunt: 0      // aucun crédit en cours
+    }
+  };
+
+  var SUGGESTIONS = [
+    { type: 'fixe', nom: 'Mutuelle, médecine du travail, repas du personnel (HCR)', categorie: 'Équipe', montant: 180, note: 'Si non compris dans les 2 800 € par salarié.' },
+    { type: 'fixe', nom: 'Licence WooCommerce Subscriptions (abonnement mensuel)', categorie: 'Commercial', montant: 22, note: 'Extension payante, environ 279 $ par an.' },
+    { type: 'fixe', nom: 'Brevo (e-mails et SMS automatiques)', categorie: 'Commercial', montant: 40, note: 'Formule Standard environ 15 € + SMS à environ 0,045 € l’unité.' },
+    { type: 'fixe', nom: 'Entretien La Marzocco et cartouches de filtration', categorie: 'Local', montant: 60, note: 'Si non compris dans l’abonnement d’entretien.' },
+    { type: 'fixe', nom: 'Logiciel de planning et paie', categorie: 'Gestion', montant: 40, note: 'Optionnel.' },
+    { type: 'ponctuelle', nom: 'Vaisselle réemployable pour 25 places (loi AGEC)', montant: 800, mois: 1, note: 'Tasses, verres, assiettes, couverts.' },
+    { type: 'ponctuelle', nom: 'Four ou grill pour le snacking (absent du plan du bar)', montant: 1200, mois: 2, note: 'Kubaneh et focaccias toastées dès M2.' },
+    { type: 'ponctuelle', nom: 'Formation hygiène HACCP 14 h', montant: 350, mois: 1, note: 'Souvent prise en charge par l’OPCO AKTO.' },
+    { type: 'ponctuelle', nom: 'Stand au Paris Café Festival', montant: 1500, mois: 6, note: 'Tarif exposant à demander.' }
+  ];
+
+  var REPARTITION_COFFRETS = [0.40, 0.22, 0.10, 0.12, 0.09, 0.07];
+  var MOLLIE_SANS_FRAIS = [1, 0.4, 0, 0, 0, 0];   // part du mois couverte par l'offre 0 % (jusqu'au 31/12)
+
+  // ------------------------------------------------------- leviers d'exploration
+  var LEVIERS_DEFAUT = {
+    tassesJour: 135,
+    tauxPatisserie: 55 / 135,
+    snackingJour: 28,
+    debutSnacking: 2,
+    sachetsJour: 6,
+    coffrets6Mois: 210,
+    colisMois: 120,
+    panierWebTtc: 49.10,
+    kgB2BMois: 60,
+    partVertB2B: 0.50,
+    moisFranchise: 0,
+    semainesStock: 0
+  };
+
+  // ------------------------------------------------------- hypothèses prudentes
+  var CORRECTIONS = [
+    { cle: 'rampe', titre: 'Montée en charge de la boutique',
+      resume: 'Le plan vise 135 tasses par jour dès le 20 novembre. Une adresse neuve construit sa clientèle sur plusieurs mois, et le Centre Pompidou voisin est fermé jusqu’en 2030 : moins de touristes devant la porte.',
+      detail: 'Boutique à 50 % de l’objectif en M1, puis 62, 72, 82, 90 et 96 %.',
+      valeurs: [0.50, 0.62, 0.72, 0.82, 0.90, 0.96] },
+    { cle: 'calendrier', titre: 'Saisonnalité et jours réellement ouverts',
+      resume: 'Fermé le 25/12, le 1/01 et le 1/05. Le quartier se vide entre Noël et le Nouvel An et en janvier. Le Ramadan (février-mars) réduit une partie de la fréquentation de journée. Le printemps relance le passage.',
+      detail: 'Jours ouverts 30, 29, 31, 28, 31, 29. Indice de fréquentation 1,06 · 0,94 · 0,90 · 0,95 · 1,04 · 1,06.',
+      jours: [30, 29, 31, 28, 31, 29], saison: [1.06, 0.94, 0.90, 0.95, 1.04, 1.06] },
+    { cle: 'rodage', titre: 'Rodage de l’e-shop et du cycle de vente B2B',
+      resume: 'Le site WordPress ouvre vers le 27/11 sans historique ni référencement. Côté pro, un cupping du jeudi mène à un échantillon, puis à une commande test, puis à un contrat : comptez 6 à 10 semaines par client.',
+      detail: 'Colis web à 50, 55, 45, 60, 75 et 90 % de l’objectif. B2B à 15, 30, 50, 70, 85 et 100 %.',
+      web: [0.50, 0.55, 0.45, 0.60, 0.75, 0.90], b2b: [0.15, 0.30, 0.50, 0.70, 0.85, 1.00] },
+    { cle: 'port', titre: 'Frais de port du e-commerce',
+      resume: 'La livraison offerte sur le premier coffret et le seuil de gratuité restent à votre charge. Tarifs publics 2026 pour 1 kg : Colissimo 8,89 à 9,59 €, Mondial Relay 5,99 € (dès 3,89 € en compte pro).',
+      detail: '5,00 € HT net par colis : transport moyen 6,20 €, moins 2,00 € de participation client en moyenne, plus 0,80 € de carton et calage.',
+      parColis: 5.00 },
+    { cle: 'pertes', titre: 'Invendus de vitrine',
+      resume: 'Le plan ne compte aucune perte. En vitrine fraîche, 6 à 10 % des pièces ne se vendent pas. Too Good To Go ou un « goûter des riverains » à 18 h en récupère une partie.',
+      detail: '8 % du coût matière des pâtisseries et du snacking.',
+      taux: 0.08 }
+  ];
+
+  // ================================================================= outils
+  function round2(x) { return Math.round(x * 100) / 100; }
+  function num(x, d) { var n = Number(x); return isFinite(n) ? n : (d || 0); }
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function correction(cle) {
+    for (var i = 0; i < CORRECTIONS.length; i++) if (CORRECTIONS[i].cle === cle) return CORRECTIONS[i];
+    return null;
+  }
+  function borne(x, min, max, d) { var n = num(x, d); return Math.min(max, Math.max(min, n)); }
+
+  /** Remet des données saisies dans une forme sûre ; convertit les données v2 (coût café compris). */
+  function normaliserDonnees(d) {
+    var out = clone(DONNEES_DEFAUT);
+    if (!d || typeof d !== 'object') return out;
+    var v2 = !d.version || d.version < 3;
+    if (Array.isArray(d.chargesFixes)) {
+      out.chargesFixes = d.chargesFixes.map(function (c, i) {
+        var debut = Math.min(6, Math.max(1, Math.round(num(c.debut, 1))));
+        var fin = Math.min(6, Math.max(debut, Math.round(num(c.fin, 6))));
+        return { id: String(c.id || ('ligne-' + i)), nom: String(c.nom || 'Charge'), categorie: String(c.categorie || 'Autre'),
+          montant: Math.max(0, num(c.montant)), debut: debut, fin: fin };
+      });
+    }
+    if (Array.isArray(d.depensesPonctuelles)) {
+      out.depensesPonctuelles = d.depensesPonctuelles.map(function (c, i) {
+        return { id: String(c.id || ('ponct-' + i)), nom: String(c.nom || 'Dépense'), montant: Math.max(0, num(c.montant)),
+          mois: Math.min(6, Math.max(1, Math.round(num(c.mois, 1)))) };
+      });
+    }
+    if (d.catalogue && typeof d.catalogue === 'object') {
+      Object.keys(out.catalogue).forEach(function (k) {
+        if (!Array.isArray(d.catalogue[k])) return;
+        out.catalogue[k] = d.catalogue[k].map(function (l, i) {
+          var g = Math.max(0, num(l.g));
+          var cout = Math.max(0, num(l.cout));
+          if (v2 && g > 0) cout = Math.max(0, cout - g * VERT_REFERENCE / RENDEMENT / 1000);
+          var r = { id: String(l.id || (k + '-' + i)), nom: String(l.nom || 'Produit'), ttc: Math.max(0, num(l.ttc)),
+            cout: cout, mix: Math.max(0, num(l.mix)), g: g };
+          if (l.parBoisson) r.parBoisson = true;
+          return r;
+        });
+      });
+    }
+    if (d.b2b && typeof d.b2b === 'object') {
+      ['vert', 'torrefie'].forEach(function (k) {
+        if (!Array.isArray(d.b2b[k])) return;
+        out.b2b[k] = d.b2b[k].map(function (l, i) {
+          return { id: String(l.id || (k + '-' + i)), nom: String(l.nom || 'Formule'), prix: Math.max(0, num(l.prix)),
+            extra: Math.max(0, num(l.extra)), mix: Math.max(0, num(l.mix)) };
+        });
+      });
+    }
+    if (d.parametres && typeof d.parametres === 'object') {
+      var p = d.parametres, o = out.parametres;
+      o.prixVertKg = borne(p.prixVertKg, 0, 500, o.prixVertKg);
+      o.sumupAbonnement = borne(p.sumupAbonnement, 0, 2000, o.sumupAbonnement);
+      o.sumupTaux = borne(p.sumupTaux, 0, 0.1, o.sumupTaux);
+      o.partCarte = borne(p.partCarte, 0, 1, o.partCarte);
+      o.mollieTaux = borne(p.mollieTaux, 0, 0.1, o.mollieTaux);
+      o.mollieFixe = borne(p.mollieFixe, 0, 5, o.mollieFixe);
+      o.mollieOffre = p.mollieOffre !== false;
+      o.tresorerieDepart = num(p.tresorerieDepart, o.tresorerieDepart);
+      o.mensualitesEmprunt = borne(p.mensualitesEmprunt, 0, 1e6, 0);
+    }
+    out.version = 3;
+    return out;
+  }
+
+  /** Coût total d'une ligne : hors café + café au prix du vert. */
+  function coutTotal(l, prixVertKg) { return l.cout + (l.g || 0) * prixVertKg / RENDEMENT / 1000; }
+
+  function moyenneCanal(lignes, tva, prixVert) {
+    var vendables = lignes.filter(function (l) { return !l.parBoisson; });
+    var somme = vendables.reduce(function (a, l) { return a + l.mix; }, 0);
+    var ttc = 0, cout = 0, g = 0;
+    if (somme > 0) vendables.forEach(function (l) { var w = l.mix / somme; ttc += l.ttc * w; cout += coutTotal(l, prixVert) * w; g += (l.g || 0) * w; });
+    lignes.forEach(function (l) { if (l.parBoisson) { ttc += l.ttc; cout += coutTotal(l, prixVert); } });
+    return { ttc: ttc, ht: ttc / (1 + tva), cout: cout, tva: tva, grammes: g, sommeMix: somme };
+  }
+
+  function moyenneWeb(lignes, prixVert) {
+    var somme = lignes.reduce(function (a, l) { return a + l.mix; }, 0), t = 0, gpe = 0;
+    if (somme <= 0) return { tauxCout: 0, grammesParEuro: 0, sommeMix: 0 };
+    lignes.forEach(function (l) {
+      var ht = l.ttc / (1 + TVA_55); if (ht <= 0) return;
+      t += (l.mix / somme) * (coutTotal(l, prixVert) / ht);
+      gpe += (l.mix / somme) * ((l.g || 0) / ht);
+    });
+    return { tauxCout: t, grammesParEuro: gpe, sommeMix: somme };
+  }
+
+  function moyenneB2B(lignes, coutCafeKg) {
+    var somme = lignes.reduce(function (a, l) { return a + l.mix; }, 0), prix = 0, cout = 0;
+    if (somme > 0) lignes.forEach(function (l) { var w = l.mix / somme; prix += l.prix * w; cout += (coutCafeKg + l.extra) * w; });
+    return { prix: prix, cout: cout };
+  }
+
+  function unitaires(d) {
+    var c = d.catalogue, pv = d.parametres.prixVertKg;
+    return {
+      boisson: moyenneCanal(c.boissons, TVA_10, pv),
+      patisserie: moyenneCanal(c.patisseries, TVA_10, pv),
+      snacking: moyenneCanal(c.snacking, TVA_10, pv),
+      sachet: moyenneCanal(c.sachets, TVA_55, pv),
+      coffret: moyenneCanal(c.coffrets, TVA_55, pv),
+      web: moyenneWeb(c.web, pv),
+      b2bVert: moyenneB2B(d.b2b.vert, pv),
+      b2bTorrefie: moyenneB2B(d.b2b.torrefie, pv / RENDEMENT)
+    };
+  }
+
+  function fixesDuMois(donnees, i, moisFranchise) {
+    var lignes = [], total = 0;
+    donnees.chargesFixes.forEach(function (c) {
+      var montant = ((i + 1) >= c.debut && (i + 1) <= c.fin) ? c.montant : 0;
+      if (c.id === 'loyer' && i < moisFranchise) montant = 0;
+      lignes.push({ id: c.id, nom: c.nom, categorie: c.categorie, montant: montant });
+      total += montant;
+    });
+    return { lignes: lignes, total: total };
+  }
+
+  /** simuler(leviers, actives, donnees) → résultat mensuel et totaux. */
+  function simuler(leviersPartiels, actives, donneesBrutes) {
+    var p = {}, k;
+    for (k in LEVIERS_DEFAUT) p[k] = LEVIERS_DEFAUT[k];
+    for (k in (leviersPartiels || {})) if (k in LEVIERS_DEFAUT) p[k] = leviersPartiels[k];
+    var on = actives || {};
+    var d = normaliserDonnees(donneesBrutes || DONNEES_DEFAUT);
+    var pa = d.parametres;
+    var u = unitaires(d);
+    var cRampe = correction('rampe'), cCal = correction('calendrier'), cRod = correction('rodage');
+    var cPort = correction('port'), cPertes = correction('pertes');
+    var mois = [];
+
+    for (var i = 0; i < MOIS.length; i++) {
+      var jours = on.calendrier ? cCal.jours[i] : 30;
+      var fBoutique = jours * (on.calendrier ? cCal.saison[i] : 1) * (on.rampe ? cRampe.valeurs[i] : 1);
+      var q = {
+        tasses: p.tassesJour * fBoutique,
+        patisseries: p.tassesJour * p.tauxPatisserie * fBoutique,
+        snacking: (i + 1 >= p.debutSnacking) ? p.snackingJour * fBoutique : 0,
+        sachets: p.sachetsJour * fBoutique,
+        coffrets: p.coffrets6Mois * REPARTITION_COFFRETS[i],
+        colis: p.colisMois * (on.rodage ? cRod.web[i] : 1),
+        kgB2B: p.kgB2BMois * (on.rodage ? cRod.b2b[i] : 1)
+      };
+      var panierHt = p.panierWebTtc / (1 + TVA_55);
+      var kgVert = q.kgB2B * p.partVertB2B, kgTorr = q.kgB2B - kgVert;
+      var ca = {
+        boissons: q.tasses * u.boisson.ht,
+        patisseries: q.patisseries * u.patisserie.ht,
+        snacking: q.snacking * u.snacking.ht,
+        boutique: q.sachets * u.sachet.ht + q.coffrets * u.coffret.ht,
+        web: q.colis * panierHt,
+        b2b: kgVert * u.b2bVert.prix + kgTorr * u.b2bTorrefie.prix
+      };
+      var cout = {
+        boissons: q.tasses * u.boisson.cout,
+        patisseries: q.patisseries * u.patisserie.cout,
+        snacking: q.snacking * u.snacking.cout,
+        boutique: q.sachets * u.sachet.cout + q.coffrets * u.coffret.cout,
+        web: ca.web * u.web.tauxCout,
+        b2b: kgVert * u.b2bVert.cout + kgTorr * u.b2bTorrefie.cout
+      };
+      var caTotal = 0, coutTotalMois = 0, marge = {};
+      for (k in ca) { marge[k] = ca[k] - cout[k]; caTotal += ca[k]; coutTotalMois += cout[k]; }
+      var margeBrute = caTotal - coutTotalMois;
+
+      // Paiements (données réelles : contrat SumUp, Mollie)
+      var ttcBoutique = (ca.boissons + ca.patisseries + ca.snacking) * (1 + TVA_10) + ca.boutique * (1 + TVA_55);
+      var fraisSumUp = ttcBoutique * pa.partCarte * pa.sumupTaux + pa.sumupAbonnement;
+      var horsOffre = pa.mollieOffre ? 1 - MOLLIE_SANS_FRAIS[i] : 1;
+      var fraisMollie = q.colis * (p.panierWebTtc * pa.mollieTaux + pa.mollieFixe) * horsOffre;
+      var fraisPort = on.port ? q.colis * cPort.parColis : 0;
+      var pertes = on.pertes ? (cout.patisseries + cout.snacking) * cPertes.taux : 0;
+
+      var fx = fixesDuMois(d, i, p.moisFranchise);
+      var ponctuelles = 0;
+      d.depensesPonctuelles.forEach(function (dp) { if (dp.mois === i + 1) ponctuelles += dp.montant; });
+      var resultat = margeBrute - fraisSumUp - fraisMollie - fraisPort - pertes - fx.total - ponctuelles;
+
+      var netKg = (q.tasses * u.boisson.grammes + q.sachets * u.sachet.grammes + q.coffrets * u.coffret.grammes
+        + ca.web * u.web.grammesParEuro) / 1000 + kgTorr;
+      mois.push({
+        id: MOIS[i].id, periode: MOIS[i].periode, jours: jours, quantites: q, ca: ca, cout: cout, marge: marge,
+        caTotal: caTotal, margeBrute: margeBrute, fraisSumUp: fraisSumUp, fraisMollie: fraisMollie,
+        fraisPaiement: fraisSumUp + fraisMollie, fraisPort: fraisPort, pertes: pertes,
+        fixes: fx.lignes, totalFixes: fx.total, ponctuelles: ponctuelles, resultat: resultat,
+        cafeVertKg: netKg / RENDEMENT + kgVert, flux: resultat - pa.mensualitesEmprunt
+      });
+    }
+
+    var pm = pointMort(p, u, d);
+    var achatStock = p.semainesStock * (pm.cafeVertKgMoisRegime * 12 / 52) * pa.prixVertKg;
+    mois[0].achatStock = achatStock;
+    mois[0].flux -= achatStock;
+
+    var tot = { caTotal: 0, margeBrute: 0, fraisPaiement: 0, fraisSumUp: 0, fraisMollie: 0, fraisPort: 0, pertes: 0, totalFixes: 0,
+      ponctuelles: 0, resultat: 0, flux: 0, ca: {}, marge: {}, quantites: {} };
+    var cumul = pa.tresorerieDepart, tresoMin = Infinity, moisTresoMin = null, premierMoisPositif = null;
+    mois.forEach(function (m) {
+      ['caTotal', 'margeBrute', 'fraisPaiement', 'fraisSumUp', 'fraisMollie', 'fraisPort', 'pertes', 'totalFixes', 'ponctuelles', 'resultat', 'flux']
+        .forEach(function (c) { tot[c] += m[c]; });
+      for (var kk in m.ca) { tot.ca[kk] = (tot.ca[kk] || 0) + m.ca[kk]; tot.marge[kk] = (tot.marge[kk] || 0) + m.marge[kk]; }
+      for (kk in m.quantites) tot.quantites[kk] = (tot.quantites[kk] || 0) + m.quantites[kk];
+      cumul += m.flux; m.tresorerieFin = cumul;
+      if (cumul < tresoMin) { tresoMin = cumul; moisTresoMin = m.id; }
+      if (premierMoisPositif === null && m.resultat > 0) premierMoisPositif = m.id;
+    });
+
+    return { leviers: p, actives: on, donnees: d, parametres: pa, unitaires: u, mois: mois, totaux: tot,
+      tresorerieFin: cumul, tresorerieMin: tresoMin, moisTresorerieMin: moisTresoMin,
+      premierMoisPositif: premierMoisPositif, achatStock: achatStock, pointMort: pm };
+  }
+
+  /** Point mort en régime (30 jours, sans montée en charge ni saisonnalité), charges fixes de M6. */
+  function pointMort(p, u, d) {
+    var pa = d.parametres, cPort = correction('port');
+    var jours = 30, carte = pa.partCarte * pa.sumupTaux, t = Math.max(p.tassesJour, 1);
+    function contribution(unit, tva) { return (unit.ht - unit.cout) - unit.ht * (1 + tva) * carte; }
+    var parTasse = contribution(u.boisson, TVA_10)
+      + p.tauxPatisserie * contribution(u.patisserie, TVA_10)
+      + (p.snackingJour / t) * contribution(u.snacking, TVA_10)
+      + (p.sachetsJour / t) * contribution(u.sachet, TVA_55);
+    var panierHt = p.panierWebTtc / (1 + TVA_55);
+    var autres = (p.coffrets6Mois / 6) * contribution(u.coffret, TVA_55)
+      + p.colisMois * (panierHt * (1 - u.web.tauxCout) - (p.panierWebTtc * pa.mollieTaux + pa.mollieFixe))
+      + p.kgB2BMois * (p.partVertB2B * (u.b2bVert.prix - u.b2bVert.cout) + (1 - p.partVertB2B) * (u.b2bTorrefie.prix - u.b2bTorrefie.cout));
+    var fixes = fixesDuMois(d, 5, 0).total + pa.sumupAbonnement;
+    var tasses = parTasse > 0 ? (fixes - autres) / (jours * parTasse) : Infinity;
+    var kgVert = p.kgB2BMois * p.partVertB2B, kgTorr = p.kgB2BMois - kgVert;
+    var netKg = (jours * p.tassesJour * u.boisson.grammes + jours * p.sachetsJour * u.sachet.grammes
+      + (p.coffrets6Mois / 6) * u.coffret.grammes + p.colisMois * panierHt * u.web.grammesParEuro) / 1000 + kgTorr;
+    return { tassesJour: Math.max(0, tasses), chargesFixesMois: fixes, contributionParTasse: parTasse,
+      contributionAutresCanaux: autres, cafeVertKgMoisRegime: netKg / RENDEMENT + kgVert };
+  }
+
+  /** Export CSV (séparateur « ; », décimales à virgule, pour Excel en français). */
+  function exportCSV(r) {
+    function n(v) { return (Math.round(v * 100) / 100).toFixed(2).replace('.', ','); }
+    function ligne(cells) { return cells.map(function (c) { var s = String(c); return /[;"\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }).join(';'); }
+    var ms = r.mois, out = [];
+    var tot = function (f) { return ms.reduce(function (a, m) { return a + f(m); }, 0); };
+    function row(label, f) { out.push(ligne([label].concat(ms.map(function (m) { return n(f(m)); })).concat([n(tot(f))]))); }
+    out.push(ligne(['YEM\'KAF - compte de résultat prévisionnel (HT, en euros)']));
+    out.push(ligne(['Hypothèses prudentes appliquées', CORRECTIONS.filter(function (c) { return r.actives[c.cle]; }).map(function (c) { return c.titre; }).join(' / ') || 'aucune']));
+    out.push('');
+    out.push(ligne(['Poste'].concat(ms.map(function (m) { return m.id + ' (' + m.periode + ')'; })).concat(['6 mois'])));
+    [['boissons', 'CA boissons'], ['patisseries', 'CA pâtisseries'], ['snacking', 'CA snacking'], ['boutique', 'CA sachets et coffrets'], ['web', 'CA e-commerce'], ['b2b', 'CA B2B']]
+      .forEach(function (c) { row(c[1], function (m) { return m.ca[c[0]]; }); });
+    row('Chiffre d\'affaires HT', function (m) { return m.caTotal; });
+    row('Coût matière et emballages', function (m) { return -(m.caTotal - m.margeBrute); });
+    row('Marge brute', function (m) { return m.margeBrute; });
+    row('Commissions SumUp (abonnement compris)', function (m) { return -m.fraisSumUp; });
+    row('Commissions Mollie', function (m) { return -m.fraisMollie; });
+    row('Frais de port e-commerce', function (m) { return -m.fraisPort; });
+    row('Invendus de vitrine', function (m) { return -m.pertes; });
+    r.donnees.chargesFixes.forEach(function (c) { row(c.nom, function (m) { var l = m.fixes.filter(function (x) { return x.id === c.id; })[0]; return -(l ? l.montant : 0); }); });
+    row('Dépenses ponctuelles', function (m) { return -m.ponctuelles; });
+    row('Résultat d\'exploitation', function (m) { return m.resultat; });
+    row('Mensualités et stock de sécurité', function (m) { return -(m.resultat - m.flux); });
+    out.push(ligne(['Trésorerie en fin de mois'].concat(ms.map(function (m) { return n(m.tresorerieFin); })).concat([n(r.tresorerieFin)])));
+    out.push('');
+    out.push(ligne(['Volumes'].concat(ms.map(function (m) { return m.id; })).concat(['6 mois'])));
+    [['tasses', 'Tasses'], ['patisseries', 'Pâtisseries'], ['snacking', 'Snacking et formules'], ['sachets', 'Sachets boutique'], ['coffrets', 'Coffrets'], ['colis', 'Colis web'], ['kgB2B', 'Café B2B (kg)']]
+      .forEach(function (c) { row(c[1], function (m) { return m.quantites[c[0]]; }); });
+    row('Café vert à acheter (kg)', function (m) { return m.cafeVertKg; });
+    return '﻿' + out.join('\r\n') + '\r\n';
+  }
+
+  var API = {
+    MOIS: MOIS, DONNEES_DEFAUT: DONNEES_DEFAUT, SUGGESTIONS: SUGGESTIONS, CORRECTIONS: CORRECTIONS,
+    LEVIERS_DEFAUT: LEVIERS_DEFAUT, REPARTITION_COFFRETS: REPARTITION_COFFRETS,
+    RENDEMENT: RENDEMENT, TVA_10: TVA_10, TVA_55: TVA_55,
+    normaliserDonnees: normaliserDonnees, simuler: simuler, unitaires: unitaires,
+    fixesDuMois: fixesDuMois, coutTotal: coutTotal, exportCSV: exportCSV
+  };
+  if (typeof module !== 'undefined' && module.exports) module.exports = API;
+  else root.YemkafModele = API;
+})(this);
+
+</script>
+<script>
+(function () {
+  'use strict';
+  var M = window.YemkafModele;
+
+  // ------------------------------------------------------------ formats
+  var fEur0 = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+  var fEur2 = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  var fSigned = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0, signDisplay: 'exceptZero' });
+  var fInt = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
+  var fDec1 = new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  var fCompact = new Intl.NumberFormat('fr-FR', { notation: 'compact', maximumFractionDigits: 1 });
+  function eur(v) { return fEur0.format(Math.round(v)); }
+  function signed(v) { return fSigned.format(Math.round(v)); }
+  function compactEur(v) { return Math.abs(v) < 1000 ? fInt.format(v) + ' €' : fCompact.format(v) + '€'; }
+  function pct(v) { return fDec1.format(v * 100) + ' %'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+
+  var CANAUX_UI = [
+    { cle: 'boissons', nom: 'Boissons', s: '--s1' },
+    { cle: 'patisseries', nom: 'Pâtisseries', s: '--s2' },
+    { cle: 'snacking', nom: 'Snacking du midi', s: '--s3' },
+    { cle: 'boutique', nom: 'Sachets et coffrets', s: '--s4' },
+    { cle: 'web', nom: 'E-commerce', s: '--s5' },
+    { cle: 'b2b', nom: 'B2B pros', s: '--s6' }
+  ];
+  var CATEGORIES = ['Équipe', 'Local', 'Gestion', 'Commercial', 'Autre'];
+  var CANAUX_PRIX = [
+    { cle: 'boissons', nom: 'Boissons (TVA 10 %)', tva: 0.10, gram: true },
+    { cle: 'patisseries', nom: 'Pâtisseries (TVA 10 %)', tva: 0.10 },
+    { cle: 'snacking', nom: 'Snacking du midi (TVA 10 %)', tva: 0.10 },
+    { cle: 'sachets', nom: 'Sachets en boutique (TVA 5,5 %)', tva: 0.055, gram: true },
+    { cle: 'coffrets', nom: 'Coffrets cadeaux (TVA 5,5 %)', tva: 0.055, gram: true },
+    { cle: 'web', nom: 'E-commerce : part du chiffre d’affaires (TVA 5,5 %)', tva: 0.055, gram: true }
+  ];
+
+  // ------------------------------------------------------------ état
+  var leviers = Object.assign({}, M.LEVIERS_DEFAUT);
+  var actives = {};
+  var donnees = M.normaliserDonnees(M.DONNEES_DEFAUT);
+  var NB_CORR = M.CORRECTIONS.length;
+
+  // ------------------------------------------------------------ comptes à rebours
+  (function () {
+    var t = new Date(); t.setHours(0, 0, 0, 0);
+    function cd(d) { var n = Math.round((d - t) / 86400000); return n > 0 ? 'J-' + n : (n === 0 ? 'aujourd’hui' : 'passé'); }
+    document.getElementById('cd-open').innerHTML = 'Soft opening · <b>' + cd(new Date(2026, 10, 20)) + '</b>';
+    document.getElementById('cd-vip').innerHTML = 'Soirée VIP · <b>' + cd(new Date(2026, 11, 12)) + '</b>';
+  })();
+
+  // ================================================================ PERSISTANCE
+  var DOC_PATH = 'config/donnees';
+  var LOCAL_KEY = 'yemkaf-donnees-v2';
+  var store = { mode: 'local', ref: null, canWrite: true, saving: false, pending: false, timer: null };
+
+  function setSave(text, cls) { var p = document.getElementById('save-pill'); p.textContent = text; p.className = 'pill ' + (cls || 'info'); }
+  function explainSave() {
+    var e = document.getElementById('save-explain');
+    if (store.mode === 'db') e.textContent = store.canWrite
+      ? 'Vos modifications sont enregistrées pour toute l’équipe qui a accès à cette page. Elles recalculent tout le simulateur.'
+      : 'Vous consultez les chiffres de l’équipe en lecture seule. Vous pouvez tester des valeurs, mais rien ne sera enregistré.';
+    else e.textContent = 'Vos modifications sont enregistrées dans ce navigateur. Sur la page publiée, elles sont partagées avec toute l’équipe.';
+  }
+  function loadLocal() { try { var s = localStorage.getItem(LOCAL_KEY); return s ? JSON.parse(s) : null; } catch (e) { return null; } }
+  function saveLocal() { try { localStorage.setItem(LOCAL_KEY, JSON.stringify(donnees)); return true; } catch (e) { return false; } }
+  function payload() { var d = clone(donnees); d.majLe = new Date().toISOString(); return d; }
+
+  function scheduleSave() {
+    if (!store.canWrite) return;
+    clearTimeout(store.timer);
+    setSave('Modifications en cours…', 'warn');
+    store.timer = setTimeout(function () { store.timer = null; flushSave(); }, 900);
+  }
+  function flushSave() {
+    if (store.mode !== 'db') {
+      var ok = saveLocal();
+      setSave(ok ? 'Enregistré dans ce navigateur' : 'Non enregistré (stockage bloqué)', ok ? 'ok' : 'bad');
+      return;
+    }
+    if (store.saving) { store.pending = true; return; }
+    store.saving = true;
+    store.ref.set(payload()).then(function () {
+      store.saving = false;
+      setSave('Enregistré pour l’équipe', 'ok');
+      if (store.pending) { store.pending = false; flushSave(); }
+    }, function (err) {
+      store.saving = false;
+      var code = err && err.code;
+      if (code === 'invalid_argument') { store.canWrite = false; applyReadOnly(); setSave('Lecture seule', 'warn'); }
+      else if (code === 'unavailable') { setTimeout(flushSave, 1500 + Math.random() * 1500); }
+      else if (code === 'quota_exceeded') { setSave('Espace de stockage plein', 'bad'); }
+      else setSave('Échec de l’enregistrement', 'bad');
+    });
+  }
+
+  function applyReadOnly() {
+    var ed = document.getElementById('donnees');
+    ed.classList.toggle('readonly', !store.canWrite);
+    ed.querySelectorAll('#ed-fixes input, #ed-fixes select, #ed-ponct input, #ed-ponct select, #ed-prix input, [data-act]').forEach(function (el) {
+      if (el.dataset && el.dataset.act === 'copy-json') return;
+      el.disabled = !store.canWrite;
+    });
+    explainSave();
+  }
+
+  function connectShared() {
+    if (!window.claude || typeof window.claude.use !== 'function') return;
+    window.claude.use('db').then(function (db) {
+      if (!db) return;
+      store.ref = db.doc(DOC_PATH);
+      store.mode = 'db';
+      setSave('Connexion aux chiffres partagés…', 'warn');
+      explainSave(); renderSave();
+      var loadingTimer = setTimeout(function () { setSave('Chiffres partagés injoignables pour l’instant', 'warn'); }, 10000);
+      window.claude.use('user').then(function (user) {
+        if (!user || typeof user.can !== 'function') return;
+        user.can('data.write').then(function (ok) { if (ok === false) { store.canWrite = false; applyReadOnly(); setSave('Lecture seule', 'warn'); } });
+      });
+      store.ref.onSnapshot(function (snap) {
+        if (!snap.metadata.fromCache) clearTimeout(loadingTimer);
+        if (!snap.exists) {
+          if (!snap.metadata.fromCache) setSave(store.canWrite ? 'Pas encore de chiffres partagés : votre première modification les crée' : 'Lecture seule', store.canWrite ? 'info' : 'warn');
+          return;
+        }
+        var body = snap.data();
+        var incoming = M.normaliserDonnees(body);
+        if (JSON.stringify(incoming) !== JSON.stringify(donnees) && !snap.metadata.hasPendingWrites && !store.timer && !store.saving) {
+          donnees = incoming; renderEditor(true); schedule();
+        }
+        if (!snap.metadata.hasPendingWrites && !snap.metadata.fromCache) {
+          var maj = body.majLe ? new Date(body.majLe) : null;
+          var quand = maj && !isNaN(maj) ? ' · ' + maj.toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+          setSave(store.canWrite ? 'Enregistré pour l’équipe' + quand : 'Lecture seule' + quand, store.canWrite ? 'ok' : 'warn');
+        }
+      }, function (err) {
+        clearTimeout(loadingTimer);
+        store.mode = 'local';
+        setSave(err && err.code === 'revoked' ? 'Accès aux chiffres partagés retiré' : 'Chiffres partagés indisponibles', 'warn');
+        explainSave(); renderSave();
+      });
+    }, function () { /* hors visionneuse : mode local */ });
+  }
+
+  // ================================================================ LEVIERS
+  var LEVIERS_UI = [
+    { g: 'Boutique' },
+    { cle: 'tassesJour', label: 'Tasses par jour', min: 30, max: 240, step: 1, fmt: function (v) { return fInt.format(v); }, foot: 'Objectif : 135' },
+    { cle: 'tauxPatisserie', label: 'Pâtisseries pour 100 tasses', min: 0, max: 0.8, step: 0.01, fmt: function (v) { return fInt.format(v * 100); }, foot: 'Objectif : 41 (55 pour 135 tasses)' },
+    { cle: 'snackingJour', label: 'Snacking et formules midi par jour', min: 0, max: 80, step: 1, fmt: function (v) { return fInt.format(v); }, foot: 'Objectif : 28' },
+    { cle: 'debutSnacking', label: 'Lancement du snacking salé', type: 'seg', options: [[1, 'M1'], [2, 'M2'], [3, 'M3']], foot: 'Prévu : dès le deuxième mois' },
+    { cle: 'sachetsJour', label: 'Sachets vendus en boutique par jour', min: 0, max: 25, step: 1, fmt: function (v) { return fInt.format(v); }, foot: 'Objectif : 6' },
+    { g: 'Coffrets et e-commerce' },
+    { cle: 'coffrets6Mois', label: 'Coffrets cadeaux sur 6 mois', min: 0, max: 600, step: 10, fmt: function (v) { return fInt.format(v); }, foot: 'Objectif : 210 · 40 % avant Noël' },
+    { cle: 'colisMois', label: 'Commandes web par mois', min: 0, max: 400, step: 5, fmt: function (v) { return fInt.format(v); }, foot: 'Objectif : 120' },
+    { cle: 'panierWebTtc', label: 'Panier moyen web TTC', min: 25, max: 90, step: 0.1, fmt: function (v) { return fEur2.format(v); }, foot: 'Objectif : 49,10 €' },
+    { g: 'Pros (B2B)' },
+    { cle: 'kgB2BMois', label: 'Café livré aux pros par mois', min: 0, max: 300, step: 5, fmt: function (v) { return fInt.format(v) + ' kg'; }, foot: 'Objectif : 60 kg' },
+    { cle: 'partVertB2B', label: 'Part de café vert dans le B2B', min: 0, max: 1, step: 0.05, fmt: function (v) { return fInt.format(v * 100) + ' %'; }, foot: 'Hypothèse : 50 %' },
+    { g: 'Loyer et stock' },
+    { cle: 'moisFranchise', label: 'Franchise de loyer obtenue', min: 0, max: 3, step: 1, fmt: function (v) { return v + ' mois'; }, foot: 'S’applique à la ligne « Loyer » de vos charges' },
+    { cle: 'semainesStock', label: 'Stock de sécurité en café vert', min: 0, max: 16, step: 1, fmt: function (v) { return v + ' sem.'; }, foot: '', footId: 'foot-stock' }
+  ];
+
+  function buildLeviers() {
+    var pane = document.getElementById('pane-leviers');
+    pane.innerHTML = LEVIERS_UI.map(function (l) {
+      if (l.g) return '<h3 class="group-title">' + esc(l.g) + '</h3>';
+      if (l.type === 'seg') {
+        return '<div class="lever"><div class="lever-head"><span class="lbl" id="lbl-' + l.cle + '">' + esc(l.label) + '</span></div>' +
+          '<div class="seg" role="group" aria-labelledby="lbl-' + l.cle + '">' +
+          l.options.map(function (o) { return '<button type="button" id="l-' + l.cle + '-' + o[0] + '" data-cle="' + l.cle + '" data-val="' + o[0] + '">' + esc(o[1]) + '</button>'; }).join('') +
+          '</div><div class="lever-foot">' + esc(l.foot) + '</div></div>';
+      }
+      return '<div class="lever"><div class="lever-head"><label for="l-' + l.cle + '">' + esc(l.label) + '</label><output id="o-' + l.cle + '" for="l-' + l.cle + '"></output></div>' +
+        '<input type="range" id="l-' + l.cle + '" data-cle="' + l.cle + '" min="' + l.min + '" max="' + l.max + '" step="' + l.step + '">' +
+        '<div class="lever-foot"' + (l.footId ? ' id="' + l.footId + '"' : '') + '>' + esc(l.foot) + '</div></div>';
+    }).join('');
+    pane.addEventListener('input', function (e) { var t = e.target; if (t.type !== 'range') return; leviers[t.dataset.cle] = parseFloat(t.value); schedule(); });
+    pane.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-cle]'); if (!b) return;
+      var v = b.dataset.val; leviers[b.dataset.cle] = isNaN(Number(v)) ? v : Number(v); schedule();
+    });
+  }
+  function syncLeviers() {
+    LEVIERS_UI.forEach(function (l) {
+      if (l.g) return;
+      if (l.type === 'seg') { l.options.forEach(function (o) { document.getElementById('l-' + l.cle + '-' + o[0]).setAttribute('aria-pressed', String(leviers[l.cle] === o[0])); }); return; }
+      var input = document.getElementById('l-' + l.cle);
+      if (String(input.value) !== String(leviers[l.cle])) input.value = leviers[l.cle];
+      document.getElementById('o-' + l.cle).textContent = l.fmt(leviers[l.cle]);
+    });
+  }
+
+  // ================================================================ CORRECTIONS
+  function buildCorrections() {
+    var list = document.getElementById('corr-list');
+    list.innerHTML = M.CORRECTIONS.map(function (c) {
+      return '<div class="corr"><div class="corr-head"><input type="checkbox" id="c-' + c.cle + '" data-cle="' + c.cle + '">' +
+        '<label for="c-' + c.cle + '">' + esc(c.titre) + '</label><span class="corr-impact" id="ci-' + c.cle + '"></span></div>' +
+        '<details><summary>Pourquoi</summary><p>' + esc(c.resume) + '</p><p><b>Chiffrage :</b> ' + esc(c.detail) + '</p></details></div>';
+    }).join('');
+    list.addEventListener('change', function (e) { if (e.target.type !== 'checkbox') return; actives[e.target.dataset.cle] = e.target.checked; schedule(); });
+    document.getElementById('corr-all').addEventListener('click', function () { setAll(true); });
+    document.getElementById('corr-none').addEventListener('click', function () { setAll(false); });
+  }
+  function setAll(on) { M.CORRECTIONS.forEach(function (c) { actives[c.cle] = on; }); schedule(); }
+  function nbActives() { return M.CORRECTIONS.filter(function (c) { return actives[c.cle]; }).length; }
+
+  function selectSideTab(which) {
+    var lev = which === 'leviers';
+    document.getElementById('tab-leviers').setAttribute('aria-selected', String(lev));
+    document.getElementById('tab-corr').setAttribute('aria-selected', String(!lev));
+    document.getElementById('pane-leviers').hidden = !lev;
+    document.getElementById('pane-corr').hidden = lev;
+  }
+  document.getElementById('tab-leviers').addEventListener('click', function () { selectSideTab('leviers'); });
+  document.getElementById('tab-corr').addEventListener('click', function () { selectSideTab('corr'); });
+  document.getElementById('sc-plan').addEventListener('click', function () { setAll(false); });
+  document.getElementById('sc-real').addEventListener('click', function () { setAll(true); selectSideTab('corr'); });
+
+  // ================================================================ ÉDITEUR « VOS CHIFFRES »
+  var MOIS_OPT = [1, 2, 3, 4, 5, 6];
+  function optMois(sel) { return MOIS_OPT.map(function (m) { return '<option value="' + m + '"' + (m === sel ? ' selected' : '') + '>M' + m + '</option>'; }).join(''); }
+  function uid(prefix) { return prefix + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+
+  function renderFixes() {
+    var rows = donnees.chargesFixes.map(function (c, i) {
+      return '<tr data-i="' + i + '">' +
+        '<td><input class="name" id="cf-nom-' + c.id + '" data-k="nom" value="' + esc(c.nom) + '" aria-label="Libellé"></td>' +
+        '<td><select id="cf-cat-' + c.id + '" data-k="categorie" aria-label="Catégorie">' + CATEGORIES.map(function (k) { return '<option' + (k === c.categorie ? ' selected' : '') + '>' + k + '</option>'; }).join('') + '</select></td>' +
+        '<td><input type="number" id="cf-mt-' + c.id + '" data-k="montant" min="0" step="10" value="' + c.montant + '" aria-label="Montant mensuel HT"></td>' +
+        '<td><select id="cf-de-' + c.id + '" data-k="debut" aria-label="Premier mois">' + optMois(c.debut) + '</select></td>' +
+        '<td><select id="cf-a-' + c.id + '" data-k="fin" aria-label="Dernier mois">' + optMois(c.fin) + '</select></td>' +
+        '<td class="calc num" id="cf-tot-' + c.id + '"></td>' +
+        '<td><button type="button" class="del" data-act="del-fixe" aria-label="Supprimer ' + esc(c.nom) + '">×</button></td></tr>';
+    }).join('');
+    var sugg = M.SUGGESTIONS.filter(function (s) { return s.type === 'fixe' && !donnees.chargesFixes.some(function (c) { return c.nom === s.nom; }); });
+    document.getElementById('ed-fixes').innerHTML =
+      '<p class="hint">Montants HT par mois. « De » et « à » fixent les mois concernés (M1 = 20 nov.–19 déc.). Pour une arrivée ou un départ en cours de période, changez le mois « De » ou « À ».</p>' +
+      '<div class="table-scroll"><table class="ed-table" id="t-fixes"><thead><tr><th>Charge</th><th>Catégorie</th><th>€ HT / mois</th><th>De</th><th>À</th><th>Total 6 mois</th><th></th></tr></thead><tbody>' + rows +
+      '</tbody><tfoot><tr><td colspan="5">Total des charges fixes sur 6 mois</td><td class="num" id="cf-total"></td><td></td></tr></tfoot></table></div>' +
+      '<div class="row-actions"><button type="button" class="btn primary" data-act="add-fixe">Ajouter une charge</button></div>' +
+      (sugg.length ? '<div><div class="eyebrow" style="margin-bottom:8px">Souvent oubliées · cliquez pour ajouter (montants estimés)</div><div class="suggest">' +
+        sugg.map(function (s) { return '<button type="button" data-act="sugg" data-nom="' + esc(s.nom) + '" title="' + esc(s.note) + '">+ ' + esc(s.nom) + ' · ' + (s.montant ? eur(s.montant) + '/mois' : 'à renseigner') + '</button>'; }).join('') + '</div></div>' : '');
+    updateFixesTotals();
+  }
+  function updateFixesTotals() {
+    var total = 0;
+    donnees.chargesFixes.forEach(function (c) {
+      var t = c.montant * Math.max(0, c.fin - c.debut + 1); total += t;
+      var el = document.getElementById('cf-tot-' + c.id); if (el) el.textContent = eur(t);
+    });
+    var el = document.getElementById('cf-total'); if (el) el.textContent = eur(total) + (leviers.moisFranchise ? ' (hors franchise)' : '');
+  }
+
+  function renderPonct() {
+    var rows = donnees.depensesPonctuelles.map(function (c, i) {
+      return '<tr data-i="' + i + '"><td><input class="name" id="dp-nom-' + c.id + '" data-k="nom" value="' + esc(c.nom) + '" aria-label="Libellé"></td>' +
+        '<td><input type="number" id="dp-mt-' + c.id + '" data-k="montant" min="0" step="10" value="' + c.montant + '" aria-label="Montant HT"></td>' +
+        '<td><select id="dp-m-' + c.id + '" data-k="mois" aria-label="Mois">' + optMois(c.mois) + '</select></td>' +
+        '<td><button type="button" class="del" data-act="del-ponct" aria-label="Supprimer ' + esc(c.nom) + '">×</button></td></tr>';
+    }).join('');
+    var total = donnees.depensesPonctuelles.reduce(function (a, c) { return a + c.montant; }, 0);
+    var sugg = M.SUGGESTIONS.filter(function (s) { return s.type === 'ponctuelle' && !donnees.depensesPonctuelles.some(function (c) { return c.nom === s.nom; }); });
+    document.getElementById('ed-ponct').innerHTML =
+      '<p class="hint">Achats ou frais qui ne tombent qu’une fois : équipement, stand, formation. Ils comptent dans le résultat du mois choisi. Le stock de sécurité de café vert se règle dans les leviers.</p>' +
+      (rows ? '<div class="table-scroll"><table class="ed-table" id="t-ponct"><thead><tr><th>Dépense</th><th>€ HT</th><th>Mois</th><th></th></tr></thead><tbody>' + rows +
+        '</tbody><tfoot><tr><td>Total</td><td class="num" id="dp-total">' + eur(total) + '</td><td colspan="2"></td></tr></tfoot></table></div>'
+        : '<p class="muted">Aucune dépense ponctuelle pour l’instant.</p>') +
+      '<div class="row-actions"><button type="button" class="btn primary" data-act="add-ponct">Ajouter une dépense</button></div>' +
+      (sugg.length ? '<div><div class="eyebrow" style="margin-bottom:8px">Suggestions (montants estimés)</div><div class="suggest">' +
+        sugg.map(function (s) { return '<button type="button" data-act="sugg-p" data-nom="' + esc(s.nom) + '" title="' + esc(s.note) + '">+ ' + esc(s.nom) + ' · ' + eur(s.montant) + ' en M' + s.mois + '</button>'; }).join('') + '</div></div>' : '');
+  }
+
+  function pv() { return donnees.parametres.prixVertKg; }
+  function margeTxt(ht, cout) { var m = ht - cout; return fEur2.format(m) + ' · ' + (ht > 0 ? fDec1.format(m / ht * 100) : '0') + ' %'; }
+  function renderPrix() {
+    document.getElementById('ed-prix').innerHTML =
+      '<p class="hint">Prix de vente TTC et part des ventes de chaque produit dans son canal (ramenées à 100 % si besoin). Pour les produits à base de café, le coût se compose du <b>coût hors café</b> (gobelet, lait, épices, emballage) et des <b>grammes de café</b>, valorisés au prix du vert réglé dans « Paramètres » (' + eur(pv()) + ' le kilo).</p>' +
+      CANAUX_PRIX.map(function (ch) {
+        var rows = donnees.catalogue[ch.cle].map(function (l, i) {
+          var ht = l.ttc / (1 + ch.tva), ct = M.coutTotal(l, pv());
+          return '<tr data-i="' + i + '"><td><input class="name" id="px-' + ch.cle + '-nom-' + l.id + '" data-k="nom" value="' + esc(l.nom) + '" aria-label="Produit"></td>' +
+            '<td><input type="number" id="px-' + ch.cle + '-ttc-' + l.id + '" data-k="ttc" min="0" step="0.1" value="' + l.ttc + '" aria-label="Prix TTC"></td>' +
+            '<td><input type="number" id="px-' + ch.cle + '-cout-' + l.id + '" data-k="cout" min="0" step="0.01" value="' + l.cout + '" aria-label="' + (ch.gram ? 'Coût hors café HT' : 'Coût HT') + '"></td>' +
+            (ch.gram ? '<td><input type="number" id="px-' + ch.cle + '-g-' + l.id + '" data-k="g" min="0" step="1" value="' + (l.g || 0) + '" aria-label="Grammes de café"></td>' +
+              '<td class="calc num" id="px-' + ch.cle + '-ct-' + l.id + '">' + fEur2.format(ct) + '</td>' : '') +
+            '<td>' + (l.parBoisson ? '<span class="muted small">par boisson</span>' : '<input type="number" id="px-' + ch.cle + '-mix-' + l.id + '" data-k="mix" min="0" step="1" value="' + l.mix + '" aria-label="Part des ventes en %">') + '</td>' +
+            '<td class="calc num" id="px-' + ch.cle + '-m-' + l.id + '">' + margeTxt(ht, ct) + '</td>' +
+            '<td><button type="button" class="del" data-act="del-prix" aria-label="Supprimer ' + esc(l.nom) + '">×</button></td></tr>';
+        }).join('');
+        return '<div class="channel" data-canal="' + ch.cle + '"><h3>' + esc(ch.nom) + ' <span class="mixsum" id="mix-' + ch.cle + '"></span></h3>' +
+          '<div class="table-scroll"><table class="ed-table"><thead><tr><th>Produit</th><th>Prix TTC</th><th>' + (ch.gram ? 'Coût hors café' : 'Coût HT') + '</th>' + (ch.gram ? '<th>Café (g)</th><th>Coût total</th>' : '') + '<th>Part %</th><th>Marge HT</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+          '<div class="row-actions"><button type="button" class="btn" data-act="add-prix">Ajouter un produit</button></div></div>';
+      }).join('');
+    updateMixSums();
+  }
+
+  var B2B_UI = [['vert', 'Café vert pour torréfacteurs', 1], ['torrefie', 'Café torréfié pour coffee shops, hôtels et restaurants', 1 / M.RENDEMENT]];
+  function renderB2B() {
+    document.getElementById('ed-b2b').innerHTML =
+      '<p class="hint">Prix HT par kilo. Le coût du kilo vendu vaut le prix du vert (' + eur(pv()) + ') pour le café vert, et le prix du vert ÷ 0,8 pour le torréfié (freinte), plus les frais hors café (sacs, transport, torréfaction à façon). Avec un vert à 60 € le kilo, chaque palier garde au moins 14 % de marge.</p>' +
+      B2B_UI.map(function (b) {
+        var rows = donnees.b2b[b[0]].map(function (l, i) {
+          var cout = pv() * b[2] + l.extra;
+          return '<tr data-i="' + i + '"><td><input class="name" id="b2-' + b[0] + '-nom-' + l.id + '" data-k="nom" value="' + esc(l.nom) + '" aria-label="Formule"></td>' +
+            '<td><input type="number" id="b2-' + b[0] + '-prix-' + l.id + '" data-k="prix" min="0" step="0.5" value="' + l.prix + '" aria-label="Prix HT par kilo"></td>' +
+            '<td><input type="number" id="b2-' + b[0] + '-extra-' + l.id + '" data-k="extra" min="0" step="0.1" value="' + l.extra + '" aria-label="Frais hors café par kilo"></td>' +
+            '<td><input type="number" id="b2-' + b[0] + '-mix-' + l.id + '" data-k="mix" min="0" step="1" value="' + l.mix + '" aria-label="Part des volumes en %"></td>' +
+            '<td class="calc num" id="b2-' + b[0] + '-c-' + l.id + '">' + fEur2.format(cout) + '</td>' +
+            '<td class="calc num" id="b2-' + b[0] + '-m-' + l.id + '">' + margeTxt(l.prix, cout) + '</td>' +
+            '<td><button type="button" class="del" data-act="del-b2b" aria-label="Supprimer ' + esc(l.nom) + '">×</button></td></tr>';
+        }).join('');
+        return '<div class="channel" data-b2b="' + b[0] + '"><h3>' + esc(b[1]) + '</h3><div class="table-scroll"><table class="ed-table"><thead><tr><th>Formule</th><th>Prix HT/kg</th><th>Frais hors café/kg</th><th>Part %</th><th>Coût/kg</th><th>Marge</th><th></th></tr></thead><tbody>' + rows +
+          '</tbody></table></div><div class="row-actions"><button type="button" class="btn" data-act="add-b2b">Ajouter une formule</button></div></div>';
+      }).join('');
+  }
+
+  var PARAMS_UI = [
+    { g: 'Café vert' },
+    { k: 'prixVertKg', label: 'Prix du café vert, tout compris', unite: '€ HT/kg', step: 0.5, note: 'Entre 50 et 60 € selon les lots. Chaque 5 € par kilo coûte environ 5 400 € de résultat sur 6 mois.' },
+    { g: 'Paiements' },
+    { k: 'sumupAbonnement', label: 'SumUp : abonnement mensuel', unite: '€ HT', step: 1, note: 'Contrat actuel : 90 € par mois.' },
+    { k: 'sumupTaux', label: 'SumUp : commission par paiement', unite: '%', step: 0.01, pct: true, note: 'Contrat actuel : 0,49 % du montant.' },
+    { k: 'partCarte', label: 'Part des ventes boutique payées par carte', unite: '%', step: 1, pct: true, note: 'Le reste en espèces.' },
+    { k: 'mollieTaux', label: 'Mollie : commission par paiement en ligne', unite: '%', step: 0.01, pct: true, note: 'Environ 1,4 % pour une carte française (grille publique de Mollie).' },
+    { k: 'mollieFixe', label: 'Mollie : frais fixes par paiement', unite: '€', step: 0.01, note: 'Environ 0,25 €.' },
+    { k: 'mollieOffre', label: 'Mollie : offre 0 % jusqu’au 31 décembre', type: 'check', note: 'Pour les nouveaux comptes, dans la limite de 50 000 €.' },
+    { g: 'Trésorerie' },
+    { k: 'tresorerieDepart', label: 'Solde Qonto au 20 novembre', unite: '€', step: 500, note: 'Solde au début de la période.' },
+    { k: 'mensualitesEmprunt', label: 'Mensualités d’emprunt ou de leasing', unite: '€ / mois', step: 50, note: 'Aucun crédit en cours.' }
+  ];
+  function renderParam() {
+    var pa = donnees.parametres;
+    document.getElementById('ed-param').innerHTML =
+      '<p class="hint">Vos conditions réelles. Elles s’appliquent à tous les scénarios et sont enregistrées avec le reste de vos chiffres.</p>' +
+      '<div class="param-list">' + PARAMS_UI.map(function (x) {
+        if (x.g) return '<div class="param-group">' + esc(x.g) + '</div>';
+        var champ = x.type === 'check'
+          ? '<input type="checkbox" id="pa-' + x.k + '" data-p="' + x.k + '"' + (pa[x.k] ? ' checked' : '') + '>'
+          : '<input type="number" id="pa-' + x.k + '" data-p="' + x.k + '"' + (x.pct ? ' data-pct="1"' : '') + ' step="' + x.step + '" value="' + (x.pct ? Math.round(pa[x.k] * 10000) / 100 : pa[x.k]) + '">';
+        return '<div class="param-row"><label for="pa-' + x.k + '">' + esc(x.label) + '</label><div>' + champ + (x.unite ? ' <span class="small muted">' + esc(x.unite) + '</span>' : '') + '</div><div class="note">' + esc(x.note) + '</div></div>';
+      }).join('') + '</div>';
+  }
+
+
+  function updateMixSums() {
+    CANAUX_PRIX.forEach(function (ch) {
+      var s = donnees.catalogue[ch.cle].filter(function (l) { return !l.parBoisson; }).reduce(function (a, l) { return a + l.mix; }, 0);
+      var el = document.getElementById('mix-' + ch.cle); if (!el) return;
+      el.textContent = 'Parts : ' + fInt.format(s) + ' %' + (Math.abs(s - 100) > 0.5 ? ' (ramenées à 100 %)' : '');
+      el.style.color = Math.abs(s - 100) > 0.5 ? 'var(--warn)' : 'var(--good)';
+    });
+  }
+
+  function renderSave() {
+    document.getElementById('ed-save').innerHTML =
+      '<p class="hint">' + (store.mode === 'db'
+        ? 'Les données de cette page sont partagées entre toutes les personnes qui ont accès au simulateur.'
+        : 'Les données sont gardées dans ce navigateur. Pour les transférer vers la page partagée, copiez-les ici puis importez-les là-bas.') + '</p>' +
+      '<div class="row-actions"><button type="button" class="btn primary" data-act="export-csv">Exporter le compte de résultat (Excel)</button>' +
+      '<button type="button" class="btn" data-act="export-json">Exporter toutes les données (JSON)</button><span id="export-msg" class="small"></span></div>' +
+      '<p class="hint">Le fichier Excel (CSV) reprend le scénario affiché : compte de résultat mois par mois, chaque charge, les volumes et le café vert. Le fichier JSON contient toutes vos données et se réimporte ci-dessous.</p>' +
+      '<div class="row-actions"><button type="button" class="btn" data-act="copy-json">Copier les données</button>' +
+      '<button type="button" class="btn" data-act="ask-reset">Revenir aux chiffres de départ</button></div>' +
+      '<div id="reset-confirm"></div>' +
+      '<label for="json-in" class="small muted">Coller des données copiées depuis une autre version (fichier local ou page publiée), puis importer :</label>' +
+      '<textarea id="json-in" spellcheck="false" placeholder="{ &quot;version&quot;: 3, … }"></textarea>' +
+      '<div class="row-actions"><button type="button" class="btn primary" data-act="import-json">Importer</button><span id="import-msg" class="small"></span></div>';
+    applyReadOnly();
+  }
+
+  function renderEditor(restoreFocus) {
+    var active = document.activeElement, focusId = active && active.id, selStart = null;
+    try { selStart = active && typeof active.selectionStart === 'number' ? active.selectionStart : null; } catch (e) { selStart = null; }
+    renderFixes(); renderPonct(); renderPrix(); renderB2B(); renderParam(); renderSave();
+    if (restoreFocus && focusId) {
+      var el = document.getElementById(focusId);
+      if (el) { el.focus(); try { if (selStart !== null) el.setSelectionRange(selStart, selStart); } catch (e) { /* champ numérique */ } }
+    }
+  }
+
+  // Saisie : met à jour les données sans redessiner l'éditeur (le curseur reste en place)
+  function onEdit(e) {
+    var t = e.target;
+    if (t.dataset && t.dataset.p) {
+      var key = t.dataset.p, val = t.type === 'checkbox' ? t.checked : (t.value === '' ? 0 : Number(t.value));
+      if (t.dataset.pct) val = val / 100;
+      donnees.parametres[key] = val;
+      if (key === 'prixVertKg') { renderPrix(); renderB2B(); }
+      scheduleSave(); schedule(); return;
+    }
+    var k = t.dataset && t.dataset.k; if (!k) return;
+    var tr = t.closest('tr'); if (!tr) return;
+    var i = Number(tr.dataset.i), v = t.type === 'number' ? (t.value === '' ? 0 : Number(t.value)) : t.value;
+    if (k === 'debut' || k === 'fin' || k === 'mois') v = Number(v);
+    var pane = t.closest('.tabpanel').id;
+    if (pane === 'ed-fixes') {
+      var c = donnees.chargesFixes[i]; c[k] = v;
+      if (k === 'debut' && c.fin < c.debut) { c.fin = c.debut; renderFixes(); }
+      if (k === 'fin' && c.fin < c.debut) { c.debut = c.fin; renderFixes(); }
+      updateFixesTotals();
+    } else if (pane === 'ed-ponct') {
+      donnees.depensesPonctuelles[i][k] = v;
+      var dt = document.getElementById('dp-total'); if (dt) dt.textContent = eur(donnees.depensesPonctuelles.reduce(function (a, x) { return a + x.montant; }, 0));
+    } else if (pane === 'ed-prix') {
+      var canal = t.closest('.channel').dataset.canal, ch = CANAUX_PRIX.filter(function (x) { return x.cle === canal; })[0];
+      var l = donnees.catalogue[canal][i]; l[k] = v;
+      var ht = l.ttc / (1 + ch.tva), ct = M.coutTotal(l, pv());
+      var cell = document.getElementById('px-' + canal + '-m-' + l.id); if (cell) cell.textContent = margeTxt(ht, ct);
+      var cc = document.getElementById('px-' + canal + '-ct-' + l.id); if (cc) cc.textContent = fEur2.format(ct);
+      updateMixSums();
+    } else if (pane === 'ed-b2b') {
+      var bk = t.closest('.channel').dataset.b2b, lb = donnees.b2b[bk][i]; lb[k] = v;
+      var coutKg = pv() * (bk === 'vert' ? 1 : 1 / M.RENDEMENT) + lb.extra;
+      var c1 = document.getElementById('b2-' + bk + '-c-' + lb.id); if (c1) c1.textContent = fEur2.format(coutKg);
+      var c2 = document.getElementById('b2-' + bk + '-m-' + lb.id); if (c2) c2.textContent = margeTxt(lb.prix, coutKg);
+    } else return;
+    scheduleSave(); schedule();
+  }
+  var ed = document.getElementById('donnees');
+  ed.addEventListener('input', function (e) { if (e.target.tagName !== 'SELECT' && e.target.type !== 'checkbox') onEdit(e); });
+  ed.addEventListener('change', function (e) { if (e.target.tagName === 'SELECT' || e.target.type === 'checkbox') onEdit(e); });
+
+  // Export : capacité « downloads » sur la page publiée, lien de téléchargement en local
+  function dateJour() { var d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+  function saveFile(filename, text, msgEl) {
+    function dire(ok, t) { if (msgEl) { msgEl.textContent = t; msgEl.style.color = ok ? 'var(--good)' : 'var(--bad)'; } }
+    function viaLien() {
+      try {
+        var blob = new Blob([text], { type: /\.csv$/.test(filename) ? 'text/csv;charset=utf-8' : 'application/json' });
+        var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename;
+        document.body.appendChild(a); a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+        dire(true, 'Fichier ' + filename + ' téléchargé.');
+      } catch (err) { dire(false, 'Téléchargement impossible ici : utilisez « Copier les données ».'); }
+    }
+    if (!window.claude || typeof window.claude.use !== 'function') { viaLien(); return; }
+    window.claude.use('downloads').then(function (dl) {
+      if (!dl) { dire(false, 'Téléchargement indisponible dans cette vue : utilisez « Copier les données ».'); return; }
+      dl.save({ filename: filename, data: text }).then(function () { dire(true, 'Fichier ' + filename + ' enregistré.'); }, function (err) {
+        var code = err && err.code;
+        if (code === 'declined') dire(false, 'Téléchargement annulé.');
+        else if (code === 'rate_limited') dire(false, 'Une fenêtre de téléchargement est déjà ouverte.');
+        else dire(false, 'Téléchargement indisponible : utilisez « Copier les données ».');
+      });
+    }, function () { dire(false, 'Téléchargement indisponible : utilisez « Copier les données ».'); });
+  }
+  function exporterCSV(msgEl) { if (lastR) saveFile('yemkaf-compte-de-resultat-' + dateJour() + '.csv', M.exportCSV(lastR), msgEl); }
+  document.getElementById('pl-export').addEventListener('click', function () { exporterCSV(document.getElementById('pl-export-msg')); });
+
+  ed.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
+    var act = b.dataset.act, tr = b.closest('tr'), i = tr ? Number(tr.dataset.i) : -1;
+    if (act === 'del-fixe') donnees.chargesFixes.splice(i, 1);
+    else if (act === 'add-fixe') donnees.chargesFixes.push({ id: uid('charge'), nom: 'Nouvelle charge', categorie: 'Autre', montant: 0, debut: 1, fin: 6 });
+    else if (act === 'sugg') { var s = M.SUGGESTIONS.filter(function (x) { return x.nom === b.dataset.nom; })[0]; donnees.chargesFixes.push({ id: uid('charge'), nom: s.nom, categorie: s.categorie, montant: s.montant, debut: 1, fin: 6 }); }
+    else if (act === 'del-ponct') donnees.depensesPonctuelles.splice(i, 1);
+    else if (act === 'add-ponct') donnees.depensesPonctuelles.push({ id: uid('ponct'), nom: 'Nouvelle dépense', montant: 0, mois: 1 });
+    else if (act === 'sugg-p') { var sp = M.SUGGESTIONS.filter(function (x) { return x.nom === b.dataset.nom; })[0]; donnees.depensesPonctuelles.push({ id: uid('ponct'), nom: sp.nom, montant: sp.montant, mois: sp.mois }); }
+    else if (act === 'del-prix') donnees.catalogue[b.closest('.channel').dataset.canal].splice(i, 1);
+    else if (act === 'add-prix') donnees.catalogue[b.closest('.channel').dataset.canal].push({ id: uid('produit'), nom: 'Nouveau produit', ttc: 0, cout: 0, mix: 0, g: 0 });
+    else if (act === 'del-b2b') donnees.b2b[b.closest('.channel').dataset.b2b].splice(i, 1);
+    else if (act === 'add-b2b') donnees.b2b[b.closest('.channel').dataset.b2b].push({ id: uid('formule'), nom: 'Nouvelle formule', prix: 0, extra: 0, mix: 0 });
+    else if (act === 'export-csv') { exporterCSV(document.getElementById('export-msg')); return; }
+    else if (act === 'export-json') { saveFile('yemkaf-donnees-' + dateJour() + '.json', JSON.stringify(payload(), null, 2), document.getElementById('export-msg')); return; }
+    else if (act === 'copy-json') {
+      var txt = JSON.stringify(payload(), null, 2), ta = document.getElementById('json-in'), msg = document.getElementById('import-msg');
+      var fallback = function () { ta.value = txt; ta.focus(); ta.select(); msg.textContent = 'Texte sélectionné : copiez-le avec Ctrl+C ou Cmd+C.'; };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { msg.textContent = 'Données copiées.'; }, fallback);
+      else fallback();
+      return;
+    }
+    else if (act === 'ask-reset') {
+      document.getElementById('reset-confirm').innerHTML = '<div class="confirm">Remplacer toutes les charges, dépenses, prix et paramètres par les chiffres de départ' + (store.mode === 'db' ? ', pour toute l’équipe' : '') + ' ? <button type="button" class="btn primary" data-act="do-reset">Oui, remplacer</button><button type="button" class="btn" data-act="cancel-reset">Annuler</button></div>';
+      return;
+    }
+    else if (act === 'cancel-reset') { document.getElementById('reset-confirm').innerHTML = ''; return; }
+    else if (act === 'do-reset') donnees = M.normaliserDonnees(M.DONNEES_DEFAUT);
+    else if (act === 'import-json') {
+      var m2 = document.getElementById('import-msg');
+      try { donnees = M.normaliserDonnees(JSON.parse(document.getElementById('json-in').value)); }
+      catch (err) { m2.textContent = 'Texte illisible : collez le bloc complet copié avec « Copier les données ».'; m2.style.color = 'var(--bad)'; return; }
+    }
+    else return;
+    renderEditor(false); scheduleSave(); schedule();
+    if (act === 'import-json') { var m3 = document.getElementById('import-msg'); m3.textContent = 'Données importées.'; m3.style.color = 'var(--good)'; }
+  });
+
+  document.getElementById('ed-tabs').addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-pane]'); if (!b) return;
+    document.querySelectorAll('#ed-tabs button').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+    ['ed-fixes', 'ed-ponct', 'ed-prix', 'ed-b2b', 'ed-param', 'ed-save'].forEach(function (id) { document.getElementById(id).hidden = id !== b.dataset.pane; });
+  });
+
+  // ================================================================ RENDU
+  var pending = false;
+  function schedule() { if (pending) return; pending = true; requestAnimationFrame(function () { pending = false; render(); }); }
+  function tile(label, value, sub) { return '<div class="tile"><div class="label">' + label + '</div><div class="value">' + value + '</div><div class="sub">' + sub + '</div></div>'; }
+  function deltaSpan(v, up) {
+    if (Math.abs(v) < 0.5) return '<span class="delta">identique au plan</span>';
+    return '<span class="delta ' + ((up ? v > 0 : v < 0) ? 'up' : 'down') + '">' + signed(v) + '</span> vs plan';
+  }
+
+  function render() {
+    var r = M.simuler(leviers, actives, donnees);
+    var plan = M.simuler(leviers, {}, donnees);
+    var t = r.totaux, n = nbActives();
+
+    document.getElementById('sc-plan').setAttribute('aria-pressed', String(n === 0));
+    document.getElementById('sc-real').setAttribute('aria-pressed', String(n === NB_CORR));
+    var pill = document.getElementById('state-pill');
+    pill.textContent = n === 0 ? 'Plan : objectifs atteints dès l’ouverture' : (n === NB_CORR ? 'Scénario prudent : ' + NB_CORR + ' hypothèses' : n + ' hypothèse' + (n > 1 ? 's' : '') + ' prudente' + (n > 1 ? 's' : '') + ' sur ' + NB_CORR);
+    pill.className = 'pill ' + (n === 0 ? 'warn' : 'ok');
+    document.getElementById('tab-corr-count').textContent = n + '/' + NB_CORR;
+
+    var pm = r.pointMort.tassesJour, marge = leviers.tassesJour > 0 ? 1 - pm / leviers.tassesJour : 0;
+    var drawdown = Math.max(0, r.parametres.tresorerieDepart - r.tresorerieMin);
+    var coussin = drawdown + r.pointMort.chargesFixesMois;
+    document.getElementById('kpis').innerHTML =
+      tile('Résultat d’exploitation · 6 mois', '<span class="' + (t.resultat < 0 ? 'neg' : '') + '">' + eur(t.resultat) + '</span>', deltaSpan(t.resultat - plan.totaux.resultat, true)) +
+      tile('Chiffre d’affaires HT · 6 mois', eur(t.caTotal), deltaSpan(t.caTotal - plan.totaux.caTotal, true)) +
+      tile('Marge brute', eur(t.margeBrute), pct(t.margeBrute / t.caTotal) + ' du chiffre d’affaires') +
+      tile('Point mort en régime', fInt.format(Math.ceil(pm)) + ' tasses/jour', marge >= 0 ? 'Marge de sécurité ' + fInt.format(marge * 100) + ' % sous vos ' + fInt.format(leviers.tassesJour) : 'Au-dessus de vos ' + fInt.format(leviers.tassesJour) + ' tasses') +
+      tile('Point bas de trésorerie', eur(r.tresorerieMin), 'en ' + r.moisTresorerieMin + ' · coussin conseillé : ' + eur(coussin));
+
+    document.getElementById('callout').innerHTML =
+      '<p><strong>En résumé.</strong> ' + (n === 0 ? 'Selon le plan' : (n === NB_CORR ? 'Dans le scénario prudent' : 'Avec ' + n + ' hypothèse' + (n > 1 ? 's' : '') + ' prudente' + (n > 1 ? 's' : ''))) + ', les six mois donnent ' + eur(t.caTotal) + ' de chiffre d’affaires et ' + eur(t.resultat) + ' de résultat d’exploitation. Les charges fixes s’élèvent à ' + eur(r.pointMort.chargesFixesMois) + ' par mois en rythme de croisière ; il faut vendre environ ' + fInt.format(Math.ceil(pm)) + ' tasses par jour pour les couvrir.</p>' +
+      '<p><strong>Trésorerie.</strong> En partant de ' + eur(r.parametres.tresorerieDepart) + ' sur Qonto, le point le plus bas est atteint en ' + r.moisTresorerieMin + ' (' + eur(r.tresorerieMin) + ') et la période se termine à ' + eur(r.tresorerieFin) + '. Coussin conseillé : le creux plus un mois de charges, soit ' + eur(coussin) + (r.tresorerieMin < r.pointMort.chargesFixesMois ? ' : <b>au point bas, il reste moins d’un mois de charges en caisse</b>.' : '.') + '</p>';
+
+    document.getElementById('hint-ca').textContent = 'Total ' + eur(t.caTotal) + ' HT · ' + fInt.format(t.quantites.tasses) + ' tasses';
+    var fs = document.getElementById('foot-stock');
+    if (fs) fs.textContent = r.achatStock > 0 ? eur(r.achatStock) + ' immobilisés dès M1 (' + fInt.format(r.pointMort.cafeVertKgMoisRegime) + ' kg de vert par mois en régime)' : 'Conseil : 8 semaines vu la situation à Mokha';
+
+    syncLeviers();
+    M.CORRECTIONS.forEach(function (c) {
+      document.getElementById('c-' + c.cle).checked = !!actives[c.cle];
+      var other = Object.assign({}, actives); other[c.cle] = !actives[c.cle];
+      var alt = M.simuler(leviers, other, donnees).totaux.resultat;
+      var effet = actives[c.cle] ? t.resultat - alt : alt - t.resultat;
+      var el = document.getElementById('ci-' + c.cle);
+      el.textContent = signed(effet); el.style.color = effet >= 0 ? 'var(--good)' : 'var(--bad)';
+    });
+    updateFixesTotals();
+    renderTables(r);
+    renderMarges();
+    renderCharts(r, plan);
+  }
+
+  function row(cls, label, values, opts) {
+    opts = opts || {};
+    return '<tr class="' + cls + '"><td>' + label + '</td>' + values.map(function (v) {
+      var c = opts.colorSign && v < -0.5 ? ' class="neg"' : '';
+      var txt = Math.abs(v) < 0.5 && !opts.fmt ? '—' : (opts.fmt ? opts.fmt(v) : eur(v));
+      return '<td' + c + '>' + txt + '</td>';
+    }).join('') + '</tr>';
+  }
+  function withTotal(arr) { return arr.concat([arr.reduce(function (a, b) { return a + b; }, 0)]); }
+
+  function renderTables(r) {
+    var ms = r.mois, css = getComputedStyle(document.documentElement);
+    var get = function (f) { return withTotal(ms.map(f)); };
+    var head = '<thead><tr><th></th>' + ms.map(function (m) { return '<th>' + m.id + '<br><span style="font-weight:400">' + m.periode + '</span></th>'; }).join('') + '<th>6 mois</th></tr></thead>';
+    var cats = [];
+    r.donnees.chargesFixes.forEach(function (c) { if (cats.indexOf(c.categorie) < 0) cats.push(c.categorie); });
+    var catRows = cats.map(function (cat) {
+      return row('', 'Charges · ' + esc(cat), get(function (m) { return -m.fixes.filter(function (l) { return l.categorie === cat; }).reduce(function (a, l) { return a + l.montant; }, 0); }));
+    }).join('');
+    document.getElementById('t-pl').innerHTML = head + '<tbody>' +
+      CANAUX_UI.map(function (c) { return row('minor', '<span class="sw" style="background:' + css.getPropertyValue(c.s).trim() + '"></span>' + c.nom, get(function (m) { return m.ca[c.cle]; })); }).join('') +
+      row('sum', 'Chiffre d’affaires HT', get(function (m) { return m.caTotal; })) +
+      row('', 'Coût matière et emballages', get(function (m) { return -(m.caTotal - m.margeBrute); })) +
+      row('key', 'Marge brute', get(function (m) { return m.margeBrute; })) +
+      row('minor', 'Taux de marge brute', ms.map(function (m) { return m.margeBrute / m.caTotal; }).concat([r.totaux.margeBrute / r.totaux.caTotal]), { fmt: pct }) +
+      row('', 'Commissions SumUp (abonnement compris)', get(function (m) { return -m.fraisSumUp; })) +
+      row('', 'Commissions Mollie', get(function (m) { return -m.fraisMollie; })) +
+      row('', 'Frais de port e-commerce', get(function (m) { return -m.fraisPort; })) +
+      row('', 'Invendus de vitrine', get(function (m) { return -m.pertes; })) +
+      catRows +
+      row('', 'Dépenses ponctuelles', get(function (m) { return -m.ponctuelles; })) +
+      row('sum', 'Résultat d’exploitation', get(function (m) { return m.resultat; }), { colorSign: true }) +
+      row('', 'Mensualités et stock de sécurité', get(function (m) { return -(m.resultat - m.flux); })) +
+      row('key', 'Trésorerie en fin de mois', ms.map(function (m) { return m.tresorerieFin; }).concat([r.tresorerieFin]), { colorSign: true }) +
+      '</tbody>';
+
+    var vHead = '<thead><tr><th></th>' + ms.map(function (m) { return '<th>' + m.id + '</th>'; }).join('') + '<th>6 mois</th></tr></thead>';
+    var q = function (k) { return get(function (m) { return m.quantites[k]; }); };
+    var n0 = function (v) { return fInt.format(v); };
+    document.getElementById('t-vol').innerHTML = vHead + '<tbody>' +
+      row('', 'Tasses servies', q('tasses'), { fmt: n0 }) + row('', 'Pâtisseries', q('patisseries'), { fmt: n0 }) +
+      row('', 'Snacking et formules', q('snacking'), { fmt: n0 }) + row('', 'Sachets boutique', q('sachets'), { fmt: n0 }) +
+      row('', 'Coffrets cadeaux', q('coffrets'), { fmt: n0 }) + row('', 'Colis web', q('colis'), { fmt: n0 }) +
+      row('', 'Café B2B (kg)', q('kgB2B'), { fmt: n0 }) +
+      row('sum', 'Café vert à acheter (kg)', get(function (m) { return m.cafeVertKg; }), { fmt: n0 }) +
+      row('minor', 'Budget café vert à ' + eur(r.parametres.prixVertKg) + '/kg', get(function (m) { return m.cafeVertKg * r.parametres.prixVertKg; })) + '</tbody>';
+  }
+
+  function renderMarges() {
+    var AR = { qishr: 'قشر', shai: 'شاي عدني' };
+    var html = '<thead><tr><th>Produit</th><th>Prix TTC</th><th>TVA</th><th>Prix HT</th><th>Coût total HT</th><th>Marge HT</th><th>Taux</th></tr></thead><tbody>';
+    CANAUX_PRIX.forEach(function (ch) {
+      html += '<tr><td colspan="7" style="background:var(--surface-2);font-weight:700">' + esc(ch.nom) + '</td></tr>';
+      donnees.catalogue[ch.cle].forEach(function (l) {
+        var ht = l.ttc / (1 + ch.tva), ct = M.coutTotal(l, pv()), m = ht - ct;
+        html += '<tr><td>' + esc(l.nom) + (AR[l.id] ? ' <span class="ar muted" lang="ar">' + AR[l.id] + '</span>' : '') + '</td><td>' + fEur2.format(l.ttc) + '</td><td>' + (ch.tva === 0.1 ? '10 %' : '5,5 %') +
+          '</td><td>' + fEur2.format(ht) + '</td><td>' + fEur2.format(ct) + '</td><td>' + fEur2.format(m) + '</td><td>' + (ht > 0 ? fDec1.format(m / ht * 100) + ' %' : '—') + '</td></tr>';
+      });
+    });
+    document.getElementById('t-grid').innerHTML = html + '</tbody>';
+  }
+
+  // ================================================================ GRAPHIQUES
+  var charts = {};
+  function tok() {
+    var cs = getComputedStyle(document.documentElement), g = function (n) { return cs.getPropertyValue(n).trim(); };
+    return { ink: g('--ink'), ink2: g('--ink-2'), muted: g('--muted'), line: g('--line'), axis: g('--axis'), surface: g('--surface'),
+      s: [g('--s1'), g('--s2'), g('--s3'), g('--s4'), g('--s5'), g('--s6')], pos: g('--pos'), neg: g('--neg'), font: g('--font-ui') };
+  }
+  function labelsMois() { return M.MOIS.map(function (m) { return [m.id, m.periode]; }); }
+  function baseOptions(T) {
+    return {
+      responsive: true, maintainAspectRatio: false, animation: { duration: 250 }, interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'top', align: 'start', labels: { color: T.ink2, usePointStyle: true, pointStyle: 'rectRounded', boxWidth: 10, boxHeight: 10, padding: 14, font: { family: T.font, size: 12 } } },
+        tooltip: { backgroundColor: T.surface, titleColor: T.ink, bodyColor: T.ink2, footerColor: T.ink, borderColor: T.line, borderWidth: 1, padding: 10, boxPadding: 4, usePointStyle: true,
+          titleFont: { family: T.font, weight: '700' }, bodyFont: { family: T.font }, footerFont: { family: T.font, weight: '700' },
+          callbacks: { title: function (items) { var m = M.MOIS[items[0].dataIndex]; return m.id + ' · ' + m.periode; }, label: function (c) { return ' ' + c.dataset.label + ' : ' + eur(c.parsed.y); } } }
+      },
+      scales: {
+        x: { grid: { display: false }, border: { color: T.axis }, ticks: { color: T.muted, font: { family: T.font, size: 12 } } },
+        y: { grid: { color: function (c) { return c.tick.value === 0 ? T.axis : T.line; } }, border: { display: false }, ticks: { color: T.muted, font: { family: T.font, size: 12 }, callback: function (v) { return compactEur(v); }, maxTicksLimit: 7 } }
+      }
+    };
+  }
+  var endLabels = { id: 'endLabels', afterDatasetsDraw: function (chart) {
+    var ctx = chart.ctx, T = chart.$tok;
+    chart.data.datasets.forEach(function (ds, i) {
+      if (!ds.endLabel || !chart.isDatasetVisible(i)) return;
+      var meta = chart.getDatasetMeta(i), pt = meta.data[meta.data.length - 1]; if (!pt) return;
+      ctx.save(); ctx.font = '700 12px ' + T.font; ctx.fillStyle = T.ink; ctx.textBaseline = 'middle';
+      ctx.fillText(compactEur(ds.data[ds.data.length - 1]), pt.x + 8, pt.y + (ds.endLabelDy || 0)); ctx.restore();
+    });
+  } };
+  var barValues = { id: 'barValues', afterDatasetsDraw: function (chart) {
+    if (chart.options.indexAxis !== 'y') return;
+    var ctx = chart.ctx, T = chart.$tok, meta = chart.getDatasetMeta(0);
+    ctx.save(); ctx.font = '700 12px ' + T.font; ctx.fillStyle = T.ink; ctx.textBaseline = 'middle';
+    meta.data.forEach(function (bar, i) { ctx.fillText(eur(chart.data.datasets[0].data[i]), bar.x + 8, bar.y); }); ctx.restore();
+  } };
+  function isTop(c) {
+    var ch = c.chart, i = c.dataIndex;
+    for (var d = ch.data.datasets.length - 1; d >= 0; d--) { if (!ch.isDatasetVisible(d)) continue; if ((ch.data.datasets[d].data[i] || 0) > 0.5) return d === c.datasetIndex; }
+    return false;
+  }
+
+  function buildCharts(T) {
+    Object.keys(charts).forEach(function (k) { charts[k].destroy(); }); charts = {};
+    var oA = baseOptions(T);
+    oA.scales.x.stacked = true; oA.scales.y.stacked = true;
+    oA.plugins.tooltip.callbacks.footer = function (items) { var s = 0; items.forEach(function (i) { s += i.parsed.y; }); return 'Total : ' + eur(s); };
+    oA.plugins.tooltip.itemSort = function (a, b) { return b.datasetIndex - a.datasetIndex; };
+    charts.ca = new Chart(document.getElementById('ch-ca'), { type: 'bar', data: { labels: labelsMois(), datasets: CANAUX_UI.map(function (c, i) {
+      return { label: c.nom, data: [], backgroundColor: T.s[i], maxBarThickness: 24, borderColor: T.surface, borderSkipped: false,
+        borderWidth: function (ctx) { return isTop(ctx) ? 0 : { top: 2, right: 0, bottom: 0, left: 0 }; },
+        borderRadius: function (ctx) { return isTop(ctx) ? { topLeft: 4, topRight: 4, bottomLeft: 0, bottomRight: 0 } : 0; } };
+    }) }, options: oA });
+
+    var oB = baseOptions(T);
+    oB.plugins.legend.labels.generateLabels = function () {
+      return [{ text: 'Résultat du mois (positif)', fillStyle: T.pos, strokeStyle: T.pos, pointStyle: 'rectRounded', datasetIndex: 0, fontColor: T.ink2 },
+        { text: 'Résultat du mois (négatif)', fillStyle: T.neg, strokeStyle: T.neg, pointStyle: 'rectRounded', datasetIndex: 0, fontColor: T.ink2 },
+        { text: 'Trésorerie cumulée', fillStyle: T.ink2, strokeStyle: T.ink2, pointStyle: 'circle', datasetIndex: 1, fontColor: T.ink2 }];
+    };
+    oB.plugins.legend.onClick = function () {};
+    oB.layout = { padding: { right: 56 } };
+    charts.res = new Chart(document.getElementById('ch-res'), { type: 'bar', data: { labels: labelsMois(), datasets: [
+      { type: 'bar', label: 'Résultat du mois', data: [], backgroundColor: [], maxBarThickness: 24, borderRadius: 4, borderSkipped: 'start', order: 2 },
+      { type: 'line', label: 'Trésorerie cumulée', data: [], borderColor: T.ink2, backgroundColor: T.ink2, borderWidth: 2, pointRadius: 4, pointHoverRadius: 6, pointBackgroundColor: T.ink2, pointBorderColor: T.surface, pointBorderWidth: 2, tension: 0, order: 1, endLabel: true }
+    ] }, options: oB, plugins: [endLabels] });
+
+    var oC = baseOptions(T);
+    oC.layout = { padding: { right: 56 } };
+    oC.plugins.tooltip.filter = function (i) { return i.raw !== null && i.raw !== undefined; };
+    charts.cmp = new Chart(document.getElementById('ch-cmp'), { type: 'line', data: { labels: labelsMois(), datasets: [
+      { label: 'Scénario affiché', data: [], borderColor: T.s[0], backgroundColor: T.s[0], borderWidth: 2, pointRadius: 4, pointHoverRadius: 6, pointBackgroundColor: T.s[0], pointBorderColor: T.surface, pointBorderWidth: 2, tension: 0, endLabel: true },
+      { label: 'Plan', data: [], borderColor: T.muted, backgroundColor: T.muted, borderWidth: 2, pointRadius: 3, pointBackgroundColor: T.muted, pointBorderColor: T.surface, pointBorderWidth: 2, tension: 0, endLabel: true },
+    ] }, options: oC, plugins: [endLabels] });
+
+    var oD = baseOptions(T);
+    oD.indexAxis = 'y'; oD.interaction = { mode: 'nearest', axis: 'y', intersect: false }; oD.plugins.legend.display = false;
+    oD.plugins.tooltip.callbacks.title = function (items) { return items[0].label; };
+    oD.plugins.tooltip.callbacks.label = function (c) { return ' Marge brute : ' + eur(c.parsed.x); };
+    oD.scales = { x: { grid: { color: T.line }, border: { display: false }, ticks: { color: T.muted, font: { family: T.font, size: 12 }, callback: function (v) { return compactEur(v); }, maxTicksLimit: 5 } },
+      y: { grid: { display: false }, border: { color: T.axis }, ticks: { color: T.ink2, font: { family: T.font, size: 12 } } } };
+    oD.layout = { padding: { right: 84 } };
+    charts.mix = new Chart(document.getElementById('ch-mix'), { type: 'bar', data: { labels: [], datasets: [{ label: 'Marge brute', data: [], backgroundColor: [], maxBarThickness: 22, borderRadius: 4, borderSkipped: 'start' }] }, options: oD, plugins: [barValues] });
+    Object.keys(charts).forEach(function (k) { charts[k].$tok = T; });
+  }
+
+  var lastR = null, lastPlan = null;
+  function renderCharts(r, plan) {
+    lastR = r; lastPlan = plan;
+    if (!window.Chart) return;
+    if (!charts.ca) buildCharts(tok());
+    var T = charts.ca.$tok;
+    CANAUX_UI.forEach(function (c, i) { charts.ca.data.datasets[i].data = r.mois.map(function (m) { return m.ca[c.cle]; }); });
+    charts.ca.update();
+    var res = r.mois.map(function (m) { return m.resultat; });
+    charts.res.data.datasets[0].data = res;
+    charts.res.data.datasets[0].backgroundColor = res.map(function (v) { return v >= 0 ? T.pos : T.neg; });
+    charts.res.data.datasets[1].data = r.mois.map(function (m) { return m.tresorerieFin; });
+    charts.res.update();
+    var cum = function (rr) { var s = 0; return rr.mois.map(function (m) { s += m.resultat; return s; }); };
+    var a = cum(r), b = cum(plan);
+    charts.cmp.data.datasets[0].data = a; charts.cmp.data.datasets[1].data = b;
+    charts.cmp.data.datasets[0].endLabelDy = a[5] >= b[5] ? -8 : 8; charts.cmp.data.datasets[1].endLabelDy = a[5] >= b[5] ? 8 : -8;
+    charts.cmp.update();
+    var sorted = CANAUX_UI.map(function (c, i) { return { nom: c.nom, v: r.totaux.marge[c.cle], col: T.s[i] }; }).sort(function (x, y) { return y.v - x.v; });
+    charts.mix.data.labels = sorted.map(function (s) { return s.nom; });
+    charts.mix.data.datasets[0].data = sorted.map(function (s) { return s.v; });
+    charts.mix.data.datasets[0].backgroundColor = sorted.map(function (s) { return s.col; });
+    charts.mix.update();
+  }
+  function showChartFallback() {
+    ['ch-ca', 'ch-res', 'ch-cmp', 'ch-mix'].forEach(function (id) {
+      var d = document.createElement('div'); d.className = 'chart-fallback';
+      d.textContent = 'Graphique indisponible : Chart.js n’a pas pu se charger (connexion). Toutes les valeurs restent dans les tableaux.';
+      document.getElementById(id).parentNode.appendChild(d);
+    });
+  }
+  function onTheme() { if (lastR) { if (window.Chart) { buildCharts(tok()); renderCharts(lastR, lastPlan); } renderTables(lastR); } }
+  try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', onTheme); } catch (e) { /* ancien navigateur */ }
+  new MutationObserver(onTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  // ================================================================ DÉMARRAGE
+  var local = loadLocal();
+  if (local) donnees = M.normaliserDonnees(local);
+  buildLeviers(); buildCorrections(); renderEditor(false);
+  if (!window.Chart) showChartFallback();
+  explainSave();
+  setSave(local ? 'Enregistré dans ce navigateur' : 'Chiffres de départ', 'info');
+  render();
+  connectShared();
+})();
+</script>
+<!-- @artifact-end -->
+</body>
+</html>

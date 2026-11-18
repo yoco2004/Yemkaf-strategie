@@ -1,0 +1,47 @@
+# Mise en ligne automatique de Yem'kaf Outils sur l'hébergement, à chaque envoi sur la branche « main ».
+# Les accès FTP ne sont jamais écrits ici : ils sont rangés dans les « secrets » du dépôt GitHub
+# (Settings → Secrets and variables → Actions) : FTP_SERVEUR, FTP_UTILISATEUR, FTP_MOT_DE_PASSE.
+# Réglages facultatifs dans l'onglet « Variables » : FTP_PROTOCOLE (ftps par défaut, ou ftp) et FTP_DOSSIER (./ par défaut).
+name: Mise en ligne
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: mise-en-ligne
+  cancel-in-progress: false
+
+jobs:
+  verifier:
+    name: Vérifier le code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérifier la syntaxe PHP
+        run: find app public -name '*.php' -print0 | xargs -0 -n1 php -l
+
+  envoyer:
+    name: Envoyer sur l'hébergement
+    needs: verifier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Envoyer les fichiers modifiés
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVEUR }}
+          username: ${{ secrets.FTP_UTILISATEUR }}
+          password: ${{ secrets.FTP_MOT_DE_PASSE }}
+          protocol: ${{ vars.FTP_PROTOCOLE || 'ftps' }}
+          server-dir: ${{ vars.FTP_DOSSIER || './' }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            app/config.php
+            storage/**
+            outils/**
+            tests/**
+            README.md
