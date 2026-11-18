@@ -1,8 +1,9 @@
 """Prépare les fichiers des deux pages publiées sur claude.ai.
 
-Usage : python3 outils/construire-artifacts.py <dossier_sortie> <url_feuille_de_route> <url_simulateur>
+Usage : python3 outils/construire-artifacts.py <dossier_sortie> <url_feuille_de_route> <url_simulateur> [<url_simulateur_de_prix>]
 
 - <sortie>/simulateur/ : page du simulateur (modele.js intégré) et ses images ; capacité « db » déclarée à la publication.
+- <sortie>/prix/       : simulateur de prix ; capacité « db » déclarée à la publication.
 - <sortie>/salle/      : feuille de route (page principale) et toutes les pages des modules, avec la charte et les images.
 Les pages principales perdent leur squelette HTML (la publication l'ajoute) ; les sous-pages le gardent.
 Les liens vers le simulateur et vers la feuille de route deviennent les adresses des pages publiées.
@@ -36,7 +37,7 @@ def copier(rel, dest):
     shutil.copyfile(RACINE / rel, cible)
 
 
-def main(sortie, url_salle, url_simu):
+def main(sortie, url_salle, url_simu, url_prix=None):
     sortie = pathlib.Path(sortie)
     shutil.rmtree(sortie, ignore_errors=True)
     runpy.run_path(str(RACINE / 'outils/documents-en-html.py'), run_name='__main__')  # documents .md → pages HTML
@@ -48,15 +49,30 @@ def main(sortie, url_salle, url_simu):
     html = html.replace('<script src="modele.js"></script>', '<script>\n' + js + '\n</script>')
     html = html.replace('../assets/', 'assets/')
     html = html.replace('href="../index.html"', 'href="' + url_salle + '" target="_blank" rel="noopener"')
+    if url_prix:
+        html = html.replace('href="../07-simulateur-prix/index.html"', 'href="' + url_prix + '" target="_blank" rel="noopener"')
     simu.mkdir(parents=True)
     (simu / 'index.html').write_text(html, encoding='utf-8')
     for a in ASSETS:
         copier(a, simu)
 
+    # Simulateur de prix
+    prix = sortie / 'prix'
+    html = corps((RACINE / '07-simulateur-prix/index.html').read_text(encoding='utf-8'))
+    html = html.replace('../assets/', 'assets/')
+    html = html.replace('href="../index.html"', 'href="' + url_salle + '" target="_blank" rel="noopener"')
+    html = html.replace('href="../01-dashboard-financier/index.html"', 'href="' + url_simu + '" target="_blank" rel="noopener"')
+    prix.mkdir(parents=True)
+    (prix / 'index.html').write_text(html, encoding='utf-8')
+    for a in ASSETS:
+        copier(a, prix)
+
     # Salle de pilotage : feuille de route + modules
     salle = sortie / 'salle'
     html = corps((RACINE / 'index.html').read_text(encoding='utf-8'))
     html = html.replace("simulateur: '01-dashboard-financier/index.html'", "simulateur: '" + url_simu + "'")
+    if url_prix:
+        html = html.replace("prix: '07-simulateur-prix/index.html'", "prix: '" + url_prix + "'")
     salle.mkdir(parents=True)
     (salle / 'index.html').write_text(html, encoding='utf-8')
     for rel in SOUS_PAGES:
@@ -73,4 +89,4 @@ def main(sortie, url_salle, url_simu):
 
 
 if __name__ == '__main__':
-    main(*sys.argv[1:4])
+    main(*sys.argv[1:5])

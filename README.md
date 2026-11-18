@@ -14,7 +14,7 @@ Période couverte : du soft opening du **20 novembre 2026** au bilan du **19 mai
 
 Chaque page commence par un **mode d'emploi** : à quoi elle sert, pour qui, comment l'utiliser.
 
-## Les sept modules
+## Les huit modules
 
 | N° | Module | Fichier | À quoi il sert | Responsable |
 |---|---|---|---|---|
@@ -26,6 +26,7 @@ Chaque page commence par un **mode d'emploi** : à quoi elle sert, pour qui, com
 | 5 | Boutique en ligne | `04-ecommerce/` | WordPress, Mollie, Qonto, Brevo : parcours client, schémas, textes des e-mails et SMS, conformité | Yousif |
 | 6 | Professionnels et contrats | `05-b2b-juridique/` | Plaquette tarifaire, deux modèles de contrats, cupping du jeudi, traçabilité | Khaled |
 | 7 | Règles de la maison | `06-regles-maison/` | Règles pour tous, tâche par tâche ; règlement intérieur des salariés ; charte des associés | Amer, Yousif |
+| 8 | Simulateur de prix | `07-simulateur-prix/` | Coût complet, prix plancher, prix conseillé et comparaison avec le marché pour chaque produit ; enregistré pour l'équipe sur la page publiée | Les trois associés |
 
 Les numéros des dossiers ne suivent pas l'ordre des modules : seul l'ordre affiché sur la salle de pilotage compte.
 

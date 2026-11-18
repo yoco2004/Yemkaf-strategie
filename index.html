@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Noto+Kufi+Arabic:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="assets/yemkaf.css">
 <style>
-/* Mise en page : bandeau de marque, mode d'emploi, les sept modules en cartes, qui fait quoi,
+/* Mise en page : bandeau de marque, mode d'emploi, les huit modules en cartes, qui fait quoi,
    feuille de route filtrable par personne avec la période en cours mise en avant, objectifs, rituels. */
 .modules { display: grid; gap: 14px; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .modules { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -91,7 +91,7 @@
   </section>
 
   <section aria-labelledby="h-mod">
-    <div class="sec-head"><h2 id="h-mod">Les sept modules</h2><p>Ce que fait chaque module, qui s’en sert, et comment.</p></div>
+    <div class="sec-head"><h2 id="h-mod">Les huit modules</h2><p>Ce que fait chaque module, qui s’en sert, et comment.</p></div>
     <div class="modules" id="modules"></div>
   </section>
 
@@ -145,7 +145,7 @@
   var LIENS = {
     marque: '00-marque/index.html', simulateur: '01-dashboard-financier/index.html', barista: '02-onboarding-baristas/index.html',
     lancement: '03-marketing-lancement/index.html', eshop: '04-ecommerce/index.html', b2b: '05-b2b-juridique/index.html',
-    regles: '06-regles-maison/index.html'
+    regles: '06-regles-maison/index.html', prix: '07-simulateur-prix/index.html'
   };
   var today = new Date(); today.setHours(0, 0, 0, 0);
 
@@ -178,13 +178,16 @@
       ['Imprimez la plaquette tarifaire pour chaque rendez-vous.', 'Ouvrez le bon modèle de contrat, complétez les crochets, faites-le relire par l’avocat avant la première signature.', 'Suivez le déroulé du cupping chaque jeudi à 15 h.']],
     ['regles', 'Règles de la maison', 'Les règles de vie et de travail de tout le monde, tâche par tâche (horaires, tenue, caisse, boissons et repas, pourboires, sécurité, respect), le règlement intérieur officiel des salariés et la charte des associés.',
       'Toute l’équipe et les trois associés ; Amer les fait vivre, Yousif conduit l’adoption du règlement intérieur.',
-      ['À chaque arrivée, lisez la page avec Amer et signez l’accusé de lecture.', 'Affichez le règlement intérieur dans la réserve une fois déposé.', 'Les associés signent la charte au point du lundi.']]
+      ['À chaque arrivée, lisez la page avec Amer et signez l’accusé de lecture.', 'Affichez le règlement intérieur dans la réserve une fois déposé.', 'Les associés signent la charte au point du lundi.']],
+    ['prix', 'Simulateur de prix', 'Calcule pour chaque produit (café en grains en 150 g et 250 g, café arabe, Qishr, café vert et torréfié pour les pros) le coût complet, le prix plancher et le prix conseillé, et le compare aux prix du marché.',
+      'Les associés ; Khaled pour le café vert et les prix pros, Yousif pour les prix du site, Amer pour les emballages et le temps de travail.',
+      ['Vérifiez les paramètres : prix du café vert, emballage, coût horaire, marges.', 'Regardez l’état de chaque produit dans le tableau des prix.', 'Reportez les prix décidés dans le simulateur financier.']]
   ];
   document.getElementById('modules').innerHTML = MOD.map(function (m, i) {
     return '<div class="panel module"><span class="num-mod">Module ' + (i + 1) + '</span><h3>' + esc(m[1]) + '</h3><p>' + esc(m[2]) + '</p>' +
       '<dl><dt>Qui l’utilise</dt><dd>' + esc(m[3]) + '</dd><dt>Comment</dt><dd><ol style="margin:0;padding-left:18px;display:grid;gap:3px">' +
       m[4].map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol></dd></dl>' +
-      '<a class="btn primary" href="' + LIENS[m[0]] + '">Ouvrir</a></div>';
+      '<a class="btn primary" href="' + LIENS[m[0]] + '"' + (/^https?:/.test(LIENS[m[0]]) ? ' target="_blank" rel="noopener"' : '') + '>Ouvrir</a></div>';
   }).join('');
 
   // Objectifs du scénario prudent (simulateur)
@@ -369,7 +372,7 @@
         (tasks.length ? tasks.map(function (t) {
           return '<div class="panel task"><div class="when">' + esc(t[1]) + '</div><div><div class="t">' + esc(t[2]) + '</div><div class="d">' + esc(t[3]) + '</div>' +
             '<div class="who"><span class="dot" style="background:' + WHO[t[0]][1] + '"></span>' + esc(WHO[t[0]][0]) +
-            (t[4] ? '<a class="link" href="' + LIENS[t[4]] + '">Voir le module</a>' : '') + '</div></div></div>';
+            (t[4] ? '<a class="link" href="' + LIENS[t[4]] + '"' + (/^https?:/.test(LIENS[t[4]]) ? ' target="_blank" rel="noopener"' : '') + '>Voir le module</a>' : '') + '</div></div></div>';
         }).join('') : '<div class="empty">Rien de spécifique sur cette période : renfort au comptoir et rituels.</div>') + '</div>';
     }).join('');
   }

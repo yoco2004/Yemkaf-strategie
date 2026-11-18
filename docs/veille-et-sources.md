@@ -33,6 +33,21 @@ Maison Lagrange 23,80 € ([Cafés d'Océ](https://www.cafes-oce.fr/cafes-d-exce
 [Café Torifa](https://cafe-torifa.fr/en/products/village-bayt-a-llal-cafe-yemen-copie),
 [Maison Lagrange](https://www.maison-lagrange.com/de-specialite/1602-cafe-grain-yemen-mof-3760259315580.html)).
 
+## 1 bis. Prix des produits à emporter et du café vert (relevé de novembre 2026)
+
+Ces fourchettes alimentent le simulateur de prix (`07-simulateur-prix/`).
+
+| Produit | Prix relevés | Au kilo | Sources |
+|---|---|---|---|
+| Café yéménite en grains | Méo 11,25 € / 250 g ; Le Comptoir de Katia 23,80 € / 250 g ; Café Torifa 24,90 € / 250 g ; Maison Lagrange 23,80 € / 200 g | 45 € (entrée de gamme), 95 à 119 € (spécialité) | [Méo](https://www.meo.fr/produit/yemen-mocca-matari-grains-250g/), [Le Comptoir de Katia](https://lecomptoirdekatia.com/boutique/cafe-yemen-moka-matari/), [Maison Lagrange](https://www.maison-lagrange.com/de-specialite/1602-cafe-grain-yemen-mof-3760259315580.html) |
+| Café de spécialité parisien (non yéménite) | Coutume : 34,90 € par mois pour 2 × 250 g | environ 70 € | [Coutume](https://touteslesbox.fr/coutume-cafe/) |
+| Café arabe ou turc à la cardamome | 9,69 à 11,38 € / 250 g | 39 à 46 € | [Desertcart](https://www.desertcart.fr/products/252379850-turkish-coffee-with-cardamom-250-gm.md) |
+| Cascara (cosses de café) | Cafés Lugat 6,32 € / 100 g ; Kaffeemacher 6,90 € / 100 g ; Terres de Café 19,91 € / 100 g | 63 à 199 € | [Cafés Lugat](https://www.maxicoffee.com/cascara-finca-lajas-cafEs-lugat-p-156972.html), [Kaffeemacher](https://kaffeemacher.de/fr/products/the-cascara), [Terres de Café](https://www.terresdecafe.com/en/tea-chocolate/2025-cascara-lechuza-100g-salvador.html) |
+| Café vert yéménite (pros) | Mocha Hunters environ 600 $ / 20 kg (score 86,6) ; Green Coffee Collective 11,90 à 20,95 € / kg ; lots rares jusqu'à environ 140 $ / kg | environ 12 à 130 € | [Mocha Hunters](https://www.mochahunters.com/), [Green Coffee Collective](https://greencoffeecollective.com/en-eu/collections/yemen), [Coffee Bean Corral](https://www.coffeebeancorral.com/categories/Green-Coffee-Beans/East-Asian-Green-Coffee-Beans/Yemen.aspx) |
+
+Aucun prix public trouvé pour le Qishr épicé yéménite en France, ni pour du café yéménite torréfié vendu aux cafés et
+restaurants.
+
 ## 2. Le quartier
 
 - **Centre Pompidou fermé jusqu'en 2030** (bâtiment fermé depuis le 22 septembre 2025) : moins de touristes devant la porte
