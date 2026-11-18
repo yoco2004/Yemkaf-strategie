@@ -1,7 +1,14 @@
-# Mise en ligne automatique de Yem'kaf Outils sur l'hébergement, à chaque envoi sur la branche « main ».
-# Les accès FTP ne sont jamais écrits ici : ils sont rangés dans les « secrets » du dépôt GitHub
-# (Settings → Secrets and variables → Actions) : FTP_SERVEUR, FTP_UTILISATEUR, FTP_MOT_DE_PASSE.
-# Réglages facultatifs dans l'onglet « Variables » : FTP_PROTOCOLE (ftps par défaut, ou ftp) et FTP_DOSSIER (./ par défaut).
+# Mise en ligne automatique de Yem'kaf Outils sur l'hébergement LWS, à chaque envoi sur la branche « main ».
+#
+# Les accès FTP ne sont jamais écrits ici : ils sont rangés dans GitHub, Settings → Secrets and variables → Actions.
+#   Onglet Secrets   : FTP_SERVEUR, FTP_UTILISATEUR, FTP_MOT_DE_PASSE
+#   Onglet Variables : FTP_DOSSIER (obligatoire), par exemple « htdocs/outils/ » : le dossier du sous-domaine, vu depuis
+#                      la racine du compte FTP, terminé par « / ».
+#                      FTP_PROTOCOLE (facultatif) : « ftps » par défaut (chiffré), ou « ftp ».
+#
+# Sécurité : le compte FTP de l'hébergement donne accès à toute la boutique et au site WordPress.
+# La mise en ligne refuse donc de partir si FTP_DOSSIER ne contient pas « outils », et elle n'efface jamais
+# un fichier qu'elle n'a pas elle-même envoyé.
 name: Mise en ligne
 
 on:
@@ -27,15 +34,33 @@ jobs:
     needs: verifier
     runs-on: ubuntu-latest
     steps:
+      - name: Vérifier les accès et le dossier de destination
+        id: acces
+        env:
+          SERVEUR: ${{ secrets.FTP_SERVEUR }}
+          UTILISATEUR: ${{ secrets.FTP_UTILISATEUR }}
+          MOT_DE_PASSE: ${{ secrets.FTP_MOT_DE_PASSE }}
+          DOSSIER: ${{ vars.FTP_DOSSIER }}
+        run: |
+          if [ -z "$SERVEUR" ] || [ -z "$UTILISATEUR" ] || [ -z "$MOT_DE_PASSE" ]; then
+            echo "::notice::Accès FTP pas encore configurés (secrets FTP_SERVEUR, FTP_UTILISATEUR, FTP_MOT_DE_PASSE) : rien n'est envoyé."
+            echo "pret=non" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          case "$DOSSIER" in
+            *outils*/) echo "Destination : $DOSSIER"; echo "pret=oui" >> "$GITHUB_OUTPUT" ;;
+            *) echo "::error::La variable FTP_DOSSIER doit désigner le dossier des outils et finir par « / » (exemple : htdocs/outils/). Valeur actuelle : « $DOSSIER ». Rien n'est envoyé, pour protéger la boutique et le site WordPress."; exit 1 ;;
+          esac
       - uses: actions/checkout@v4
+        if: steps.acces.outputs.pret == 'oui'
       - name: Envoyer les fichiers modifiés
+        if: steps.acces.outputs.pret == 'oui'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVEUR }}
           username: ${{ secrets.FTP_UTILISATEUR }}
           password: ${{ secrets.FTP_MOT_DE_PASSE }}
           protocol: ${{ vars.FTP_PROTOCOLE || 'ftps' }}
-          server-dir: ${{ vars.FTP_DOSSIER || './' }}
+          server-dir: ${{ vars.FTP_DOSSIER }}
           exclude: |
             **/.git*
             **/.git*/**

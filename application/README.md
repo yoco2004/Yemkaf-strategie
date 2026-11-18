@@ -30,52 +30,57 @@ la maison (« Votre accès est personnel »), écrite dans le règlement intéri
 
 ## Mise en place, pas à pas (une seule fois)
 
-Compter environ une heure. Les étapes 2, 3 et 5 se font dans l'espace client de l'hébergeur.
+Hébergement : **LWS**, formule Standard de yemeni-market.com. Il contient la boutique PrestaShop (yemeni-market.com) et,
+dans le dossier `htdocs/yemkaf.fr`, le site WordPress de yemkaf.fr. Les outils vont dans **leur propre dossier**, sans
+toucher ni à l'un ni à l'autre.
 
-### Étape 1 · Le dépôt GitHub
+### Étape 1 · Le dépôt GitHub (fait)
 
-1. Sur GitHub, dans le compte Yem'kaf : **New repository** → nom `yemkaf-outils` → **Private** → **Create repository**.
-2. Donnez-moi l'accès en installant l'application GitHub « Claude » sur ce dépôt :
-   https://github.com/apps/claude/installations/select_target → choisir le compte Yem'kaf → **Only select repositories**
-   → `yemkaf-outils` → **Install**.
-3. Envoyez-moi le nom exact du dépôt (par exemple `yemkaf/yemkaf-outils`) : j'y envoie le code sur la branche `main`.
+Dépôt `yemkaf/yemkaf-outils`, avec l'application GitHub « Claude » installée. Le code est sur la branche `main`.
 
-### Étape 2 · Le sous-domaine, PHP et le certificat
+### Étape 2 · Trouver le dossier du sous-domaine outils.yemkaf.fr
 
-1. Créez le sous-domaine **outils.yemkaf.fr**.
-   - Dossier du sous-domaine : **`outils/public`** (le dossier `public` à l'intérieur de `outils`).
-   - Si l'hébergeur n'accepte qu'un dossier simple, choisissez `outils` : le fichier `.htaccess` fourni protège alors le
-     reste du code.
-2. Activez le **certificat SSL** (Let's Encrypt, gratuit) pour `outils.yemkaf.fr`.
-3. Réglez **PHP 8.1 ou plus récent** pour ce sous-domaine.
+Le sous-domaine est créé ; il faut savoir quel dossier il affiche.
 
-### Étape 3 · La base de données et la boîte e-mail
+1. **LWS Panel** → votre hébergement yemeni-market.com → **Sous-domaines** (ou « Gestion des sous-domaines ») : la ligne
+   `outils.yemkaf.fr` indique son **répertoire**. Notez-le (par exemple `htdocs/outils`).
+2. **Vérification** : dans le **Gestionnaire de fichiers**, ouvrez ce dossier → **+ Fichier** → nommez-le
+   `test-outils.txt` → écrivez `ici` → enregistrez. Ouvrez **https://outils.yemkaf.fr/test-outils.txt** : si le mot
+   « ici » s'affiche, c'est le bon dossier. Supprimez ensuite le fichier.
+3. Si aucun répertoire n'est indiqué ou si le test échoue : supprimez le sous-domaine et recréez-le depuis
+   **Sous-domaines** de l'hébergement en choisissant le répertoire **`outils`** : LWS crée alors `htdocs/outils`.
+   **Ne choisissez pas un dossier à l'intérieur de `htdocs/yemkaf.fr`** (c'est WordPress).
+4. Toujours dans LWS Panel : activez le **certificat SSL** (Let's Encrypt) pour `outils.yemkaf.fr`, et regardez la
+   **version de PHP** de l'hébergement. Il faut 8.0 ou plus. **Ne changez pas la version sans vérifier la boutique** :
+   elle s'applique aussi à PrestaShop et WordPress.
 
-1. **MySQL** : créez une base (par exemple `yemkaf_outils`), un utilisateur et son mot de passe. Notez les trois, et le
-   nom du serveur (souvent `localhost`).
-2. **E-mail** : créez la boîte **outils@yemkaf.fr**. Notez son mot de passe, le serveur SMTP et le port (465 ou 587).
-   C'est elle qui envoie les codes de connexion.
-3. **FTP** : créez un compte FTP **réservé au dossier `outils/`**. N'utilisez pas le compte FTP principal : il donne
-   accès au site WordPress. Notez le serveur, l'identifiant et le mot de passe.
+### Étape 3 · La base de données et l'e-mail
 
-### Étape 4 · Les secrets GitHub (les accès FTP ne passent jamais par le chat)
+1. **LWS Panel → Bases de données MySQL → Créer** : par exemple `yemkaf_outils`. Notez le nom de la base, l'utilisateur,
+   le mot de passe et le **serveur MySQL** affiché par LWS.
+2. **E-mail** : créez une adresse pour envoyer les codes, de préférence `outils@yemkaf.fr` (sinon
+   `outils@yemeni-market.com`). Notez son mot de passe et les réglages **SMTP** indiqués par LWS (serveur, port 465 en
+   SSL ou 587 en TLS).
 
-Dans le dépôt GitHub : **Settings → Secrets and variables → Actions**.
+### Étape 4 · Les accès FTP dans GitHub (jamais dans le chat)
 
-1. Onglet **Secrets** → **New repository secret**, trois fois :
-   - `FTP_SERVEUR` : le serveur FTP (par exemple `ftp.yemkaf.fr`) ;
-   - `FTP_UTILISATEUR` : l'identifiant du compte FTP de l'étape 3 ;
-   - `FTP_MOT_DE_PASSE` : son mot de passe.
-2. Onglet **Variables** (facultatif) :
-   - `FTP_PROTOCOLE` : `ftps` (par défaut, chiffré) ou `ftp` si l'hébergeur ne propose pas FTPS ;
-   - `FTP_DOSSIER` : `./` si le compte FTP s'ouvre directement dans `outils/` (par défaut), sinon par exemple `outils/`.
+Dans **LWS Panel → FTP** : notez le **serveur FTP**, l'**identifiant** et le **mot de passe** du compte FTP.
+Puis, sur GitHub, dans `yemkaf/yemkaf-outils` : **Settings → Secrets and variables → Actions**.
+
+1. Onglet **Secrets** → **New repository secret**, trois fois : `FTP_SERVEUR`, `FTP_UTILISATEUR`, `FTP_MOT_DE_PASSE`.
+2. Onglet **Variables** → **New repository variable** :
+   - `FTP_DOSSIER` : le dossier de l'étape 2 tel qu'on le voit en se connectant en FTP, **terminé par `/`**
+     (par exemple `htdocs/outils/`). La mise en ligne refuse de partir si ce chemin ne contient pas « outils » :
+     la boutique et WordPress sont protégés d'une erreur de frappe.
+   - `FTP_PROTOCOLE` (facultatif) : laissez vide (FTP chiffré) ; mettez `ftp` seulement si l'envoi échoue en FTPS.
 
 ### Étape 5 · Première mise en ligne et configuration
 
-1. Dans GitHub : **Actions** → **Mise en ligne** → **Run workflow**. Au bout d'une à deux minutes, la ligne devient verte.
-2. Dans le **gestionnaire de fichiers** de l'hébergeur, ouvrez `outils/app/`, copiez `config.example.php` en
-   **`config.php`** et remplissez-le : base de données, e-mail, votre adresse d'administrateur, une phrase d'installation.
-   Ce fichier reste sur le serveur : il n'est jamais envoyé sur GitHub et la mise en ligne ne l'écrase pas.
+1. Sur GitHub : **Actions** → **Mise en ligne** → **Run workflow**. En une à deux minutes, la ligne devient verte et les
+   fichiers apparaissent dans le dossier des outils (`app`, `public`, `.htaccess`…).
+2. Dans le **Gestionnaire de fichiers** LWS, ouvrez le dossier des outils → `app` → copiez `config.example.php` en
+   **`config.php`** et remplissez-le (base de données de l'étape 3, e-mail, votre adresse d'administrateur, une phrase
+   d'installation). Ce fichier reste sur le serveur : il n'est jamais envoyé sur GitHub et la mise en ligne ne l'écrase pas.
 
 ### Étape 6 · Installation
 
@@ -119,12 +124,12 @@ sauvegarde automatique est faite chaque jour avant la première modification.
 ## Sauvegardes
 
 - **Base MySQL** : activez les sauvegardes automatiques de l'hébergeur et faites un export (phpMyAdmin) chaque mois.
-- **Fichiers déposés** : dossier `outils/storage/uploads`, à copier par FTP chaque mois.
+- **Fichiers déposés** : dossier `storage/uploads` du dossier des outils, à copier par FTP chaque mois.
 - **Simulateurs** : chaque version se télécharge en fichier depuis « Versions ».
 
 ## En cas de problème
 
-- Les erreurs sont notées dans `outils/storage/logs/erreurs.log` (lisible par FTP ou le gestionnaire de fichiers).
+- Les erreurs sont notées dans `storage/logs/erreurs.log` du dossier des outils (lisible avec le gestionnaire de fichiers LWS).
 - Les codes de connexion n'arrivent pas : vérifiez la partie « mail » de `app/config.php` et les indésirables. Pour un
   essai sans envoi, mettez `'journal_seulement' => true` : les e-mails sont alors écrits dans `storage/logs/mails.log`.
 - Pour voir le détail d'une erreur pendant un essai : `'debug' => true` dans `app/config.php`, puis remettez `false`.

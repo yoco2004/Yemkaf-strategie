@@ -4,6 +4,14 @@
  */
 declare(strict_types=1);
 
+if (PHP_VERSION_ID < 80000) {
+    http_response_code(500);
+    header('Content-Type: text/html; charset=utf-8');
+    echo '<!doctype html><meta charset="utf-8"><title>Version de PHP</title><p style="font-family:sans-serif">Yem’kaf Outils a besoin de PHP 8.0 ou plus récent. Version actuelle : '
+        . htmlspecialchars(PHP_VERSION) . '. Changez-la dans LWS Panel (Configuration PHP), après avoir vérifié que la boutique et WordPress la supportent.</p>';
+    exit;
+}
+
 define('YK_ROOT', dirname(__DIR__));
 require YK_ROOT . '/app/bootstrap.php';
 require YK_ROOT . '/app/modules.php';
