@@ -14,6 +14,10 @@ Période couverte : du soft opening du **20 novembre 2026** au bilan du **19 mai
 
 Chaque page commence par un **mode d'emploi** : à quoi elle sert, pour qui, comment l'utiliser.
 
+**L'application de l'équipe** (tâches, journal du soir, planning, commandes, bilan, simulateurs partagés) est à
+l'adresse **https://outils.yemkaf.fr**. Son code est dans le dépôt `yemkaf/yemkaf-outils` ; elle reprend les modules de
+ce dépôt avec `node outils/importer-contenu.js <chemin de ce dépôt>`.
+
 ## Les huit modules
 
 | N° | Module | Fichier | À quoi il sert | Responsable |
